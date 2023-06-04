@@ -16,32 +16,19 @@ import javax.swing.JOptionPane;
  */
 public class Conexion {
     
-    final static String URL = "jdbc:mariadb://localhost/fravemax_gp8";
-    final static String USER = "root";
-    final static String PASS = "";
+    private final static String URL = "jdbc:mariadb://localhost/fravemax_gp8";
+    private final static String USER = "root";
+    private final static String PASS = "";
 
     private static Connection con;
 
 
-    public static Connection getConexion() {
+    public static Connection getConexion() throws ClassNotFoundException, SQLException {
 
       
-            try {
-                Class.forName("org.mariadb.jdbc.Driver");
-                con = DriverManager.getConnection(URL, USER, PASS);
-                
-            } catch (ClassNotFoundException e) {
-              JOptionPane.showMessageDialog(null, e.getMessage());
-            } catch (SQLException e) {
-                
-                JOptionPane.showMessageDialog(null, e.getMessage());
-                       
-               
-            }
-       
-
-        return con;// retorno null si no me conecto 
-        // sino la conexión
+        Class.forName("org.mariadb.jdbc.Driver");
+        con = DriverManager.getConnection(URL, USER, PASS);
+        return con;  //retorno la conexion o una excepción
 
     }
 }

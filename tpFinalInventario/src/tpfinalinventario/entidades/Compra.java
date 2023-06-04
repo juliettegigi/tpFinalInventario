@@ -5,36 +5,63 @@
  */
 package tpfinalinventario.entidades;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author julie
  */
 public class Compra {
-    private int idCliente;
-    private String apellido;
-    private String nombre;
-    private String domicilio;
-    private String telefono;
+    private int idCompra;
+    private Proveedor proveedor;
+    private LocalDate fecha;
 
     public Compra(){
         
     }
-    
-    public Compra(String apellido, String nombre, String domicilio, String telefono) {
-        this.idCliente = idCliente;
-        this.apellido = apellido;
-        this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
+
+    public Compra(int idCompra, Proveedor proveedor, LocalDate fecha) {
+        this.idCompra = idCompra;
+        this.proveedor = proveedor;
+        this.fecha = fecha;
+    }
+
+    public Compra(Proveedor proveedor, LocalDate fecha) {
+        this.proveedor = proveedor;
+        this.fecha = fecha;
+    }
+
+    public int getIdCompra() {
+        return idCompra;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setIdCompra(int idCompra) {
+        this.idCompra = idCompra;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    @Override
+    public String toString() {
+        return "Compra{" + "idCompra=" + idCompra + ", proveedor=" + proveedor + ", fecha=" + fecha + '}';
     }
     
-    public Compra(int idCliente, String apellido, String nombre, String domicilio, String telefono) {
-        this.idCliente = idCliente;
-        this.apellido = apellido;
-        this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
-    }
+    
+    
     
     
 }
