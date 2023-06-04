@@ -12,14 +12,14 @@ package tpfinalinventario.entidades;
 public class DetalleCompra {
     private int idDetalle;
     private int cantidad;
-    private int precioCosto;
+    private double precioCosto;
     private Compra compra;
     private Producto producto;
 
     public DetalleCompra() {
     }
 
-    public DetalleCompra(int idDetalle, int cantidad, int precioCosto, Compra compra, Producto producto) {
+    public DetalleCompra(int idDetalle, int cantidad, double precioCosto, Compra compra, Producto producto) {
         this.idDetalle = idDetalle;
         this.cantidad = cantidad;
         this.precioCosto = precioCosto;
@@ -27,7 +27,7 @@ public class DetalleCompra {
         this.producto = producto;
     }
     
-        public DetalleCompra( int cantidad, int precioCosto, Compra compra, Producto producto) {
+        public DetalleCompra( int cantidad, double precioCosto, Compra compra, Producto producto) {
        
         this.cantidad = cantidad;
         this.precioCosto = precioCosto;
@@ -43,7 +43,7 @@ public class DetalleCompra {
         return cantidad;
     }
 
-    public int getPrecioCosto() {
+    public double getPrecioCosto() {
         return precioCosto;
     }
 
@@ -63,7 +63,7 @@ public class DetalleCompra {
         this.cantidad = cantidad;
     }
 
-    public void setPrecioCosto(int precioCosto) {
+    public void setPrecioCosto(double precioCosto) {
         this.precioCosto = precioCosto;
     }
 
