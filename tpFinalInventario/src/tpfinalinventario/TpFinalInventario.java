@@ -24,9 +24,8 @@ public class TpFinalInventario {
         
         Cliente c=new Cliente("Apellido1","Nombre1","Domicilio1","Telefono1");
         try {
-            ClienteData.insertar(c);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ClienteData.guardar(c);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

@@ -20,7 +20,7 @@ public class ClienteData {
      private static PreparedStatement p;
     
     
-    public static void insertar(Cliente cliente) throws ClassNotFoundException, SQLException,Exception{
+    public static void guardar(Cliente cliente) throws ClassNotFoundException, SQLException,Exception{
         
         c = Conexion.getConexion();
         String sql="INSERT into cliente(apellido,nombre,domicilio,telefono) values(?,?,?,?)";
