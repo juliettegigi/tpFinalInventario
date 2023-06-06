@@ -18,8 +18,7 @@ import tpfinalinventario.entidades.Producto;
  *
  * @author julie
  */
-public class ProductoData {
-    
+public class ProductoData {  
     
     
     
@@ -28,7 +27,7 @@ public class ProductoData {
      private static ResultSet r;
     
      
-       public static void guardar(Producto producto) throws ClassNotFoundException, SQLException,Exception{
+       public  void guardar(Producto producto) throws ClassNotFoundException, SQLException,Exception{
         c=Conexion.getConexion();
         p=c.prepareStatement("insert into producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)");
         p.setString(1, producto.getNombre());
@@ -50,12 +49,11 @@ public class ProductoData {
         cerrar2();
     }
      
-    public static List<Producto> buscar(String campo,String valor) throws ClassNotFoundException, SQLException,Exception{
+    public static List<Producto> buscarCampoValor(String campo,String valor) throws ClassNotFoundException, SQLException,Exception{
         ArrayList<Producto> lista= new ArrayList();
         c = Conexion.getConexion();
         p=c.prepareStatement("SELECT * FROM producto WHERE "+campo+"=?;");
-        p.setString(1,valor);
-        
+        p.setString(1,valor);        
         
         r=p.executeQuery();
         while(r.next()){
