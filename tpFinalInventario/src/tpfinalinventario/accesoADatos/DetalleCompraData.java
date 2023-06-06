@@ -9,8 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.Compra;
 import tpfinalinventario.entidades.DetalleCompra;
 
@@ -20,77 +24,99 @@ import tpfinalinventario.entidades.DetalleCompra;
  */
 public class DetalleCompraData {
     
-     private static Connection c;
-     private static PreparedStatement p;
-     private static ResultSet r;
+    private Connection c=null;
     
-    public static void guardar(DetalleCompra dc) throws ClassNotFoundException, SQLException,Exception{
+    public DetalleCompraData(){
         c=Conexion.getConexion();
-        p=c.prepareStatement("insert into detallecompra(cantidad,precioCosto,idCompra,idProducto) values(?,?,?,?)");
-        p.setInt(1, dc.getCantidad());
-        p.setDouble(2, dc.getPrecioCosto());
-        p.setInt(3,dc.getCompra().getIdCompra());
-        p.setInt(4, dc.getProducto().getIdProducto());
-        p.execute();
-        cerrar2();
+    }    
+    
+    
+    public void guardar(DetalleCompra dc) {
+      
+        try {
+            PreparedStatement p=c.prepareStatement("insert into detallecompra(cantidad,precioCosto,idCompra,idProducto) values(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            p.setInt(1, dc.getCantidad());
+            p.setDouble(2, dc.getPrecioCosto());
+            p.setInt(3,dc.getCompra().getIdCompra());
+            p.setInt(4, dc.getProducto().getIdProducto());
+            p.executeUpdate();
+            ResultSet r=p.getGeneratedKeys();
+            if(r.next()){
+                dc.setIdDetalle(r.getInt("idDetalleCompra"));
+            }
+            p.close();
+            r.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al guardar en DetalleCompraData, "+ex.getMessage());
+        }
     }
     
       
-     public static void eliminar(int id) throws ClassNotFoundException, SQLException,Exception{
+     public void eliminar(int id) {
         
-        c = Conexion.getConexion();
-        p=c.prepareStatement("DELETE FROM detallecompra WHERE idDetalle=?;");
-        p.setInt(1,id);
-        p.execute();
-        cerrar2();
+        
+        try {
+            PreparedStatement p=c.prepareStatement("DELETE FROM detallecompra WHERE idDetalle=?;");
+            p.setInt(1,id);
+            p.execute();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al eliminar en DetalleCompraData, "+ex.getMessage());
+        }
     }
      
-    public static DetalleCompra buscar(int id) throws ClassNotFoundException, SQLException,Exception{
+    public DetalleCompra buscar(int id) {
+        CompraData compraData=new CompraData();
+        ProductoData productoData=new ProductoData();
         DetalleCompra dc = null;
-        c = Conexion.getConexion();
-        p=c.prepareStatement("SELECT * FROM detallecompra WHERE idDetalle=?;");
-        p.setInt(1,id);
-        r=p.executeQuery();
-        if(r.next()){
-            dc=new DetalleCompra();
-            dc.setIdDetalle(r.getInt("idDetalle"));
-            dc.setCantidad(r.getInt("cantidad"));
-            dc.setPrecioCosto(r.getDouble("precioCosto"));
-            dc.setCompra(CompraData.buscar(r.getInt("idCompra")));
-            dc.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));          
-          
+        try {
+            PreparedStatement p=c.prepareStatement("SELECT * FROM detallecompra WHERE idDetalle=?;");
+            p.setInt(1,id);
+            ResultSet r=p.executeQuery();
+            if(r.next()){
+                dc=new DetalleCompra();
+                dc.setIdDetalle(r.getInt("idDetalle"));
+                dc.setCantidad(r.getInt("cantidad"));
+                dc.setPrecioCosto(r.getDouble("precioCosto"));
+                dc.setCompra(compraData.buscar(r.getInt("idCompra")));
+                dc.setProducto(productoData.buscarCampoValor("idProducto", r.getString("idProducto")).get(0));
+                
+            }
+           p.close();
+           r.close();
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleCompraData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cerrar3();
-        return dc;
+         return dc;
     }
    
     
     
   
-       public static List<DetalleCompra> lista() throws ClassNotFoundException, SQLException,Exception {
-        ArrayList<DetalleCompra> lista=new ArrayList();
-        c=Conexion.getConexion();
-        p=c.prepareStatement("select * from DetalleCompra;");
-        r=p.executeQuery();
-        while(r.next()){
-            DetalleCompra dc= new DetalleCompra(); 
-            dc.setIdDetalle(r.getInt("idDetalle"));
-            dc.setCantidad(r.getInt("cantidad"));
-            dc.setPrecioCosto(r.getDouble("precioCosto"));
-            dc.setCompra(CompraData.buscar(r.getInt("idCompra")));
-            dc.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));  
-        }
-        cerrar3();
-        return lista;
-    }
-           private static void cerrar2() throws SQLException{
-           p.close();
-           c.close();
-       }
-       
-       private static void cerrar3() throws SQLException{
-           p.close();
+       public List<DetalleCompra> lista()  {
+           CompraData compraData=new CompraData();
+           ProductoData productoData=new ProductoData();
+          ArrayList<DetalleCompra> lista=new ArrayList();
+           try {
+          
+            PreparedStatement p=c.prepareStatement("select * from DetalleCompra;");
+            ResultSet r=p.executeQuery();
+            while(r.next()){
+                DetalleCompra dc= new DetalleCompra();
+                dc.setIdDetalle(r.getInt("idDetalle"));
+                dc.setCantidad(r.getInt("cantidad"));
+                dc.setPrecioCosto(r.getDouble("precioCosto"));
+                dc.setCompra(compraData.buscar(r.getInt("idCompra")));  
+                dc.setProducto(productoData.buscarCampoValor("idProducto", r.getString("idProducto")).get(0));
+            }
            r.close();
-           c.close();
-       }
+           p.close();
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleCompraData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return lista;
+    }
+         
 }

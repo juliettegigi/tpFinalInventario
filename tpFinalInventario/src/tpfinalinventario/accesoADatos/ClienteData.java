@@ -9,8 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.Cliente;
 
 /**
@@ -19,42 +23,60 @@ import tpfinalinventario.entidades.Cliente;
  */
 public class ClienteData {
 
-    private static Connection c;
-    private static PreparedStatement p;
-    private static ResultSet r;
+    private Connection c=null;
+    
+    public ClienteData(){
+        c=Conexion.getConexion();
+    }
+    
 
-    public static void guardar(Cliente cliente) throws ClassNotFoundException, SQLException, Exception {
-
-        c = Conexion.getConexion();
+    public  void guardar(Cliente cliente){
+        
         String sql = "INSERT into cliente(dni, apellido,nombre,domicilio,telefono) values(?,?,?,?,?);";
-        p = c.prepareStatement(sql);
-        p.setInt(1,cliente.getDni());
-        p.setString(2, cliente.getApellido());
-        p.setString(3, cliente.getNombre());
-        p.setString(4, cliente.getDomicilio());
-        p.setString(5, cliente.getTelefono());
-        p.execute();
-        cerrar2();
+        try {
+            PreparedStatement p=c.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            p.setInt(1,cliente.getDni());
+            p.setString(2, cliente.getApellido());
+            p.setString(3, cliente.getNombre());
+            p.setString(4, cliente.getDomicilio());
+            p.setString(5, cliente.getTelefono());
+            p.executeUpdate();
+            ResultSet rs=p.getGeneratedKeys();
+            if(rs.next()){
+                cliente.setIdCliente(rs.getInt("idCliente"));
+                JOptionPane.showMessageDialog(null,"Cliente añadido con éxito" );
+            }
+             
+               
+            p.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"El cliente no fue añadido" +  ex.getMessage());
+        }
     }
 
-    public static void eliminar(int id) throws ClassNotFoundException, SQLException, Exception {
+    public void eliminar(int id)  {
 
-        c = Conexion.getConexion();
-        String sql = "DELETE FROM cliente WHERE idCliente=?;";
-        p = c.prepareStatement(sql);
-        p.setInt(1, id);
-        p.execute();
-        cerrar2();
+         String sql = "DELETE FROM cliente WHERE idCliente=?;";
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1,id);
+            p.execute();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al eliminar cliente, "+ex.getMessage());
+        }
     }
 
-    public static Cliente buscar(int id) throws ClassNotFoundException, SQLException, Exception {
+    public Cliente buscar(int id) {
         Cliente cliente = null;
-        c = Conexion.getConexion();
         String sql = "SELECT * FROM cliente WHERE idCliente=?;";
-        p = c.prepareStatement(sql);
-        p.setInt(1, id);
-        r = p.executeQuery();
-        if (r.next()) {
+        
+        try {
+           PreparedStatement p = c.prepareStatement(sql);
+           p.setInt(1, id);
+           ResultSet r=p.executeQuery();
+           if (r.next()) {
             cliente = new Cliente();
             cliente.setIdCliente(id);
             cliente.setDni(r.getInt("dni"));
@@ -63,38 +85,36 @@ public class ClienteData {
             cliente.setNombre(r.getString("domicilio"));
             cliente.setNombre(r.getString("telefono"));
         }
-        cerrar3();
+           r.close();
+           p.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al buscar cliente, "+ex.getMessage());
+        }
+      
         return cliente;
     }
 
-    public static List<Cliente> lista() throws ClassNotFoundException, SQLException, Exception {
-        ArrayList<Cliente> lista = new ArrayList();
-        c = Conexion.getConexion();
-        p = c.prepareStatement("select * from cliente;");
-        r = p.executeQuery();
-        while (r.next()) {
-            Cliente cliente = new Cliente();
-            cliente.setDni(r.getInt("dni"));
-            cliente.setIdCliente(r.getInt("idCliente"));
-            cliente.setApellido(r.getString("apellido"));
-            cliente.setNombre(r.getString("nombre"));
-            cliente.setDomicilio(r.getString("domicilio"));
-            cliente.setTelefono(r.getString("telefono"));
-
+    public List<Cliente> lista(){
+         ArrayList<Cliente> lista = new ArrayList();
+        try {
+            PreparedStatement p= c.prepareStatement("select * from cliente;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setDni(r.getInt("dni"));
+                cliente.setIdCliente(r.getInt("idCliente"));
+                cliente.setApellido(r.getString("apellido"));
+                cliente.setNombre(r.getString("nombre"));
+                cliente.setDomicilio(r.getString("domicilio"));
+                cliente.setTelefono(r.getString("telefono"));
+            }
+            p.close();
+            r.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al listar clientes, "+ex.getMessage());
         }
-        cerrar3();
-        return lista;
+         return lista;
     }
 
-    private static void cerrar2() throws SQLException {
-        p.close();
-        c.close();
-    }
-
-    private static void cerrar3() throws SQLException {
-        p.close();
-        r.close();
-        c.close();
-    }
 
 }

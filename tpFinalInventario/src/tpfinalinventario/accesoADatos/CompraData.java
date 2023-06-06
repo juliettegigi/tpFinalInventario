@@ -10,8 +10,12 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.Cliente;
 import tpfinalinventario.entidades.Compra;
 
@@ -21,74 +25,92 @@ import tpfinalinventario.entidades.Compra;
  */
 public class CompraData {
     
-     private static Connection c;
-     private static PreparedStatement p;
-     private static ResultSet r;
+     private Connection c=null;
+     public CompraData(){
+          c=Conexion.getConexion();
+     }
     
+
     
-    public static void guardar(Compra compra) throws ClassNotFoundException, SQLException,Exception{
-        c=Conexion.getConexion();
-        p=c.prepareStatement("insert into compra (idproveedor,fecha) values(?,?)");
-        p.setInt(1,compra.getProveedor().getIdProveedor());        
-        p.setDate(2,Date.valueOf(compra.getFecha()));
-        p.execute();
-        cerrar2();
+    public void guardar(Compra compra){
+         try {
+             PreparedStatement p=c.prepareStatement("insert into compra (idproveedor,fecha) values(?,?)",Statement.RETURN_GENERATED_KEYS);
+             p.setInt(1,compra.getProveedor().getIdProveedor());
+             p.setDate(2,Date.valueOf(compra.getFecha()));
+             p.executeUpdate();
+             ResultSet r=p.getGeneratedKeys();
+             if(r.next()){
+                 compra.setIdCompra(r.getInt("idCompra"));
+             }
+             p.close();
+             r.close();
+         } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error en guardar CompraData, "+ex.getMessage());
+         }
     }
     
     
-     public static void eliminar(int id) throws ClassNotFoundException, SQLException,Exception{
-        
-        c = Conexion.getConexion();
-        p=c.prepareStatement("DELETE FROM compra WHERE idCompra=?;");
-        p.setInt(1,id);
-        p.execute();
-        cerrar2();
+     public  void eliminar(int id){
+         
+         try {
+             PreparedStatement p=c.prepareStatement("DELETE FROM compra WHERE idCompra=?;");
+             p.setInt(1,id);
+             p.execute();
+             p.close();
+         } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error en eliminar CompraData, "+ex.getMessage());
+         }
     }
      
-    public static Compra buscar(int id) throws ClassNotFoundException, SQLException,Exception{
-        Compra compra = null;
-        c = Conexion.getConexion();
-        p=c.prepareStatement("SELECT * FROM compra WHERE idCompra=?;");
-        p.setInt(1,id);
-        r=p.executeQuery();
-        if(r.next()){
-            compra=new Compra();
-            compra.setIdCompra(id);
-            compra.setProveedor(ProveedorData.buscar(r.getInt("idProveedor")));
-            compra.setFecha(r.getDate("fecha").toLocalDate());
-          
-        }
-        cerrar3();
+    public Compra buscar(int id){
+        ProveedorData proveedorData=new ProveedorData();
+        Compra compra = null; 
+        try {
+             
+             PreparedStatement p=c.prepareStatement("SELECT * FROM compra WHERE idCompra=?;");
+             p.setInt(1,id);
+             ResultSet r=p.executeQuery();
+             if(r.next()){
+                 compra=new Compra();
+                 compra.setIdCompra(id);
+                 compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
+                 compra.setFecha(r.getDate("fecha").toLocalDate());
+                 
+             }
+             
+            p.close();
+            r.close();
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en buscar CompraData, "+ex.getMessage());
+         }
         return compra;
     }
    
     
     
   
-       public static List<Compra> lista() throws ClassNotFoundException, SQLException,Exception {
-        ArrayList<Compra> lista=new ArrayList();
-        c=Conexion.getConexion();
-        p=c.prepareStatement("select * from compra;");
-        r=p.executeQuery();
-        while(r.next()){
-            Compra compra= new Compra();
-            compra.setIdCompra(r.getInt("idCompra"));
-            compra.setProveedor(ProveedorData.buscar(r.getInt("idProveedor")));
-            compra.setFecha(r.getDate("fecha").toLocalDate());
-        }
-        cerrar3();
-        return lista;
+       public List<Compra> lista(){
+            ProveedorData proveedorData=new ProveedorData();
+             ArrayList<Compra> lista=new ArrayList();
+           try {
+             
+             PreparedStatement p=c.prepareStatement("select * from compra;");
+             ResultSet r=p.executeQuery();
+             while(r.next()){
+                 Compra compra= new Compra();
+                 compra.setIdCompra(r.getInt("idCompra"));
+                 compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
+                 compra.setFecha(r.getDate("fecha").toLocalDate());
+             }
+             p.close();
+             r.close();
+             
+         } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error en buscar CompraData, "+ex.getMessage());
+         }
+           return lista;
     }
     
-       private static void cerrar2() throws SQLException{
-           p.close();
-           c.close();
-       }
-       
-       private static void cerrar3() throws SQLException{
-           p.close();
-           r.close();
-           c.close();
-       }
+     
     
 }
