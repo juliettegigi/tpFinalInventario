@@ -10,8 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.DetalleCompra;
 import tpfinalinventario.entidades.Venta;
 
@@ -21,72 +23,95 @@ import tpfinalinventario.entidades.Venta;
  */
 public class VentaData {
     
-    private static Connection c;
-    private static PreparedStatement p;
-    private static ResultSet r;
+       Connection c=null;
+       
+       public VentaData(){
+           c=Conexion.getConexion();
+       }
     
-       public static void guardar(Venta v) throws ClassNotFoundException, SQLException,Exception{
-        c=Conexion.getConexion();
-        p=c.prepareStatement("insert into venta(fecha,idCliente) values(?,?)");
-        p.setDate(1,Date.valueOf(v.getFecha()));
-        p.setDouble(2, v.getCliente().getIdCliente());
-        p.execute();
-        cerrar2();
+       public  void guardar(Venta v) {
+           
+           try {
+               PreparedStatement p=c.prepareStatement("insert into venta(fecha,idCliente) values(?,?)",Statement.RETURN_GENERATED_KEYS);
+               p.setDate(1,Date.valueOf(v.getFecha()));
+               p.setDouble(2, v.getCliente().getIdCliente());
+               p.executeUpdate();
+               ResultSet r=p.getGeneratedKeys();
+               if(r.next()){
+                   v.setIdVenta(r.getInt("idVenta"));
+               }
+               p.close();
+               r.close();
+           } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error en guardar venta, "+ex.getMessage());
+           }
+       
     }
        
-       public static void eliminar(int id) throws ClassNotFoundException, SQLException,Exception{
+       public void eliminar(int id) {
         
-        Connection c = Conexion.getConexion();
-        PreparedStatement p=c.prepareStatement("DELETE FROM venta WHERE idVenta=?;");
-        p.setInt(1,id);
-        p.execute();
-        cerrar2();
+      
+           try {
+               PreparedStatement p=c.prepareStatement("DELETE FROM venta WHERE idVenta=?;");
+               p.setInt(1,id);
+               p.execute();
+               p.close();
+           } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error en eliminar venta, "+ex.getMessage());
+           }
+        
     }
      
-    public static Venta buscar(int id) throws ClassNotFoundException, SQLException,Exception{
-        Venta v = null;
-        c = Conexion.getConexion();
-        p=c.prepareStatement("SELECT * FROM venta WHERE idVenta=?;");
-        p.setInt(1,id);
-        r=p.executeQuery();
-        if(r.next()){
-            v=new Venta();
-            v.setIdVenta(id);
-            v.setFecha(r.getDate("fecha").toLocalDate());
-            v.setCliente(ClienteData.buscar(r.getInt("idCliente")));        
-          
-        }
-        cerrar3();
-        return v;
+    public Venta buscar(int id){
+        Venta v = null;   
+        ClienteData clienteData=new ClienteData();
+        try {
+               
+               PreparedStatement p=c.prepareStatement("SELECT * FROM venta WHERE idVenta=?;");
+               p.setInt(1,id);
+               ResultSet r=p.executeQuery();
+               if(r.next()){
+                   v=new Venta();
+                   v.setIdVenta(id);
+                   v.setFecha(r.getDate("fecha").toLocalDate());
+                   v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+                   
+               }
+               p.close();
+               r.close();
+              
+           } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error en buscar venta, "+ex.getMessage());
+           }
+         return v;
     }
    
     
     
   
-       public static List<DetalleCompra> lista() throws ClassNotFoundException, SQLException,Exception {
-        ArrayList<DetalleCompra> lista=new ArrayList();
-        c=Conexion.getConexion();
-       p=c.prepareStatement("select * from venta;");
-        r=p.executeQuery();
-        while(r.next()){
-            Venta v=new Venta();
-            v.setIdVenta(r.getInt("idVenta"));
-            v.setFecha(r.getDate("fecha").toLocalDate());
-            v.setCliente(ClienteData.buscar(r.getInt("idCliente")));  
-        }
-        cerrar3();
-        return lista;
+       public List<DetalleCompra> lista() {
+           
+               ArrayList<DetalleCompra> lista=new ArrayList();
+               ClienteData clienteData=new ClienteData();
+           try {
+               
+               PreparedStatement p=c.prepareStatement("select * from venta;");
+               ResultSet r=p.executeQuery();
+               while(r.next()){
+                   Venta v=new Venta();
+                   v.setIdVenta(r.getInt("idVenta"));
+                   v.setFecha(r.getDate("fecha").toLocalDate());
+                   v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+               }
+               p.close();
+               r.close();
+               
+           } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error en lista venta, "+ex.getMessage());
+           }
+           return lista;
     }
        
        
-       private static void cerrar2() throws SQLException{
-           p.close();
-           c.close();
-       }
-       
-       private static void cerrar3() throws SQLException{
-           p.close();
-           r.close();
-           c.close();
-       }
+    
 }
