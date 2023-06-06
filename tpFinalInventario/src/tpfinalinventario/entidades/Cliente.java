@@ -11,6 +11,7 @@ package tpfinalinventario.entidades;
  */
 public class Cliente {
     private int idCliente;
+    private int dni;
     private String apellido;
     private String nombre;
     private String domicilio;
@@ -19,22 +20,30 @@ public class Cliente {
     public Cliente(){
         
     }
-    
-    public Cliente(String apellido, String nombre, String domicilio, String telefono){
+
+    public Cliente(int idCliente, int dni, String apellido, String nombre, String domicilio, String telefono) {
+        this.idCliente = idCliente;
+        this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
     }
     
-    public Cliente(int idCliente, String apellido, String nombre, String domicilio, String telefono) {
+        public Cliente(int dni, String apellido, String nombre, String domicilio, String telefono) {
         this.idCliente = idCliente;
+        this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
     }
 
+    public int getDni() {
+        return dni;
+    }
+
+        
     public int getIdCliente() {
         return idCliente;
     }
@@ -55,6 +64,12 @@ public class Cliente {
         return telefono;
     }
 
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    
+    
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
@@ -77,10 +92,10 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", apellido=" + apellido + ", nombre=" + nombre + ", domicilio=" + domicilio + ", telefono=" + telefono + '}';
+        return "Cliente{" + "idCliente=" + idCliente + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ", domicilio=" + domicilio + ", telefono=" + telefono + '}';
     }
-    
-    
+
+ 
     
     
     
