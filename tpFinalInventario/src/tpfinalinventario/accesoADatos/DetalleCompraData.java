@@ -57,7 +57,7 @@ public class DetalleCompraData {
             dc.setCantidad(r.getInt("cantidad"));
             dc.setPrecioCosto(r.getDouble("precioCosto"));
             dc.setCompra(CompraData.buscar(r.getInt("idCompra")));
-            dc.setProducto(ProductoData.buscar(r.getInt("idProducto")));          
+            dc.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));          
           
         }
         cerrar3();
@@ -78,7 +78,7 @@ public class DetalleCompraData {
             dc.setCantidad(r.getInt("cantidad"));
             dc.setPrecioCosto(r.getDouble("precioCosto"));
             dc.setCompra(CompraData.buscar(r.getInt("idCompra")));
-            dc.setProducto(ProductoData.buscar(r.getInt("idProducto")));  
+            dc.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));  
         }
         cerrar3();
         return lista;

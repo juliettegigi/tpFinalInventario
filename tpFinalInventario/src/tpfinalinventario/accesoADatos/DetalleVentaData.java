@@ -58,7 +58,7 @@ public class DetalleVentaData {
             dv.setCantidad(r.getInt("cantidad"));
             dv.setPrecioVenta(r.getDouble("precioVenta"));
             dv.setVenta(VentaData.buscar(r.getInt("idVenta")));
-            dv.setProducto(ProductoData.buscar(r.getInt("idProducto")));      
+            dv.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));      
           
         }
         cerrar3();
@@ -79,7 +79,7 @@ public class DetalleVentaData {
             dv.setCantidad(r.getInt("cantidad"));
             dv.setPrecioVenta(r.getDouble("precioVenta"));
             dv.setVenta(VentaData.buscar(r.getInt("idVenta")));
-            dv.setProducto(ProductoData.buscar(r.getInt("idProducto")));  
+            dv.setProducto(ProductoData.buscarPorId(r.getInt("idProducto")));  
         }
         cerrar3();
         return lista;

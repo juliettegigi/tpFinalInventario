@@ -50,7 +50,30 @@ public class ProductoData {
         cerrar2();
     }
      
-    public static Producto buscar(int id) throws ClassNotFoundException, SQLException,Exception{
+    public static List<Producto> buscar(String campo,String valor) throws ClassNotFoundException, SQLException,Exception{
+        ArrayList<Producto> lista= new ArrayList();
+        c = Conexion.getConexion();
+        p=c.prepareStatement("SELECT * FROM producto WHERE "+campo+"=?;");
+        p.setString(1,valor);
+        
+        
+        r=p.executeQuery();
+        while(r.next()){
+            Producto producto=new Producto();
+            producto.setIdProducto(r.getInt("idProducto"));
+            producto.setNombre(r.getString("nombre"));
+            producto.setDescripcion(r.getString("descripcion"));
+            producto.setPrecioActual(r.getDouble("precioActual"));
+            producto.setStock(r.getInt("stock"));
+            producto.setEstado(r.getBoolean("estado"));
+            lista.add(producto);
+        }
+        cerrar3();
+        return lista;
+    }
+   
+    
+        public static Producto buscarPorId(int id) throws ClassNotFoundException, SQLException,Exception{
         Producto producto = null;
         c = Conexion.getConexion();
         p=c.prepareStatement("SELECT * FROM producto WHERE idCompra=?;");
@@ -69,9 +92,6 @@ public class ProductoData {
         cerrar3();
         return producto;
     }
-   
-    
-    
   
        public static List<Producto> lista() throws ClassNotFoundException, SQLException,Exception {
         ArrayList<Producto> lista=new ArrayList();
