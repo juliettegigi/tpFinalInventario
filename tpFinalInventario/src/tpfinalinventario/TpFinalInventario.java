@@ -22,13 +22,16 @@ public class TpFinalInventario {
      */
     public static void main(String[] args) {
         
-        Cliente c=new Cliente("Apellido1","Nombre1","Domicilio1","Telefono1");
+        /*Cliente c=new Cliente("Apellido1","Nombre1","Domicilio1","Telefono1");
         try {
             ClienteData.guardar(c);
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-    }
+*/
+        
+        
+}
     
 }
