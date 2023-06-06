@@ -11,6 +11,7 @@ package tpfinalinventario.entidades;
  */
 public class Producto {
     private int idProducto;
+    private String nombre;
     private String descripcion;
     private double precioActual;
     private int stock;
@@ -19,20 +20,29 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, String descripcion, double precioActual, int stock, boolean estado) {
+    public Producto(int idProducto, String nombre, String descripcion, double precioActual, int stock, boolean estado) {
         this.idProducto = idProducto;
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
         this.estado = estado;
     }
-    
-      public Producto( String descripcion, double precioActual, int stock, boolean estado) {
+
+     public Producto(String nombre, String descripcion, double precioActual, int stock, boolean estado) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
         this.estado = estado;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+ 
 
     public int getIdProducto() {
         return idProducto;
@@ -54,6 +64,11 @@ public class Producto {
         return estado;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
@@ -76,9 +91,10 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", stock=" + stock + ", estado=" + estado + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", stock=" + stock + ", estado=" + estado + '}';
     }
-    
+
+ 
       
             
 }

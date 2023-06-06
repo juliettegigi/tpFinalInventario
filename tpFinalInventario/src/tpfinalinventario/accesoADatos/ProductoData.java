@@ -30,11 +30,12 @@ public class ProductoData {
      
        public static void guardar(Producto producto) throws ClassNotFoundException, SQLException,Exception{
         c=Conexion.getConexion();
-        p=c.prepareStatement("insert into producto(descripcion,precioActual,stock,estado) values(?,?,?,?)");
-        p.setString(1,producto.getDescripcion());
-        p.setDouble(2, producto.getPrecioActual());
-        p.setInt(3,producto.getStock());
-        p.setBoolean(4, producto.isEstado());
+        p=c.prepareStatement("insert into producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)");
+        p.setString(1, producto.getNombre());
+        p.setString(2,producto.getDescripcion());
+        p.setDouble(3, producto.getPrecioActual());
+        p.setInt(4,producto.getStock());
+        p.setBoolean(5, producto.isEstado());
         p.execute();
         cerrar2();
     }
@@ -58,6 +59,7 @@ public class ProductoData {
         if(r.next()){
             producto=new Producto();
             producto.setIdProducto(id);
+            producto.setNombre(r.getString("nombre"));
             producto.setDescripcion(r.getString("descripcion"));
             producto.setPrecioActual(r.getDouble("precioActual"));
             producto.setStock(r.getInt("stock"));
@@ -78,6 +80,7 @@ public class ProductoData {
         r=p.executeQuery();
         while(r.next()){
             Producto producto= new Producto();
+            producto.setNombre(r.getString("nombre"));
             producto.setIdProducto(r.getInt("idProducto"));
             producto.setDescripcion(r.getString("descripcion"));
             producto.setPrecioActual(r.getDouble("precioActual"));
