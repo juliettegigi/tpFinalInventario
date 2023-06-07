@@ -12,8 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import tpfinalinventario.accesoADatos.ClienteData;
 import tpfinalinventario.accesoADatos.ProductoData;
+import tpfinalinventario.accesoADatos.ProveedorData;
 import tpfinalinventario.entidades.Cliente;
 import tpfinalinventario.entidades.Producto;
+import tpfinalinventario.entidades.Proveedor;
 
 /**
  *
@@ -26,29 +28,20 @@ public class TpFinalInventario {
      */
     public static void main(String[] args) {
         
-        /*Cliente c=new Cliente("Apellido1","Nombre1","Domicilio1","Telefono1");
-        try {
-            ClienteData.guardar(c);
-            
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-*/
-        Producto p=new Producto("nombre1","descripcion1",2.5,2,true);
-        try {
-            ProductoData.guardar(p);
-            ArrayList<Producto> l=(ArrayList<Producto>) ProductoData.buscarCampoValor("precioActual", "dos pesos");
-            
-            for(Producto pp:l){
-                System.out.println(pp);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(TpFinalInventario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(TpFinalInventario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ClienteData clienteData=new ClienteData();
+        ProductoData productoData=new ProductoData();
+        ProveedorData proveedorData=new ProveedorData();
+        Cliente c1=new Cliente(1,"apellido1","nombre1","domicilio1","telefono1");
+        Producto p1=new Producto("nombre1","descripcion1",1.1,1,true);
+        Producto p2=new Producto("nombre3","descripcion2",1.1,1,true);
+        
+        
+        Proveedor proveedor=new Proveedor("razon social 1","domicilio1","telefono1");
+        proveedorData.guardar(proveedor);
+        clienteData.guardar(c1);
+        productoData.guardar(p1);
+        
+        
         
         
 }
