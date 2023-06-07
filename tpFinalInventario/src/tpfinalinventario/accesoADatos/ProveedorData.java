@@ -43,6 +43,20 @@ public class ProveedorData {
            JOptionPane.showMessageDialog(null, "Error en guardar proveedor, "+ex.getMessage());
         }
     }
+    
+    public void update(Proveedor proveedor){
+        try {
+            PreparedStatement p=c.prepareStatement("UPDATE FROM proveedor SET razonsocial=?,domicilio=?,telefono=? WHERE idProveedor=?");
+            p.setString(1, proveedor.getRazonSocial());
+            p.setString(2, proveedor.getDomicilio());
+            p.setString(3, proveedor.getTelefono());
+            p.setInt(4, proveedor.getIdProveedor());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al update proovedor, "+ex.getMessage());
+        }
+    }
 
     public void eliminar(int id) {
         
