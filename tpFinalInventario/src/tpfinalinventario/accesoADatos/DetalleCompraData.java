@@ -32,7 +32,7 @@ public class DetalleCompraData {
     public void guardar(DetalleCompra dc) {
 
         try {
-            PreparedStatement p = c.prepareStatement("insert into detallecompra(cantidad,precioCosto,idCompra,idProducto) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO detallecompra(cantidad,precioCosto,idCompra,idProducto) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             p.setInt(1, dc.getCantidad());
             p.setDouble(2, dc.getPrecioCosto());
             p.setInt(3, dc.getCompra().getIdCompra());
@@ -62,6 +62,18 @@ public class DetalleCompraData {
             p.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update detalleCompra, " + ex.getMessage());
+        }
+    }
+    
+    public void borrarLog(DetalleCompra dC) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM detalleCompra SET estado=? WHERE idDetalle=?");
+            p.setBoolean(1, dC.isEstado());
+            p.setInt(2, dC.getIdDetalle());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico detalleCompra, " + ex.getMessage());
         }
     }
 
@@ -109,7 +121,7 @@ public class DetalleCompraData {
         ArrayList<DetalleCompra> lista = new ArrayList();
         try {
 
-            PreparedStatement p = c.prepareStatement("select * from DetalleCompra;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM DetalleCompra;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 DetalleCompra dc = new DetalleCompra();

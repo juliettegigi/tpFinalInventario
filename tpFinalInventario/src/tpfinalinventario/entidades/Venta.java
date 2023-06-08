@@ -12,22 +12,26 @@ import java.time.LocalDate;
  * @author julie
  */
 public class Venta {
+
     private int idVenta;
     private LocalDate fecha;
     private Cliente cliente;
+    private boolean estado;
 
     public Venta() {
     }
 
-    public Venta(int idVenta, LocalDate fecha, Cliente cliente) {
+    public Venta(int idVenta, LocalDate fecha, Cliente cliente, boolean estado) {
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.cliente = cliente;
+        this.estado = estado;
     }
-    
-      public Venta(LocalDate fecha, Cliente cliente) {
+
+    public Venta(LocalDate fecha, Cliente cliente, boolean estado) {
         this.fecha = fecha;
         this.cliente = cliente;
+        this.estado = estado;
     }
 
     public int getIdVenta() {
@@ -40,6 +44,14 @@ public class Venta {
 
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public void setIdVenta(int idVenta) {
@@ -58,6 +70,5 @@ public class Venta {
     public String toString() {
         return "Venta{" + "idVenta=" + idVenta + ", fecha=" + fecha + ", cliente=" + cliente + '}';
     }
-      
-        
+
 }

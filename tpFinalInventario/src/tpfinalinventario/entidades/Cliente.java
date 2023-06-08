@@ -10,40 +10,42 @@ package tpfinalinventario.entidades;
  * @author julie
  */
 public class Cliente {
+
     private int idCliente;
     private int dni;
     private String apellido;
     private String nombre;
     private String domicilio;
     private String telefono;
+    private boolean estado;
 
-    public Cliente(){
-        
+    public Cliente() {
+
     }
 
-    public Cliente(int idCliente, int dni, String apellido, String nombre, String domicilio, String telefono) {
+    public Cliente(int idCliente, int dni, String apellido, String nombre, String domicilio, String telefono, boolean estado) {
         this.idCliente = idCliente;
         this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
+        this.estado = estado;
     }
-    
-        public Cliente(int dni, String apellido, String nombre, String domicilio, String telefono) {
-        this.idCliente = idCliente;
+
+    public Cliente(int dni, String apellido, String nombre, String domicilio, String telefono, boolean estado) {
         this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.domicilio = domicilio;
         this.telefono = telefono;
+        this.estado = estado;
     }
 
     public int getDni() {
         return dni;
     }
 
-        
     public int getIdCliente() {
         return idCliente;
     }
@@ -64,12 +66,18 @@ public class Cliente {
         return telefono;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     public void setDni(int dni) {
         this.dni = dni;
     }
 
-    
-    
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
@@ -95,8 +103,4 @@ public class Cliente {
         return "Cliente{" + "idCliente=" + idCliente + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ", domicilio=" + domicilio + ", telefono=" + telefono + '}';
     }
 
- 
-    
-    
-    
 }

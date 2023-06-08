@@ -32,7 +32,7 @@ public class VentaData {
     public void guardar(Venta v) {
 
         try {
-            PreparedStatement p = c.prepareStatement("insert into venta(fecha,idCliente) values(?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO venta(fecha,idCliente) values(?,?)", Statement.RETURN_GENERATED_KEYS);
             p.setDate(1, Date.valueOf(v.getFecha()));
             p.setDouble(2, v.getCliente().getIdCliente());
             p.executeUpdate();
@@ -58,6 +58,18 @@ public class VentaData {
             p.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update venta, " + ex.getMessage());
+        }
+    } 
+
+    public void borrarLog(Venta venta) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM venta SET estado=? WHERE idVenta=?");
+            p.setBoolean(1, venta.isEstado());
+            p.setInt(2, venta.getIdVenta());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico Venta, " + ex.getMessage());
         }
     }
 
@@ -104,7 +116,7 @@ public class VentaData {
         ClienteData clienteData = new ClienteData();
         try {
 
-            PreparedStatement p = c.prepareStatement("select * from venta;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Venta v = new Venta();
