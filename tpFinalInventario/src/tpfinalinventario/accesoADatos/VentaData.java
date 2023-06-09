@@ -11,8 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.DetalleCompra;
 import tpfinalinventario.entidades.Venta;
@@ -121,4 +124,20 @@ public class VentaData {
         return lista;
     }
 
+    
+    
+    //dias entre hoy y la fecha q recibo
+    public void diasTrascurridos(LocalDate fecha){
+        
+        try {
+            PreparedStatement p=c.prepareStatement("select datediff(curdate(),?) as 'dias transcurridos' from venta;");
+            p.setDate(1, Date.valueOf(fecha));
+            ResultSet r=p.executeQuery();
+            while(r.next()){
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VentaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
