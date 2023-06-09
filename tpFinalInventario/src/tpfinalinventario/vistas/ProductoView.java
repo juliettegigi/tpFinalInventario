@@ -44,7 +44,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jtf_id = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         jLabel1.setText("NOMBRE: ");
 
@@ -70,10 +71,17 @@ public class ProductoView extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Agregar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -117,7 +125,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
                         .addComponent(jtf_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addComponent(jButton2)))
+                        .addComponent(btnAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -153,7 +163,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
                         .addGap(29, 29, 29)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEliminar))
                 .addGap(38, 38, 38))
         );
 
@@ -167,14 +179,17 @@ public class ProductoView extends javax.swing.JInternalFrame {
             id=Integer.parseInt(jtf_id.getText());
             Producto p=pd.buscarPorId(id);
             
-            if(p==null)
+            if(p==null){
                 JOptionPane.showMessageDialog(this,"No existe producto con id="+id);
-            else{
+                return;
+            }
+                
+            
                 jtf_nombre.setText(p.getNombre());
                 jta_descripcion.setText(p.getDescripcion());
                 jtf_precioActual.setText(p.getPrecioActual()+"");
                 jtf_stock.setText(p.getStock()+"");
-            } 
+                btnAgregar.setEnabled(false);
             
         }catch( Exception e){
             JOptionPane.showMessageDialog(this,e.getMessage());
@@ -183,30 +198,49 @@ public class ProductoView extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         
         ProductoData pd=new ProductoData();
         Producto p=new Producto();
         
         try{
-            p.setDescripcion(jta_descripcion.getText());
-            p.setEstado(true);
-            p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
-            p.setStock(Integer.parseInt(jtf_stock.getText()));
             p.setNombre(jtf_nombre.getText());
+            p.setDescripcion(jta_descripcion.getText());
+            p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
+            p.setEstado(true);            
+            p.setStock(Integer.parseInt(jtf_stock.getText()));
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
         
+        if(!pd.existe(p)){
+             pd.guardar(p);
+             jtf_id.setText(p.getIdProducto()+"");
+        }
+            
+        else  JOptionPane.showMessageDialog(this,"El producto ya existe en nuesta base de datos");
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        ProductoData pd=new ProductoData();
+        int id=0;
+        try{
+        id=Integer.parseInt(jtf_id.getText());
         
-        pd.guardar(p);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error con el dato ingresado, "+e.getMessage());
+            return;   
+        }
+        pd.eliminadoLogico(id);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
