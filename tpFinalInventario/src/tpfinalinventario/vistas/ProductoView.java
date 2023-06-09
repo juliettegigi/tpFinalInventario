@@ -71,6 +71,11 @@ public class ProductoView extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Agregar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,6 +182,26 @@ public class ProductoView extends javax.swing.JInternalFrame {
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        ProductoData pd=new ProductoData();
+        Producto p=new Producto();
+        
+        try{
+            p.setDescripcion(jta_descripcion.getText());
+            p.setEstado(true);
+            p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
+            p.setStock(Integer.parseInt(jtf_stock.getText()));
+            p.setNombre(jtf_nombre.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
+        }
+        
+        
+        pd.guardar(p);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
