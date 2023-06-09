@@ -5,6 +5,8 @@
  */
 package tpfinalinventario.entidades;
 
+import java.util.Objects;
+
 /**
  *
  * @author julie
@@ -91,6 +93,24 @@ public class Producto {
     }
 
  
-      
+      @Override
+    public boolean equals(Object obj) {
+       if (this == obj)return true;
+       if (obj == null)return false;
+       if (getClass() != obj.getClass())return false;
+       Producto other = (Producto) obj;
+       boolean retorno= stock == other.stock  && 
+                        Objects.equals(nombre, other.nombre) &&
+                        Objects.equals(descripcion, other.descripcion)&&
+                        precioActual==other.precioActual &&
+                        estado==other.estado;
+
+      return retorno;
+}
+ 
+@Override
+public int hashCode() {
+return Objects.hash(nombre,descripcion,precioActual,stock,estado);
+}
             
 }

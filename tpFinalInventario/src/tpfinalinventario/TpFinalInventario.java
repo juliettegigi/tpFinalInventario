@@ -5,17 +5,7 @@
  */
 package tpfinalinventario;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import tpfinalinventario.accesoADatos.ClienteData;
-import tpfinalinventario.accesoADatos.ProductoData;
-import tpfinalinventario.accesoADatos.ProveedorData;
-import tpfinalinventario.entidades.Cliente;
-import tpfinalinventario.entidades.Producto;
-import tpfinalinventario.entidades.Proveedor;
+
 
 /**
  *
@@ -28,10 +18,7 @@ public class TpFinalInventario {
      */
     public static void main(String[] args) {
         
-        
-        
-        
-        
+               
         
 }
     
