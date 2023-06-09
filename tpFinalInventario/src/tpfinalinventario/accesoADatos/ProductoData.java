@@ -59,18 +59,32 @@ public class ProductoData {
         }
     }
 
-    public void eliminar(int id) {
+    public void eliminadoFisico(int id) {
 
         try {
-            PreparedStatement p = c.prepareStatement("DELETE FROM compra WHERE idCompra=?;");
+            PreparedStatement p = c.prepareStatement("DELETE FROM producto WHERE idProducto=?;");
             p.setInt(1, id);
             p.execute();
             p.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "");
+            JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
         }
     }
 
+    
+        public void eliminadoLogico(int id) {
+
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=?;");
+            p.setInt(1, id);
+            p.execute();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
+        }
+    }
+    
+    
     public List<Producto> buscarCampoValor(String campo, String valor) {
         ArrayList<Producto> lista = new ArrayList();
         try {
@@ -100,7 +114,7 @@ public class ProductoData {
     public Producto buscarPorId(int id) {
         Producto producto = null;
         try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE id=?;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE idProducto=? AND  estado=1;");
             p.setInt(1, id);
 
             ResultSet r = p.executeQuery();
@@ -123,6 +137,34 @@ public class ProductoData {
         return producto;
     }
 
+    
+    public boolean existe(Producto producto){
+            try {
+            PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and descripcion=? and precioActual=? and stock=? and estado=?;");
+            p.setString(1,producto.getNombre() );
+            p.setString(2,producto.getDescripcion());
+            p.setDouble(3,producto.getPrecioActual() );
+            p.setInt(4, producto.getStock());
+            p.setBoolean(5, producto.isEstado());
+
+            ResultSet r = p.executeQuery();
+            
+            if (r.next()) {
+                p.close();
+                r.close();
+                return true;
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en existe producto, " + ex.getMessage());
+        }
+            
+            return false;
+    }
+    
+    
     public void update(Producto producto) {
 
         try {
