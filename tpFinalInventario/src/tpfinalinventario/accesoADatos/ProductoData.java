@@ -79,6 +79,7 @@ public class ProductoData {
             p.setInt(1, id);
             p.execute();
             p.close();
+            JOptionPane.showMessageDialog(null, "Producto eliminado con éxito ");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
         }
@@ -168,7 +169,7 @@ public class ProductoData {
     public void update(Producto producto) {
 
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE FROM producto set nombre=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE id=?");
+            PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE idProducto=?");
             p.setString(1, producto.getNombre());
             p.setString(2, producto.getDescripcion());
             p.setDouble(3, producto.getPrecioActual());
@@ -177,6 +178,8 @@ public class ProductoData {
             p.setInt(6, producto.getIdProducto());
             p.executeUpdate();
             p.close();
+            
+            JOptionPane.showMessageDialog(null, "Producto actualizado" );
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
         }

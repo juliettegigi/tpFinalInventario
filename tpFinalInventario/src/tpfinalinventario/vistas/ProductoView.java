@@ -19,6 +19,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
      */
     public ProductoView() {
         initComponents();
+         btnAgregar.setEnabled(false);
     }
 
     /**
@@ -46,6 +47,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setText("NOMBRE: ");
 
@@ -82,6 +84,13 @@ public class ProductoView extends javax.swing.JInternalFrame {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Actualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -127,7 +136,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
                         .addGap(87, 87, 87)
                         .addComponent(btnAgregar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)))
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -165,7 +176,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
-                    .addComponent(btnEliminar))
+                    .addComponent(btnEliminar)
+                    .addComponent(jButton2))
                 .addGap(38, 38, 38))
         );
 
@@ -192,15 +204,15 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnAgregar.setEnabled(false);
             
         }catch( Exception e){
-            JOptionPane.showMessageDialog(this,e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error con el dato ingresado, "+e.getMessage());
         }
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
-        ProductoData pd=new ProductoData();
+    
+    private Producto cargarProducto(){
+                
         Producto p=new Producto();
         
         try{
@@ -212,8 +224,18 @@ public class ProductoView extends javax.swing.JInternalFrame {
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
-            return;
+            return null;
         }
+        return p;
+    }
+    
+    
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        
+        ProductoData pd=new ProductoData();
+        Producto p=cargarProducto();
+        
+        if(p==null)return;
         
         if(!pd.existe(p)){
              pd.guardar(p);
@@ -236,11 +258,31 @@ public class ProductoView extends javax.swing.JInternalFrame {
         pd.eliminadoLogico(id);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        
+          ProductoData pd=new ProductoData();
+        Producto p=cargarProducto();
+        
+        if(p==null)return;
+        
+        try{
+           p.setIdProducto(Integer.parseInt(jtf_id.getText()));    
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, "Error con el id ingresado, "+e.getMessage());
+             return;
+        }
+        
+        
+        pd.update(p); 
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
