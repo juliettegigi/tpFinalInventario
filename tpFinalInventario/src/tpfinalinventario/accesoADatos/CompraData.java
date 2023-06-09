@@ -30,9 +30,9 @@ public class CompraData {
 
     public void guardar(Compra compra) {
         try {
-            PreparedStatement p = c.prepareStatement("insert into compra (idproveedor,fecha) values(?,?)", Statement.RETURN_GENERATED_KEYS);
-            p.setInt(1, compra.getProveedor().getIdProveedor());
-            p.setDate(2, Date.valueOf(compra.getFecha()));
+            PreparedStatement p = c.prepareStatement("INSERT INTO compra (fecha,idproveedor) values(?,?)", Statement.RETURN_GENERATED_KEYS);
+            p.setDate(1, Date.valueOf(compra.getFecha()));
+            p.setInt(2, compra.getProveedor().getIdProveedor());
             p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
             if (r.next()) {
@@ -42,6 +42,18 @@ public class CompraData {
             r.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en guardar CompraData, " + ex.getMessage());
+        }
+    }
+
+    public void borrarLog(Compra compra) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM compra SET estado=? WHERE idCompra=?");
+            p.setBoolean(1, compra.isEstado());
+            p.setInt(2, compra.getIdCompra());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico Compra, " + ex.getMessage());
         }
     }
 
@@ -67,8 +79,8 @@ public class CompraData {
             if (r.next()) {
                 compra = new Compra();
                 compra.setIdCompra(id);
-                compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
                 compra.setFecha(r.getDate("fecha").toLocalDate());
+                compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
             }
 
             p.close();
@@ -82,7 +94,7 @@ public class CompraData {
     public void update(Compra compra) {
 
         try {
-            PreparedStatement p = c.prepareStatement("update from compra set idProveedor=? WHERE id=?");
+            PreparedStatement p = c.prepareStatement("UPDATE FROM compra SET idProveedor=? WHERE id=?");
             p.setInt(1, compra.getProveedor().getIdProveedor());
             p.setInt(2, compra.getIdCompra());
             p.executeUpdate();
@@ -98,13 +110,13 @@ public class CompraData {
         ArrayList<Compra> lista = new ArrayList();
         try {
 
-            PreparedStatement p = c.prepareStatement("select * from compra;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM compra;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Compra compra = new Compra();
                 compra.setIdCompra(r.getInt("idCompra"));
-                compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
                 compra.setFecha(r.getDate("fecha").toLocalDate());
+                compra.setProveedor(proveedorData.buscar(r.getInt("idProveedor")));
             }
             p.close();
             r.close();

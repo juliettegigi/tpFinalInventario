@@ -10,28 +10,32 @@ package tpfinalinventario.entidades;
  * @author julie
  */
 public class DetalleVenta {
+
     private int idDetalleVenta;
     private int cantidad;
     private double precioVenta;
     private Venta venta;
     private Producto producto;
+    private boolean estado;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int detalleVenta, int cantidad, double precioVenta, Venta venta, Producto producto) {
-        this.idDetalleVenta = detalleVenta;
+    public DetalleVenta(int idDetalleVenta, int cantidad, double precioVenta, Venta venta, Producto producto, boolean estado) {
+        this.idDetalleVenta = idDetalleVenta;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.venta = venta;
         this.producto = producto;
+        this.estado = estado;
     }
-    
-     public DetalleVenta(int cantidad, double precioVenta, Venta venta, Producto producto) {
+
+    public DetalleVenta(int cantidad, double precioVenta, Venta venta, Producto producto, boolean estado) {
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.venta = venta;
         this.producto = producto;
+        this.estado = estado;
     }
 
     public int getIdDetalleVenta() {
@@ -52,6 +56,14 @@ public class DetalleVenta {
 
     public Producto getProducto() {
         return producto;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public void setIdDetalleVenta(int idDetalleVenta) {
@@ -78,7 +90,5 @@ public class DetalleVenta {
     public String toString() {
         return "DetalleVenta{" + "idDetalleVenta=" + idDetalleVenta + ", cantidad=" + cantidad + ", precioVenta=" + precioVenta + ", venta=" + venta + ", producto=" + producto + '}';
     }
-    
-     
-    
+
 }

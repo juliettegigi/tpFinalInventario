@@ -57,6 +57,18 @@ public class ProveedorData {
            JOptionPane.showMessageDialog(null, "Error al update proovedor, "+ex.getMessage());
         }
     }
+    
+    public void borrarLog(Proveedor proveedor) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM proveedor SET estado=? WHERE idProveedor=?");
+            p.setBoolean(1, proveedor.isEstado());
+            p.setInt(2, proveedor.getIdProveedor());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico Proveedor, " + ex.getMessage());
+        }
+    }
 
     public void eliminar(int id) {
         

@@ -29,7 +29,7 @@ public class ProductoData {
 
     public void guardar(Producto producto) {
         try {
-            PreparedStatement p = c.prepareStatement("insert into producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             p.setString(1, producto.getNombre());
             p.setString(2, producto.getDescripcion());
             p.setDouble(3, producto.getPrecioActual());
@@ -44,6 +44,18 @@ public class ProductoData {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar producto, " + ex.getMessage());
+        }
+    }
+    
+    public void borrarLog(Producto producto) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM producto SET estado=? WHERE idProducto=?");
+            p.setBoolean(1, producto.isEstado());
+            p.setInt(2, producto.getIdProducto());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico Producto, " + ex.getMessage());
         }
     }
 
@@ -114,7 +126,7 @@ public class ProductoData {
     public void update(Producto producto) {
 
         try {
-            PreparedStatement p = c.prepareStatement("update from producto set nombre=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE id=?");
+            PreparedStatement p = c.prepareStatement("UPDATE FROM producto set nombre=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE id=?");
             p.setString(1, producto.getNombre());
             p.setString(2, producto.getDescripcion());
             p.setDouble(3, producto.getPrecioActual());
@@ -134,7 +146,7 @@ public class ProductoData {
         ArrayList<Producto> lista = new ArrayList();
 
         try {
-            PreparedStatement p = c.prepareStatement("select * from producto;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Producto producto = new Producto();

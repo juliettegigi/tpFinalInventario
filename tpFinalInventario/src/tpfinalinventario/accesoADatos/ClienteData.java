@@ -29,7 +29,7 @@ public class ClienteData {
 
     public void guardar(Cliente cliente) {
 
-        String sql = "INSERT into cliente(dni, apellido,nombre,domicilio,telefono) values(?,?,?,?,?);";
+        String sql = "INSERT INTO cliente(dni, apellido,nombre,domicilio,telefono) values(?,?,?,?,?);";
         try {
             PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             p.setInt(1, cliente.getDni());
@@ -48,6 +48,18 @@ public class ClienteData {
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "El cliente no fue añadido" + ex.getMessage());
+        }
+    }
+    
+     public void borrarLog(Cliente cliente) {
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE FROM cliente SET estado=? WHERE idCliente=?");
+            p.setBoolean(1, cliente.isEstado());
+            p.setInt(2, cliente.getIdCliente());
+            p.executeUpdate();
+            p.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en borrado lógico Cliente, " + ex.getMessage());
         }
     }
 
@@ -93,7 +105,7 @@ public class ClienteData {
     public void update(Cliente cliente) {
 
         try {
-            PreparedStatement p = c.prepareStatement("update from cliente set nombre=?,dni=?,apellido=?, domicilio=?, telefono=? WHERE id=?");
+            PreparedStatement p = c.prepareStatement("UPDATE FROM cliente SET nombre=?,dni=?,apellido=?, domicilio=?, telefono=? WHERE id=?");
             p.setString(1, cliente.getNombre());
             p.setInt(2, cliente.getDni());
             p.setString(3, cliente.getApellido());
@@ -111,7 +123,7 @@ public class ClienteData {
     public List<Cliente> lista() {
         ArrayList<Cliente> lista = new ArrayList();
         try {
-            PreparedStatement p = c.prepareStatement("select * from cliente;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM cliente;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Cliente cliente = new Cliente();

@@ -10,27 +10,29 @@ package tpfinalinventario.entidades;
  * @author julie
  */
 public class Proveedor {
+
     private int idProveedor;
     private String razonSocial;
     private String domicilio;
     private String telefono;
+    private boolean estado;
 
     public Proveedor() {
     }
 
-    public Proveedor(int idProveedor, String razonSocial, String domicilio, String telefono) {
+    public Proveedor(int idProveedor, String razonSocial, String domicilio, String telefono, boolean estado) {
         this.idProveedor = idProveedor;
         this.razonSocial = razonSocial;
         this.domicilio = domicilio;
         this.telefono = telefono;
-        
+        this.estado = estado;
     }
-    
-     public Proveedor(String razonSocial, String domicilio, String telefono) {
+
+    public Proveedor(String razonSocial, String domicilio, String telefono, boolean estado) {
         this.razonSocial = razonSocial;
         this.domicilio = domicilio;
         this.telefono = telefono;
-        
+        this.estado = estado;
     }
 
     public int getIdProveedor() {
@@ -47,6 +49,14 @@ public class Proveedor {
 
     public String getTelefono() {
         return telefono;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public void setIdProveedor(int idProveedor) {
@@ -69,7 +79,5 @@ public class Proveedor {
     public String toString() {
         return "Proveedor{" + "idProveedor=" + idProveedor + ", razonSocial=" + razonSocial + ", domicilio=" + domicilio + ", telefono=" + telefono + '}';
     }
-     
-     
-    
+
 }

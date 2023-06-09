@@ -30,7 +30,6 @@ public class Producto {
     }
 
      public Producto(String nombre, String descripcion, double precioActual, int stock, boolean estado) {
-        this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
@@ -41,8 +40,6 @@ public class Producto {
     public String getNombre() {
         return nombre;
     }
-
- 
 
     public int getIdProducto() {
         return idProducto;
@@ -68,7 +65,6 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
