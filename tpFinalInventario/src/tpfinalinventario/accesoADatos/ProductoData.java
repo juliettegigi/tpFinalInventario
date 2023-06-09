@@ -100,7 +100,7 @@ public class ProductoData {
     public Producto buscarPorId(int id) {
         Producto producto = null;
         try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE id=?;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE idProducto=?;");
             p.setInt(1, id);
 
             ResultSet r = p.executeQuery();
