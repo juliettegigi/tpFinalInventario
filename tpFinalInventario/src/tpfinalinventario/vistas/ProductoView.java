@@ -5,6 +5,7 @@
  */
 package tpfinalinventario.vistas;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.entidades.Producto;
@@ -19,7 +20,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
      */
     public ProductoView() {
         initComponents();
-         btnAgregar.setEnabled(false);
+        limpiar();
+       
     }
 
     /**
@@ -47,7 +49,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jLabel1.setText("NOMBRE: ");
 
@@ -56,6 +59,12 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jLabel3.setText("PRECIO ACTUAL: ");
 
         jLabel4.setText("STOCK: ");
+
+        jtf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nombreKeyReleased(evt);
+            }
+        });
 
         jta_descripcion.setColumns(20);
         jta_descripcion.setRows(5);
@@ -87,10 +96,17 @@ public class ProductoView extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Actualizar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Limpiar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -138,7 +154,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(btnActualizar)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton3)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -177,7 +195,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnEliminar)
-                    .addComponent(jButton2))
+                    .addComponent(btnActualizar)
+                    .addComponent(jButton3))
                 .addGap(38, 38, 38))
         );
 
@@ -185,37 +204,56 @@ public class ProductoView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ProductoData pd=new ProductoData();
+        
         int id=0;
         try{
             id=Integer.parseInt(jtf_id.getText());
-            Producto p=pd.buscarPorId(id);
-            
-            if(p==null){
-                JOptionPane.showMessageDialog(this,"No existe producto con id="+id);
-                return;
-            }
-                
-            
-                jtf_nombre.setText(p.getNombre());
-                jta_descripcion.setText(p.getDescripcion());
-                jtf_precioActual.setText(p.getPrecioActual()+"");
-                jtf_stock.setText(p.getStock()+"");
-                btnAgregar.setEnabled(false);
+        
             
         }catch( Exception e){
-            JOptionPane.showMessageDialog(this, "Error con el dato ingresado, "+e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error con el id ingresado, "+e.getMessage());
+            return;
         }
         
-        
+        ProductoData pd=new ProductoData();
+        Producto producto=pd.buscarPorId(id);
+        if(producto==null){
+            JOptionPane.showMessageDialog(this, "El producto con ID: " + id + " no existe en nuestro registro");
+            btnEliminar.setEnabled(false);
+            btnActualizar.setEnabled(false);
+            return;
+        }
+           
+        jtf_nombre.setText(producto.getNombre());
+        jta_descripcion.setText(producto.getDescripcion());
+        jtf_precioActual.setText(String.valueOf(producto.getPrecioActual()));
+        jtf_stock.setText(String.valueOf(producto.getStock()));
+        btnAgregar.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
     private Producto cargarProducto(){
-                
+        String mensajeError="";
+        boolean error=false;        
         Producto p=new Producto();
         
         try{
+            
+            if(jtf_nombre.getText().trim().equals("")){
+                 mensajeError+="Campo nombre, obligatorio. \n";
+                 error=true;            
+            }
+            if(jtf_precioActual.getText().trim().equals("")){
+                mensajeError+="El campo precio actual es obligatorio.\n";
+                error=true;
+            }
+            if(jtf_stock.getText().trim().equals("")){
+                mensajeError+="El campo stock es obligatorio. \n";
+                error=true;
+            }
+            if(error)
+                throw new Exception(mensajeError);
+            
             p.setNombre(jtf_nombre.getText());
             p.setDescripcion(jta_descripcion.getText());
             p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
@@ -223,7 +261,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
             p.setStock(Integer.parseInt(jtf_stock.getText()));
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this,  "Error con el dato ingresado.\n "+e.getMessage());
             return null;
         }
         return p;
@@ -232,17 +270,12 @@ public class ProductoView extends javax.swing.JInternalFrame {
     
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         
-        ProductoData pd=new ProductoData();
-        Producto p=cargarProducto();
-        
-        if(p==null)return;
-        
-        if(!pd.existe(p)){
-             pd.guardar(p);
-             jtf_id.setText(p.getIdProducto()+"");
-        }
-            
-        else  JOptionPane.showMessageDialog(this,"El producto ya existe en nuesta base de datos");
+         if (!validar())
+            return;
+         ProductoData productoData=new ProductoData();
+         Producto p=cargarDatos();
+         productoData.guardar(p);
+         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -252,37 +285,109 @@ public class ProductoView extends javax.swing.JInternalFrame {
         id=Integer.parseInt(jtf_id.getText());
         
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Error con el dato ingresado, "+e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error con el id ingresado, "+e.getMessage());
             return;   
         }
         pd.eliminadoLogico(id);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        
-          ProductoData pd=new ProductoData();
-        Producto p=cargarProducto();
-        
-        if(p==null)return;
-        
+        if (!validar())
+            return;
+        int id=0;
         try{
-           p.setIdProducto(Integer.parseInt(jtf_id.getText()));    
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this, "Error con el id ingresado, "+e.getMessage());
-             return;
+            id=Integer.parseInt(jtf_id.getText());
         }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un número en el campo id.\n"+e.getMessage());
+            return;
+        }
+        ProductoData productoData=new ProductoData();
+        if(!validar())
+            return;
+        Producto producto=cargarProducto();
+        producto.setIdProducto(id);
+        productoData.update(producto);
         
-        
-        pd.update(p); 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+  limpiar();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jtf_nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nombreKeyReleased
+        btnAgregar.setEnabled(true);
+    }//GEN-LAST:event_jtf_nombreKeyReleased
+
+    
+    
+    private boolean validar( ){
+         ArrayList<String> errores=new ArrayList();
+         
+         if(jtf_nombre.getText().trim().length()==0)
+            errores.add("El campo nombre es obligatorio");
+       
+        try{
+          Integer.parseInt(jtf_stock.getText());    
+        }
+        catch(Exception e){
+            errores.add("Debe ingresar un número entero en stock.\n");
+        }
+         try{
+            Double.parseDouble(jtf_precioActual.getText());    
+        }
+        catch(Exception e){
+            errores.add("Debe ingresar un número en precio actual.\n");
+        }
+         
+         if(!errores.isEmpty()){
+                 String mensaje="";
+            for(int i=0; i<errores.size();i++){
+                if(i==errores.size()-1)
+                    mensaje+=errores.get(i)+", ";
+                else  mensaje+=errores.get(i)+".";
+            }
+          JOptionPane.showMessageDialog(this,mensaje);
+          return false;
+         }
+             
+      
+        
+        return true;
+    }
+    
+    
+    private Producto cargarDatos(){
+        Producto p=new Producto();
+        
+        p.setNombre(jtf_nombre.getText());
+        p.setDescripcion(jta_descripcion.getText());
+        p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
+        p.setStock(Integer.parseInt(jtf_stock.getText()));
+        p.setEstado(true);
+        return p;
+    }
+    
+    
+    
+    private void limpiar(){
+       btnAgregar.setEnabled(false);
+       btnEliminar.setEnabled(false);
+       btnActualizar.setEnabled(false);
+       jtf_nombre.setText("");
+       jtf_id.setText("");
+       jtf_precioActual.setText("");
+       jtf_stock.setText("");
+       jta_descripcion.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

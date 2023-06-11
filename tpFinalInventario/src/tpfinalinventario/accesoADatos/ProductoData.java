@@ -74,11 +74,19 @@ public class ProductoData {
     
         public void eliminadoLogico(int id) {
 
+           Producto producto=buscarPorId(id);
+           if(producto==null){
+               
+               JOptionPane.showMessageDialog(null, "El Producto con id="+id+" no existe");
+               return;
+           }
+            
         try {
             PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=?;");
             p.setInt(1, id);
-            p.execute();
+            p.executeUpdate();
             p.close();
+            
             JOptionPane.showMessageDialog(null, "Producto eliminado con éxito ");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
