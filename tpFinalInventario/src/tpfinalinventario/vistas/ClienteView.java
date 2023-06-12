@@ -15,11 +15,13 @@ import tpfinalinventario.entidades.Cliente;
  */
 public class ClienteView extends javax.swing.JInternalFrame{
 
-    /**
-     * Creates new form CleinteDataView
-     */
+    private ClienteData clienteData=new ClienteData();
+    
     public ClienteView() {
         initComponents();
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
     }
 
     /**
@@ -49,8 +51,9 @@ public class ClienteView extends javax.swing.JInternalFrame{
         btnAgregar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jtf_dni = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Cliente");
 
@@ -69,6 +72,12 @@ public class ClienteView extends javax.swing.JInternalFrame{
         jLabel5.setText("Domicilio");
 
         jLabel6.setText("Telefono");
+
+        jtf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nombreFocusGained(evt);
+            }
+        });
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +109,13 @@ public class ClienteView extends javax.swing.JInternalFrame{
 
         jLabel7.setText("DNI:");
 
+        jButton2.setText("Limpiar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,12 +139,6 @@ public class ClienteView extends javax.swing.JInternalFrame{
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnAgregar)
-                                        .addGap(42, 42, 42)
-                                        .addComponent(btnEliminar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnActualizar))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel3)
@@ -139,17 +149,26 @@ public class ClienteView extends javax.swing.JInternalFrame{
                                             .addGap(30, 30, 30)
                                             .addComponent(jtf_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(122, 122, 122)
-                                        .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel7))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jtf_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jtf_domicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(jtf_domicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btnAgregar)
+                                            .addGap(42, 42, 42)
+                                            .addComponent(btnEliminar)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnActualizar)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton2))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addGap(122, 122, 122)
+                                            .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(0, 154, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -190,7 +209,8 @@ public class ClienteView extends javax.swing.JInternalFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnActualizar)
-                    .addComponent(btnAgregar))
+                    .addComponent(btnAgregar)
+                    .addComponent(jButton2))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
 
@@ -206,22 +226,22 @@ public class ClienteView extends javax.swing.JInternalFrame{
             return;
         }
              
-             ClienteData clienteData=new ClienteData();
+            
              Cliente c=clienteData.buscar(id);
              if(c==null){
                   JOptionPane.showMessageDialog(this, "El cliente con ID: " + jtf_id.getText() + " no existe en nuestro registro");
-            btnEliminar.setEnabled(false);
-            btnActualizar.setEnabled(false);
-            return;
+                  return;
                  
              }
-             System.out.println("q me devuelve. "+c);
+             
              jtf_dni.setText(c.getDni()+"");
              jtf_apellido.setText(c.getApellido());
              jtf_nombre.setText(c.getNombre());
              jtf_domicilio.setText(c.getDomicilio());
              jtf_telefono.setText(c.getTelefono());
-             
+            
+            btnEliminar.setEnabled(true);
+            btnActualizar.setEnabled(true); 
             btnAgregar.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -232,8 +252,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
           Cliente c=new Cliente();
           if (!validar(c))
-            return;
-          ClienteData clienteData=new ClienteData();          
+            return;          
           clienteData.guardar(c);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -245,16 +264,13 @@ public class ClienteView extends javax.swing.JInternalFrame{
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "El id debe ser un número");
             return;
-        }
-        ClienteData clienteData=new ClienteData();  
+        } 
         clienteData.eliminarLogico(id);
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        Cliente c=new Cliente();  
-        if (!validar(c))
-            return;
+        
         int id=0;
         try{
             id=Integer.parseInt(jtf_id.getText());
@@ -264,10 +280,32 @@ public class ClienteView extends javax.swing.JInternalFrame{
             return;
         }
         
-        ClienteData clienteData=new ClienteData(); 
+        Cliente c=new Cliente();  
+        if (!validar(c))
+            return;
+        
+       
         c.setIdCliente(id);
-        clienteData.update(c);
+        if(clienteData.update(c))
+            JOptionPane.showMessageDialog(this,"Cliente actualizado" );
+        else  JOptionPane.showMessageDialog(this,"Cliente no actualizado, id no existe o error " );
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jtf_apellido.setText("");
+        jtf_dni.setText("");
+        jtf_domicilio.setText("");
+        jtf_id.setText("");
+        jtf_nombre.setText("");
+        jtf_telefono.setText("");
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jtf_nombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nombreFocusGained
+           btnAgregar.setEnabled(true);
+    }//GEN-LAST:event_jtf_nombreFocusGained
 
     /**
      * @param args the command line arguments
@@ -332,46 +370,43 @@ public class ClienteView extends javax.swing.JInternalFrame{
          c.setDomicilio(domicilio);
          c.setTelefono(telefono);
          if(nombre.trim().length()==0)
-            errores.add("El campo nombre es obligatorio");
+            errores.add("Campo nombre es obligatorio");
           else{
            if(!nombre.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*"))
-              errores.add("ha ingresado un carácter no válido en el campo nombre");
+              errores.add("Campo nombre: carácter no válido.\n");
         }
          
          if(apellido.trim().length()==0)
-            errores.add("El campo nombre es obligatorio");
+            errores.add("Campo apellido es obligatorio");
         else{
            if(!apellido.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*"))
-              errores.add("ha ingresado un carácter no válido en el campo apellido");
+              errores.add("Campo apellido: carácter no válido.\n");
         }
          
          // valido domicilio
          
             if(domicilio.trim().length()==0)
-            errores.add("El campo domicilio es obligatorio");
+            errores.add("Campo domicilio es obligatorio");
         else{
             
              if(!domicilio.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü0-9]+)*")){
-            errores.add("Ha ingresado un carácter no válido en domicilio.\n");
+            errores.add("Campo domicilio: carácter no válido.\n");
              }
            
         }
          
             
             // valido telefono
-            if(telefono.trim().length()!=0){
-                if(!telefono.matches("[0-9]+"))
-                        errores.add("ha ingresado un carácter no válido en el campo telefono");
+            if(telefono.trim().length()!=0 && !telefono.matches("[0-9]{10}")){
+               
+                        errores.add("campo telefono: carácter o longitud no válido.\n");
             }
                 
             //SI HAY ERRORES , HAGO EL MSJ DE ERROR
          if(!errores.isEmpty()){
             String mensaje="";
-            for(int i=0; i<errores.size();i++){
-                if(i==errores.size()-1)
-                    mensaje+=errores.get(i)+", ";
-                else  mensaje+=errores.get(i)+".";
-            }
+            for(String error : errores)
+                mensaje+=error+"\n";
           JOptionPane.showMessageDialog(this,mensaje);
           return false;
         }
@@ -388,6 +423,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

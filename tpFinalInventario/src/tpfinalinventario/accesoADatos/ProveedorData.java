@@ -25,55 +25,66 @@ public class ProveedorData {
         c=Conexion.getConexion();
     }
 
-    public void guardar(Proveedor proveedor){
+    public String guardar(Proveedor proveedor){
        
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO proveedor(razonSocial,domicilio,telefono)VALUES(?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO proveedor(razonSocial,domicilio,telefono,estado)VALUES(?,?,?,true)",Statement.RETURN_GENERATED_KEYS);
             p.setString(1, proveedor.getRazonSocial());
             p.setString(2, proveedor.getDomicilio());
             p.setString(3, proveedor.getTelefono());
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             ResultSet r=p.getGeneratedKeys();
             if(r.next()){
                 proveedor.setIdProveedor(r.getInt("idProveedor"));
             }
             p.close();
             r.close();
+            if(filasAfectadas>0)
+                return "Proveedor guardado.";
+            else return "Proveedor no guardado";            
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error en guardar proveedor, "+ex.getMessage());
+           return "Error en guardar proveedor, "+ex.getMessage();
         }
+        
     }
     
-    public void update(Proveedor proveedor){
+    public String update(Proveedor proveedor){
         try {
-            PreparedStatement p=c.prepareStatement("UPDATE FROM proveedor SET razonsocial=?,domicilio=?,telefono=? WHERE idProveedor=?");
+            PreparedStatement p=c.prepareStatement("UPDATE proveedor SET razonsocial=?,domicilio=?,telefono=? WHERE idProveedor=? and estado=true;");
             p.setString(1, proveedor.getRazonSocial());
             p.setString(2, proveedor.getDomicilio());
             p.setString(3, proveedor.getTelefono());
             p.setInt(4, proveedor.getIdProveedor());
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             p.close();
+            if (filasAfectadas>0)
+                return "Proveedor actualizado";
+            else return "No se encuentra un proveedor con id="+proveedor.getIdProveedor();
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error al update proovedor, "+ex.getMessage());
+           return "Error al update proovedor, "+ex.getMessage();
+           
         }
     }
     
-    public void borrarLog(Proveedor proveedor) {
+    public String eliminarLogico(int id) {
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE FROM proveedor SET estado=? WHERE idProveedor=?");
-            p.setBoolean(1, proveedor.isEstado());
-            p.setInt(2, proveedor.getIdProveedor());
-            p.executeUpdate();
+            PreparedStatement p = c.prepareStatement("UPDATE proveedor SET estado=false WHERE idProveedor=? and estado=true;");
+            p.setInt(1, id);
+            int filasAfectadas=p.executeUpdate();
             p.close();
+            if(filasAfectadas>0)
+               return "Proveedor eliminado.\n";
+            else return "Proveedor no eliminado,no se encuentra proveedor con id="+id;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en borrado lógico Proveedor, " + ex.getMessage());
+           
+            return "Error en Proveedor borradoLogico";
         }
     }
 
     public void eliminar(int id) {
         
         try {
-            PreparedStatement p = c.prepareStatement("DELETE FROM proveedor WHERE idProveedor=?");
+            PreparedStatement p = c.prepareStatement("DELETE FROM proveedor WHERE idProveedor=?;");
             p.setInt(1, id);
             p.execute();
             p.close();
@@ -87,13 +98,13 @@ public class ProveedorData {
         Proveedor proveedor = null;
         
         try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor WHERE idProveedor=?");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor WHERE idProveedor=? and estado=true;");
             p.setInt(1, id);
             ResultSet r = p.executeQuery();
            
             if (r.next()) {
                 proveedor = new Proveedor();
-                proveedor.setRazonSocial(r.getString("razonSocila"));
+                proveedor.setRazonSocial(r.getString("razonSocial"));
                 proveedor.setDomicilio(r.getString("domicilio"));
                 proveedor.setTelefono(r.getString("telefono"));
                 proveedor.setIdProveedor(id);

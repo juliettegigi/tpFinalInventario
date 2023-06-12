@@ -44,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
@@ -60,16 +61,16 @@ public class Principal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGap(0, 663, Short.MAX_VALUE)
         );
 
         jMenu3.setText("Cliente");
 
-        jMenuItem4.setText("Agregar");
+        jMenuItem4.setText("Formulario de cliente");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -95,7 +96,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu6.setText("Producto");
 
-        jMenuItem3.setText("agregar/buscar");
+        jMenuItem3.setText("Formulario de producto");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -106,6 +107,15 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Proveedor");
+
+        jMenuItem5.setText("Formulario de proveedor");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem5);
+
         jMenuBar1.add(jMenu7);
 
         jMenu8.setText("Salir");
@@ -128,12 +138,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
-        escritorio.repaint();//dibuja todo de nuevo
-        ProductoView productoView = new ProductoView();
-        productoView.setVisible(true);
-        escritorio.add(productoView);
-        escritorio.moveToFront(productoView);
+       
+        cargarInternal(new ProductoView());      
         
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -142,6 +148,10 @@ public class Principal extends javax.swing.JFrame {
         
         cargarInternal(new ClienteView());
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        cargarInternal(new ProveedorView());
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     
     private void cargarInternal(JInternalFrame i){
@@ -206,5 +216,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }

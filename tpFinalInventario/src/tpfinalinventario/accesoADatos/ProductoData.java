@@ -27,7 +27,7 @@ public class ProductoData {
         c = Conexion.getConexion();
     }
 
-    public void guardar(Producto producto) {
+    public boolean guardar(Producto producto) {
         try {
             PreparedStatement p = c.prepareStatement("INSERT INTO producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             p.setString(1, producto.getNombre());
@@ -35,16 +35,17 @@ public class ProductoData {
             p.setDouble(3, producto.getPrecioActual());
             p.setInt(4, producto.getStock());
             p.setBoolean(5, producto.isEstado());
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
-            if (r.next()) {
-                producto.setIdProducto(r.getInt("idProducto"));
-                JOptionPane.showMessageDialog(null, "Producto añadido con éxito");
-            }
+            if (r.next()) 
+                producto.setIdProducto(r.getInt("idProducto"));              
 
+            if(filasAfectadas>0)
+                return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar producto, " + ex.getMessage());
         }
+        return false;
     }
     
     public void borrarLog(Producto producto) {

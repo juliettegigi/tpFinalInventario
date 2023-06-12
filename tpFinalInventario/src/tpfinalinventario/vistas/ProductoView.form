@@ -152,7 +152,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jtf_nombre">
       <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_nombreKeyReleased"/>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_nombreFocusGained"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jtf_precioActual">

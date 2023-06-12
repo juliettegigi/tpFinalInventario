@@ -5,15 +5,25 @@
 
 package tpfinalinventario.vistas;
 
+import java.util.ArrayList;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import tpfinalinventario.accesoADatos.ProveedorData;
+import tpfinalinventario.entidades.Proveedor;
+
 /**
  *
  * @author Paula Priotti
  */
-public class ProveedorView extends javax.swing.JFrame {
+public class ProveedorView extends javax.swing.JInternalFrame {
 
-    /** Creates new form ProveedorView */
+    private ProveedorData proveedorData=new ProveedorData();
+    
     public ProveedorView() {
         initComponents();
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -31,103 +41,252 @@ public class ProveedorView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jtf_id = new javax.swing.JTextField();
+        jtf_razonSocial = new javax.swing.JTextField();
+        jtf_domicilio = new javax.swing.JTextField();
+        jtf_telefono = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
         jTextField5.setText("jTextField5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
         jLabel1.setText("Proveedor");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("ID");
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Razon social");
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setText("Domicilio");
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel5.setText("Telefono");
 
-        jLabel6.setText("Estado");
+        jtf_id.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
-        jTextField1.setText("jTextField1");
+        jtf_razonSocial.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jtf_razonSocial.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_razonSocialFocusGained(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        jtf_domicilio.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
-        jTextField3.setText("jTextField3");
+        jtf_telefono.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
-        jTextField4.setText("jTextField4");
-
+        jButton1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnAgregar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(jLabel1))
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtf_razonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(94, 94, 94)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                                .addComponent(jButton1)))))
-                .addGap(40, 40, 40))
+                                .addGap(3, 3, 3)
+                                .addComponent(btnAgregar)))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEliminar)
+                                .addGap(41, 41, 41)
+                                .addComponent(btnActualizar)
+                                .addGap(41, 41, 41)
+                                .addComponent(btnLimpiar))
+                            .addComponent(jtf_domicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(91, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jSeparator1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jtf_id)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(187, 187, 187))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(269, 269, 269))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                    .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel2))
+                .addGap(31, 31, 31)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_razonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_domicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(95, 95, 95)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnLimpiar))
+                .addGap(85, 85, 85))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         int id=0;
+             try{
+           id=Integer.parseInt(jtf_id.getText());    
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "El id debe ser un número");
+            return;
+        }
+             Proveedor proveedor=proveedorData.buscar(id);
+             if(proveedor==null){
+                 JOptionPane.showMessageDialog(this, "El proveedor con ID: " + jtf_id.getText() + " no existe en nuestro registro");
+                 return;
+             }
+             
+            jtf_razonSocial.setText(proveedor.getRazonSocial());
+            jtf_domicilio.setText(proveedor.getDomicilio());
+            jtf_telefono.setText(proveedor.getTelefono());
+            
+          
+            btnEliminar.setEnabled(true);
+            btnActualizar.setEnabled(true); 
+            btnAgregar.setEnabled(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        Proveedor proveedor=new Proveedor();
+        if (!validar(proveedor))
+            return; 
+       
+        JOptionPane.showMessageDialog(this,proveedorData.guardar(proveedor));
+        
+    
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         int id=0; 
+        try{
+           id=Integer.parseInt(jtf_id.getText());    
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "El id debe ser un número");
+            return;
+        } 
+       
+        JOptionPane.showMessageDialog(this, proveedorData.eliminarLogico(id));
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        
+        int id=0;
+        try{
+            id=Integer.parseInt(jtf_id.getText());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un número en el campo id.\n"+e.getMessage());
+            return;
+        }
+        
+        Proveedor p=new Proveedor();  
+        if (!validar(p))
+            return;
+        
+        p.setIdProveedor(id);
+        JOptionPane.showMessageDialog(this,proveedorData.update(p));
+        
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+         jtf_domicilio.setText("");
+         jtf_id.setText("");
+         jtf_razonSocial.setText("");
+         jtf_telefono.setText("");
+         btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void jtf_razonSocialFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_razonSocialFocusGained
+        btnAgregar.setEnabled(true);
+    }//GEN-LAST:event_jtf_razonSocialFocusGained
 
     /**
      * @param args the command line arguments
@@ -163,20 +322,67 @@ public class ProveedorView extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    
+    private boolean validar(Proveedor p){
+         ArrayList<String> errores=new ArrayList();
+         
+         String razonSocial=jtf_razonSocial.getText();
+         String domicilio=jtf_domicilio.getText();
+         String telefono=jtf_telefono.getText();
+         p.setDomicilio(domicilio);
+         p.setRazonSocial(razonSocial);
+         p.setTelefono(telefono);
+         
+          if(razonSocial.trim().length()==0)
+            errores.add("Campo razón social es obligatorio.");
+          else{
+              if(!razonSocial.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*"))
+                  errores.add("Campo razón social: caracteres no válidos.");
+          }
+          
+          if(domicilio.trim().length()==0)
+            errores.add("Campo domicilio es obligatorio.");
+          else{
+              if(!domicilio.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*"))
+                  errores.add("Campo domicilio: caracteres no válidos.");
+          }
+          
+          
+          if(telefono.trim().length()!=0 && !telefono.matches("[0-9]+")){
+            errores.add("Campo teléfono: incorrecto.");  
+          }
+         
+          if(!errores.isEmpty()){
+              String mensaje="";
+              for(String error:errores){
+                mensaje+=error+"\n";
+            }
+           JOptionPane.showMessageDialog(this,mensaje);
+           return false;
+        }
+          p.setEstado(true);
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jtf_domicilio;
+    private javax.swing.JTextField jtf_id;
+    private javax.swing.JTextField jtf_razonSocial;
+    private javax.swing.JTextField jtf_telefono;
     // End of variables declaration//GEN-END:variables
 
 }

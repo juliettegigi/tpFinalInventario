@@ -119,7 +119,7 @@ public class ClienteData {
         return cliente;
     }
 
-    public void update(Cliente cliente) {
+    public boolean update(Cliente cliente) {
 
         try {
             PreparedStatement p = c.prepareStatement("UPDATE  cliente SET nombre=?,dni=?,apellido=?, domicilio=?, telefono=? WHERE idCliente=? and estado=true");
@@ -129,11 +129,17 @@ public class ClienteData {
             p.setString(4, cliente.getDomicilio());
             p.setString(5, cliente.getTelefono());
             p.setInt(6, cliente.getIdCliente());
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             p.close();
+            if(filasAfectadas>0)
+                return true;
+            else return false;
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
+            return false;
         }
+      
 
     }
 

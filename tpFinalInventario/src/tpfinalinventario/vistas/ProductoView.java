@@ -20,7 +20,10 @@ public class ProductoView extends javax.swing.JInternalFrame {
      */
     public ProductoView() {
         initComponents();
-        limpiar();
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        
        
     }
 
@@ -60,9 +63,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
         jLabel4.setText("STOCK: ");
 
-        jtf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nombreKeyReleased(evt);
+        jtf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nombreFocusGained(evt);
             }
         });
 
@@ -229,6 +232,8 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jtf_precioActual.setText(String.valueOf(producto.getPrecioActual()));
         jtf_stock.setText(String.valueOf(producto.getStock()));
         btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(true);
+        btnActualizar.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
@@ -274,8 +279,10 @@ public class ProductoView extends javax.swing.JInternalFrame {
             return;
          ProductoData productoData=new ProductoData();
          Producto p=cargarDatos();
-         productoData.guardar(p);
          
+         if(productoData.guardar(p))
+              JOptionPane.showMessageDialog(this,  "Producto guardado.\n ");
+         else  JOptionPane.showMessageDialog(this,  "Producto no guardado, el producto ya existe o error.\n ");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -294,8 +301,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        if (!validar())
-            return;
         int id=0;
         try{
             id=Integer.parseInt(jtf_id.getText());
@@ -304,6 +309,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Debe ingresar un número en el campo id.\n"+e.getMessage());
             return;
         }
+        if (!validar())
+            return;
+        
         ProductoData productoData=new ProductoData();
      
         Producto producto=cargarProducto();
@@ -314,11 +322,12 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
   limpiar();
+  
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jtf_nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nombreKeyReleased
+    private void jtf_nombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nombreFocusGained
         btnAgregar.setEnabled(true);
-    }//GEN-LAST:event_jtf_nombreKeyReleased
+    }//GEN-LAST:event_jtf_nombreFocusGained
 
     
     
@@ -326,19 +335,19 @@ public class ProductoView extends javax.swing.JInternalFrame {
          ArrayList<String> errores=new ArrayList();
          
          if(jtf_nombre.getText().trim().length()==0)
-            errores.add("El campo nombre es obligatorio");
+            errores.add("Campo nombre es obligatorio.");
        
         try{
           Integer.parseInt(jtf_stock.getText());    
         }
         catch(Exception e){
-            errores.add("Debe ingresar un número entero en stock.\n");
+            errores.add("Campo stock: numérico.");
         }
          try{
             Double.parseDouble(jtf_precioActual.getText());    
         }
         catch(Exception e){
-            errores.add("Debe ingresar un número en precio actual.\n");
+            errores.add("Campo precio actual: numérico.");
         }
          
          if(!errores.isEmpty()){
