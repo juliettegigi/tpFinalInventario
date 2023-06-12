@@ -4,19 +4,39 @@
  */
 package tpfinalinventario.vistas;
 
+import java.util.ArrayList;
+import tpfinalinventario.accesoADatos.ClienteData;
+import tpfinalinventario.entidades.Cliente;
+
 /**
  *
  * @author Paula Priotti
  */
-public class DetalleVentaView extends javax.swing.JFrame {
+public class DetalleVentaView extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form DetalleVentaView
-     */
+    ClienteData clienteData=new ClienteData();
+    
     public DetalleVentaView() {
         initComponents();
+        initComboBox();
+        
     }
 
+    
+    
+    
+         private void initComboBox(){
+        ArrayList<Cliente> lista=(ArrayList<Cliente>) clienteData.lista();
+             System.out.println(lista);
+        if(!lista.isEmpty()){
+              for(Cliente item: lista)
+                  jcb_clientes.addItem(item);     
+        }
+       
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,17 +46,44 @@ public class DetalleVentaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jcb_clientes = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("VENDER");
+
+        jcb_clientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel2.setText("CLIENTE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(jLabel2)
+                        .addGap(72, 72, 72)
+                        .addComponent(jcb_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcb_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(453, Short.MAX_VALUE))
         );
 
         pack();
@@ -77,6 +124,18 @@ public class DetalleVentaView extends javax.swing.JFrame {
         });
     }
 
+    
+    
+    
+    
+    
+    
+
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<Cliente> jcb_clientes;
     // End of variables declaration//GEN-END:variables
 }

@@ -146,7 +146,7 @@ public class ClienteData {
     public List<Cliente> lista() {
         ArrayList<Cliente> lista = new ArrayList();
         try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM cliente;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM cliente where estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Cliente cliente = new Cliente();
@@ -156,6 +156,7 @@ public class ClienteData {
                 cliente.setNombre(r.getString("nombre"));
                 cliente.setDomicilio(r.getString("domicilio"));
                 cliente.setTelefono(r.getString("telefono"));
+                lista.add(cliente);
             }
             p.close();
             r.close();

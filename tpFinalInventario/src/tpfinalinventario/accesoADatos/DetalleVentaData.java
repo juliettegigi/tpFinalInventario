@@ -126,6 +126,7 @@ public class DetalleVentaData {
                 dv.setPrecioVenta(r.getDouble("precioVenta"));
                 dv.setVenta(ventaData.buscar(r.getInt("idVenta")));
                 dv.setProducto(productoData.buscarPorId(r.getInt("idProducto")));
+                lista.add(dv);
             }
             r.close();
             p.close();

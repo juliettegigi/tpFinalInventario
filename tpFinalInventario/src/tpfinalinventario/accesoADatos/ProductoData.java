@@ -200,7 +200,7 @@ public class ProductoData {
         ArrayList<Producto> lista = new ArrayList();
 
         try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM producto;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto where estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Producto producto = new Producto();
@@ -210,6 +210,7 @@ public class ProductoData {
                 producto.setPrecioActual(r.getDouble("precioActual"));
                 producto.setStock(r.getInt("stock"));
                 producto.setEstado(r.getBoolean("estado"));
+                lista.add(producto);
             }
 
         } catch (SQLException ex) {

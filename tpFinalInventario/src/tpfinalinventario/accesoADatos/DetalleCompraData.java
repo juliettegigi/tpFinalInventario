@@ -130,6 +130,7 @@ public class DetalleCompraData {
                 dc.setPrecioCosto(r.getDouble("precioCosto"));
                 dc.setCompra(compraData.buscar(r.getInt("idCompra")));
                 dc.setProducto(productoData.buscarCampoValor("idProducto", r.getString("idProducto")).get(0));
+                lista.add(dc);
             }
             r.close();
             p.close();

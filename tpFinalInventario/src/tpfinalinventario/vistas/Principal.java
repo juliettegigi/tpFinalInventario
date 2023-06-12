@@ -40,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu11 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -89,8 +89,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu5.setText("Venta");
 
-        jMenu11.setText("Detalle de venta");
-        jMenu5.add(jMenu11);
+        jMenuItem6.setText("Detalle venta ");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
 
         jMenuBar1.add(jMenu5);
 
@@ -153,6 +158,10 @@ public class Principal extends javax.swing.JFrame {
         cargarInternal(new ProveedorView());
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       cargarInternal(new DetalleVentaView());
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     
     private void cargarInternal(JInternalFrame i){
          escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
@@ -203,7 +212,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
-    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -217,5 +225,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }

@@ -124,7 +124,7 @@ public class ProveedorData {
         try {
        
             
-            PreparedStatement p = c.prepareStatement("select * from proveedor;");
+            PreparedStatement p = c.prepareStatement("select * from proveedor where estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Proveedor proveedor = new Proveedor();
@@ -132,6 +132,7 @@ public class ProveedorData {
                 proveedor.setRazonSocial(r.getString("razonSocial"));
                 proveedor.setDomicilio(r.getString("domicilio"));
                 proveedor.setTelefono(r.getString("telefono"));
+                lista.add(proveedor);
             }
             
             
