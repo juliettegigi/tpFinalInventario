@@ -29,7 +29,7 @@ public class ClienteData {
 
     public void guardar(Cliente cliente) {
 
-        String sql = "INSERT INTO cliente(dni, apellido,nombre,domicilio,telefono) values(?,?,?,?,?);";
+        String sql = "INSERT INTO cliente(dni, apellido,nombre,domicilio,telefono,estado) values(?,?,?,?,?,true);";
         try {
             PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             p.setInt(1, cliente.getDni());
@@ -37,6 +37,7 @@ public class ClienteData {
             p.setString(3, cliente.getNombre());
             p.setString(4, cliente.getDomicilio());
             p.setString(5, cliente.getTelefono());
+            
             p.executeUpdate();
             ResultSet rs = p.getGeneratedKeys();
             if (rs.next()) {
@@ -76,9 +77,25 @@ public class ClienteData {
         }
     }
 
+      public void eliminarLogico(int id) {
+
+        String sql = "UPDATE cliente set estado=false WHERE idCliente=? and estado=true ;";
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, id);
+            int filasAfectadas=p.executeUpdate();
+            p.close();
+            if(filasAfectadas>0)
+                JOptionPane.showMessageDialog(null,"Cliente eliminado");
+            else JOptionPane.showMessageDialog(null,"No existe cliente con id="+id);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar cliente, " + ex.getMessage());
+        }
+    }
+    
     public Cliente buscar(int id) {
         Cliente cliente = null;
-        String sql = "SELECT * FROM cliente WHERE idCliente=?;";
+        String sql = "SELECT * FROM cliente WHERE idCliente=? and estado=true;";
 
         try {
             PreparedStatement p = c.prepareStatement(sql);
@@ -90,8 +107,8 @@ public class ClienteData {
                 cliente.setDni(r.getInt("dni"));
                 cliente.setApellido(r.getString("apellido"));
                 cliente.setNombre(r.getString("nombre"));
-                cliente.setNombre(r.getString("domicilio"));
-                cliente.setNombre(r.getString("telefono"));
+                cliente.setDomicilio(r.getString("domicilio"));
+                cliente.setTelefono(r.getString("telefono"));
             }
             r.close();
             p.close();
@@ -105,7 +122,7 @@ public class ClienteData {
     public void update(Cliente cliente) {
 
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE FROM cliente SET nombre=?,dni=?,apellido=?, domicilio=?, telefono=? WHERE id=?");
+            PreparedStatement p = c.prepareStatement("UPDATE  cliente SET nombre=?,dni=?,apellido=?, domicilio=?, telefono=? WHERE idCliente=? and estado=true");
             p.setString(1, cliente.getNombre());
             p.setInt(2, cliente.getDni());
             p.setString(3, cliente.getApellido());

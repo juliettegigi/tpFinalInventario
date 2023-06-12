@@ -279,7 +279,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        ProductoData pd=new ProductoData();
+       
         int id=0;
         try{
         id=Integer.parseInt(jtf_id.getText());
@@ -288,6 +288,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error con el id ingresado, "+e.getMessage());
             return;   
         }
+         ProductoData pd=new ProductoData();
         pd.eliminadoLogico(id);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -304,8 +305,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
             return;
         }
         ProductoData productoData=new ProductoData();
-        if(!validar())
-            return;
+     
         Producto producto=cargarProducto();
         producto.setIdProducto(id);
         productoData.update(producto);
