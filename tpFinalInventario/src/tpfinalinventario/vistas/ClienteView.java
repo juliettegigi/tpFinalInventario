@@ -389,7 +389,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
             errores.add("Campo domicilio es obligatorio");
         else{
             
-             if(!domicilio.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü0-9]+)*")){
+             if(!domicilio.toLowerCase().matches("[a-zñá-úä-ü-0-9]+(\\s[a-zñá-úä-ü0-9]+)*")){
             errores.add("Campo domicilio: carácter no válido.\n");
              }
            

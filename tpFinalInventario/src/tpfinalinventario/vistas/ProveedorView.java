@@ -350,9 +350,12 @@ public class ProveedorView extends javax.swing.JInternalFrame {
           }
           
           
-          if(telefono.trim().length()!=0 && !telefono.matches("[0-9]+")){
-            errores.add("Campo teléfono: incorrecto.");  
-          }
+        
+          
+            if(telefono.trim().length()!=0 && !telefono.matches("[0-9]{10}")){
+               
+                        errores.add("campo telefono: carácter o longitud no válido.\n");
+            }
          
           if(!errores.isEmpty()){
               String mensaje="";

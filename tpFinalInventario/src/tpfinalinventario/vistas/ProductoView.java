@@ -372,6 +372,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         Producto p=new Producto();
         
         p.setNombre(jtf_nombre.getText());
+        p.setCategoria(jtf_categoria.getText());
         p.setDescripcion(jta_descripcion.getText());
         p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
         p.setStock(Integer.parseInt(jtf_stock.getText()));
@@ -390,6 +391,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
        jtf_precioActual.setText("");
        jtf_stock.setText("");
        jta_descripcion.setText("");
+       jtf_categoria.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

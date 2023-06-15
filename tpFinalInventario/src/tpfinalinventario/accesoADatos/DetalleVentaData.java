@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.DetalleVenta;
+import tpfinalinventario.entidades.Producto;
 
 /**
  *
@@ -136,5 +137,39 @@ public class DetalleVentaData {
         }
         return lista;
     }
+    
+    
+    
+            
+        ///*productos que están en detalle venta*/
+//select * from producto where idProducto in(select idProducto from detalleVenta);
+
+    public List<Producto> productosEnDetalleVenta() {
+        ArrayList<Producto> lista = new ArrayList();
+        try { 
+            PreparedStatement p = c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta);");
+          
+
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setNombre(r.getString("nombre"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                producto.setEstado(r.getBoolean("estado"));
+                lista.add(producto);
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error productosEnDetalleVenta, " + ex.getMessage());
+        }
+        return lista;
+    }
+
 
 }
