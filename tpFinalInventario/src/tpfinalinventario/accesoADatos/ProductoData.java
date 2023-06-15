@@ -29,12 +29,13 @@ public class ProductoData {
 
     public boolean guardar(Producto producto) {
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO producto(nombre,descripcion,precioActual,stock,estado) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO producto(nombre,categoria,descripcion,precioActual,stock,estado) values(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             p.setString(1, producto.getNombre());
-            p.setString(2, producto.getDescripcion());
-            p.setDouble(3, producto.getPrecioActual());
-            p.setInt(4, producto.getStock());
-            p.setBoolean(5, producto.isEstado());
+            p.setString(2, producto.getCategoria());
+            p.setString(3, producto.getDescripcion());
+            p.setDouble(4, producto.getPrecioActual());
+            p.setInt(5, producto.getStock());
+            p.setBoolean(6, producto.isEstado());
             int filasAfectadas=p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
             if (r.next()) 
@@ -105,6 +106,7 @@ public class ProductoData {
             while (r.next()) {
                 Producto producto = new Producto();
                 producto.setIdProducto(r.getInt("idProducto"));
+                producto.setCategoria(r.getString("categoria"));
                 producto.setNombre(r.getString("nombre"));
                 producto.setDescripcion(r.getString("descripcion"));
                 producto.setPrecioActual(r.getDouble("precioActual"));
@@ -132,6 +134,7 @@ public class ProductoData {
                 producto = new Producto();
                 producto.setIdProducto(r.getInt("idProducto"));
                 producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
                 producto.setDescripcion(r.getString("descripcion"));
                 producto.setPrecioActual(r.getDouble("precioActual"));
                 producto.setStock(r.getInt("stock"));
@@ -150,12 +153,13 @@ public class ProductoData {
     
     public boolean existe(Producto producto){
             try {
-            PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and descripcion=? and precioActual=? and stock=? and estado=?;");
+            PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and categoria=? and descripcion=? and precioActual=? and stock=? and estado=true;");
             p.setString(1,producto.getNombre() );
-            p.setString(2,producto.getDescripcion());
-            p.setDouble(3,producto.getPrecioActual() );
-            p.setInt(4, producto.getStock());
-            p.setBoolean(5, producto.isEstado());
+            p.setString(2, producto.getCategoria());
+            p.setString(3,producto.getDescripcion());
+            p.setDouble(4,producto.getPrecioActual() );
+            p.setInt(5, producto.getStock());
+            
 
             ResultSet r = p.executeQuery();
             
@@ -178,13 +182,14 @@ public class ProductoData {
     public void update(Producto producto) {
 
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE idProducto=?");
+            PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,categoria=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE idProducto=?");
             p.setString(1, producto.getNombre());
-            p.setString(2, producto.getDescripcion());
-            p.setDouble(3, producto.getPrecioActual());
-            p.setInt(4, producto.getStock());
-            p.setBoolean(5, producto.isEstado());
-            p.setInt(6, producto.getIdProducto());
+            p.setString(2, producto.getCategoria());
+            p.setString(3, producto.getDescripcion());
+            p.setDouble(4, producto.getPrecioActual());
+            p.setInt(5, producto.getStock());
+            p.setBoolean(6, producto.isEstado());
+            p.setInt(7, producto.getIdProducto());
             p.executeUpdate();
             p.close();
             
@@ -205,6 +210,7 @@ public class ProductoData {
             while (r.next()) {
                 Producto producto = new Producto();
                 producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
                 producto.setIdProducto(r.getInt("idProducto"));
                 producto.setDescripcion(r.getString("descripcion"));
                 producto.setPrecioActual(r.getDouble("precioActual"));

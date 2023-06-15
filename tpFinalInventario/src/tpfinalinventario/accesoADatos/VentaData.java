@@ -32,7 +32,7 @@ public class VentaData {
     public void guardar(Venta v) {
 
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO venta(fecha,idCliente) values(?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO venta(fecha,idCliente,estado) values(?,?,true)", Statement.RETURN_GENERATED_KEYS);
             p.setDate(1, Date.valueOf(v.getFecha()));
             p.setDouble(2, v.getCliente().getIdCliente());
             p.executeUpdate();

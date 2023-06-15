@@ -14,6 +14,7 @@ import java.util.Objects;
 public class Producto {
     private int idProducto;
     private String nombre;
+    private String categoria;
     private String descripcion;
     private double precioActual;
     private int stock;
@@ -22,22 +23,34 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String descripcion, double precioActual, int stock, boolean estado) {
+    public Producto(int idProducto, String nombre,String categoria, String descripcion, double precioActual, int stock, boolean estado) {
         this.idProducto = idProducto;
         this.nombre = nombre;
+        this.categoria=categoria;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
         this.estado = estado;
     }
 
-     public Producto(String nombre, String descripcion, double precioActual, int stock, boolean estado) {
+     public Producto(String nombre,String categoria, String descripcion, double precioActual, int stock, boolean estado) {
         this.nombre = nombre;
+        this.categoria=categoria;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
         this.estado = estado;
     }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+     
+     
 
     public String getNombre() {
         return nombre;
@@ -89,8 +102,10 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", stock=" + stock + ", estado=" + estado + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", categoria=" + categoria + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", stock=" + stock + ", estado=" + estado + '}';
     }
+
+  
 
  
       @Override
@@ -101,16 +116,16 @@ public class Producto {
        Producto other = (Producto) obj;
        boolean retorno= stock == other.stock  && 
                         Objects.equals(nombre, other.nombre) &&
+                        Objects.equals(categoria, other.categoria)&&
                         Objects.equals(descripcion, other.descripcion)&&
-                        precioActual==other.precioActual &&
-                        estado==other.estado;
+                        precioActual==other.precioActual;
 
       return retorno;
 }
  
 @Override
 public int hashCode() {
-return Objects.hash(nombre,descripcion,precioActual,stock,estado);
+return Objects.hash(nombre,categoria,descripcion,precioActual,stock);
 }
             
 }
