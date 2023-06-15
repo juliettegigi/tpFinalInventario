@@ -108,21 +108,21 @@ public class ProductoConsultasView extends javax.swing.JInternalFrame {
                         .addGap(292, 292, 292)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(rbtnTodos)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(rbtnCategoria)
+                                .addComponent(rbtnTodos)
                                 .addGap(18, 18, 18)
-                                .addComponent(rbtnNombre))
-                            .addComponent(jtf_buscar))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)))
-                .addContainerGap(138, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(rbtnCategoria)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbtnNombre))
+                                    .addComponent(jtf_buscar))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar)))))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,6 +205,7 @@ public class ProductoConsultasView extends javax.swing.JInternalFrame {
          //creo las columnas de la tabla
         ArrayList<Object> columns=new ArrayList();
         columns.add("NOMBRE");
+        columns.add("CATEGORIA");
         columns.add("DESCRIPCIÓN");
         columns.add("PRECIO ACTUAL");
         columns.add("STOCK");
@@ -223,7 +224,7 @@ public class ProductoConsultasView extends javax.swing.JInternalFrame {
        if(lista.isEmpty())
            return;            
         for(Producto p:lista){
-                modelo.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getDescripcion(),p.getPrecioActual(),p.getStock()});
+                modelo.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getCategoria(),p.getDescripcion(),p.getPrecioActual(),p.getStock()});
                
             }
              

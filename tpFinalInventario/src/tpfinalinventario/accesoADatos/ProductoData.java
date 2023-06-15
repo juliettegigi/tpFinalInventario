@@ -95,10 +95,45 @@ public class ProductoData {
         }
     }
     
+        
+        
+        ///*productos que están en detalle venta*/
+//select * from producto where idProducto in(select idProducto from detalleVenta);
+
+    public List<Producto> productosEnDetalleVenta(String campo, String valor) {
+        ArrayList<Producto> lista = new ArrayList();
+        try { 
+            PreparedStatement p = c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta");
+            p.setString(1, valor);
+
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setNombre(r.getString("nombre"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                producto.setEstado(r.getBoolean("estado"));
+                lista.add(producto);
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar en producto, " + ex.getMessage());
+        }
+        return lista;
+    }
+
+
+
+        
     
     public List<Producto> buscarCampoValor(String campo, String valor) {
         ArrayList<Producto> lista = new ArrayList();
-        try {
+        try { 
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE " + campo + "=?;");
             p.setString(1, valor);
 
