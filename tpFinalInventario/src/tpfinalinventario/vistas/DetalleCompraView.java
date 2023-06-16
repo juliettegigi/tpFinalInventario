@@ -4,9 +4,14 @@
  */
 package tpfinalinventario.vistas;
 
+import java.time.LocalDate;
 import javax.swing.table.DefaultTableModel;
+import tpfinalinventario.accesoADatos.CompraData;
+import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.accesoADatos.ProveedorData;
+import tpfinalinventario.entidades.Compra;
+import tpfinalinventario.entidades.DetalleCompra;
 import tpfinalinventario.entidades.Producto;
 import tpfinalinventario.entidades.Proveedor;
 
@@ -15,37 +20,46 @@ import tpfinalinventario.entidades.Proveedor;
  * @author Paula Priotti
  */
 public class DetalleCompraView extends javax.swing.JInternalFrame {
-    ProveedorData prov=new ProveedorData();
-    ProductoData prod=new ProductoData();
+
+    ProveedorData prov = new ProveedorData();
+    ProductoData prod = new ProductoData();
+    CompraData compraD=new CompraData();
+    DetalleCompraData dcD=new DetalleCompraData();
+
     /**
      * Creates new form DetalleCompraView
      */
     public DetalleCompraView() {
         initComponents();
         cargarProv();
-        cargarPorductos();
+        cargarProductos();
     }
 
-    private void cargarProv(){
-        String[] columns={"id", "nombre", "telefono"};
-        DefaultTableModel mod = new DefaultTableModel(columns,0);
-        for(Proveedor p:prov.lista()){
-            Object[] d={p.getIdProveedor(),p.getRazonSocial(),p.getTelefono()};
+    private void cargarProv() {
+        String[] columns = {"id", "nombre", "telefono"};
+        DefaultTableModel mod = new DefaultTableModel(columns, 0);
+        for (Proveedor p : prov.lista()) {
+            Object[] d = {p.getIdProveedor(), p.getRazonSocial(), p.getTelefono()};
             mod.addRow(d);
         }
         jTableProv.setModel(mod);
     }
-    
-    private void cargarPorductos(){
-        String[] columns={"id", "nombre", "categoria","precio actual"};
-        DefaultTableModel mod = new DefaultTableModel(columns,0);
-        for(Producto p:prod.lista()){
-            Object[] d={p.getIdProducto(),p.getNombre(),p.getCategoria(),p.getPrecioActual()};
+
+    private void cargarProductos() {
+        String[] columns = {"id", "nombre", "categoria", "precio actual", "cantidad"};
+        DefaultTableModel mod = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int i, int il) {
+                return il != 4;
+            }
+        };
+        for (Producto p : prod.lista()) {
+            Object[] d = {p.getIdProducto(), p.getNombre(), p.getCategoria(), p.getPrecioActual(), "0"};
             mod.addRow(d);
         }
         jTableProd.setModel(mod);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +115,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Ca"
             }
         ));
         jTableProd.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,6 +127,11 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Realizar compra");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +155,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
                         .addGap(225, 225, 225)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
+                        .addGap(172, 172, 172)
                         .addComponent(jButton1)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -152,23 +171,58 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addComponent(jButton1)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableProvMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProvMousePressed
-        
+
     }//GEN-LAST:event_jTableProvMousePressed
 
     private void jTableProdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProdMousePressed
-        
-        
+
+
     }//GEN-LAST:event_jTableProdMousePressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //boton de realizar compra
+        //metodo que obtiene cantidad de filas seleccionadas
+        int cantR = jTableProv.getSelectedRowCount();
+        int cantProd = jTableProd.getRowCount();
+        int c = 0;
+        Compra comp = new Compra();
+        
+        for (int i = 0; i < cantProd; i++) {
+            if (!jTableProd.getValueAt(i, 4).equals("0")) {
+                c++;
+            }
+        }
+        
+        if(cantR!=0 && c!=0){
+            for(int i = 0; i < cantProd; i++){
+                if (!jTableProd.getValueAt(i, 4).equals("0")) {
+                    int f=jTableProv.getSelectedRow();
+                    comp.setProveedor(prov.buscar((int) jTableProv.getValueAt(f, 0)));
+                    comp.setFecha(LocalDate.now());
+                    comp.setEstado(true);
+                    compraD.guardar(comp);
+                    DetalleCompra dc = new DetalleCompra();
+                    Producto p=prod.buscarPorId((int) jTableProd.getValueAt(i, 0));
+                    dc.setCantidad((int) jTableProd.getValueAt(i, 4));
+                    dc.setPrecioCosto(p.getPrecioActual());
+                    dc.setCompra(comp);
+                    dc.setProducto(p);
+                    dc.setEstado(true);
+                    dcD.guardar(dc);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
