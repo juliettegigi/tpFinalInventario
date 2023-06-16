@@ -195,6 +195,10 @@ public class RealizarVenta extends javax.swing.JInternalFrame {
             
         dv.setVenta(v);
         Producto p = productoData.buscarPorId(idProducto);   
+        if(p.getStock()<Integer.parseInt(jtf_cantidad.getText())){
+            JOptionPane.showMessageDialog(this, "Stock disponible "+p.getStock()+" .Venta rechazada");
+        }
+            
         dv.setProducto(p);
         if(detalleVentaData.guardar(dv))
             JOptionPane.showMessageDialog(this, "Venta realizada.");
