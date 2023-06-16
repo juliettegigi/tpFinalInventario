@@ -16,6 +16,7 @@ import tpfinalinventario.entidades.Cliente;
 public class ClienteView extends javax.swing.JInternalFrame{
 
     private ClienteData clienteData=new ClienteData();
+    private int idCliente=0;
     
     public ClienteView() {
         initComponents();
@@ -61,7 +62,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
         jLabel1.setForeground(new java.awt.Color(102, 0, 0));
         jLabel1.setText("Cliente");
 
-        jLabel2.setText("ID");
+        jLabel2.setText("DNI");
 
         jtf_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,17 +166,15 @@ public class ClienteView extends javax.swing.JInternalFrame{
                         .addContainerGap()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jButton1))))
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel9))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(btnAgregar)
@@ -199,7 +198,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
                     .addComponent(jButton1)
                     .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,25 +231,26 @@ public class ClienteView extends javax.swing.JInternalFrame{
                     .addComponent(btnActualizar)
                     .addComponent(btnAgregar)
                     .addComponent(jButton2))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            int id=0;
+            int dni=0;
              try{
-           id=Integer.parseInt(jtf_id.getText());    
+           dni=Integer.parseInt(jtf_id.getText());    
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "El id debe ser un número");
+            JOptionPane.showMessageDialog(this, "El dni debe ser un número");
             return;
         }
              
             
-             Cliente c=clienteData.buscar(id);
+             Cliente c=clienteData.buscarPorDNI(dni);
+             idCliente=c.getIdCliente();
              if(c==null){
-                  JOptionPane.showMessageDialog(this, "El cliente con ID: " + jtf_id.getText() + " no existe en nuestro registro");
+                  JOptionPane.showMessageDialog(this, "El cliente con DNI= " + jtf_id.getText() + " no existe en nuestro registro");
                   return;
                  
              }
@@ -279,34 +279,21 @@ public class ClienteView extends javax.swing.JInternalFrame{
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        int id=0; 
-        try{
-           id=Integer.parseInt(jtf_id.getText());    
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "El id debe ser un número");
-            return;
-        } 
-        clienteData.eliminarLogico(id);
+       
+        clienteData.eliminarLogico(idCliente);
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        int id=0;
-        try{
-            id=Integer.parseInt(jtf_id.getText());
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this,"Debe ingresar un número en el campo id.\n"+e.getMessage());
-            return;
-        }
+    
         
         Cliente c=new Cliente();  
         if (!validar(c))
             return;
         
        
-        c.setIdCliente(id);
+        c.setIdCliente(idCliente);
         if(clienteData.update(c))
             JOptionPane.showMessageDialog(this,"Cliente actualizado" );
         else  JOptionPane.showMessageDialog(this,"Cliente no actualizado, id no existe o error " );
