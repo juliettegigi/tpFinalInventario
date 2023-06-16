@@ -265,27 +265,23 @@ public class RealizarVenta extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        
+        // cargar la venta
         Cliente c = (Cliente) jcb_clientes.getSelectedItem();
         Venta v = new Venta(ventaData.numeroCompra(),LocalDate.now(), c, true);
         ventaData.guardar(v);
         
-        //validar
-        DetalleVenta dv = new DetalleVenta();
-        if(!validar(dv)){
-            ventaData.eliminar(v.getIdVenta());
-            return;
-        }
-            
-        
-        dv.setVenta(v);
-        Producto p = productoData.buscarPorId(producto.getIdProducto());   
-        int cantidad=Integer.parseInt(jtf_cantidad.getText());
+        //recorrer la tabla
+         for (int row = 0; row < jtable.getRowCount()-1; row++) {
+             DetalleVenta dv=new DetalleVenta();
+             dv.setCantidad(Integer.parseInt(jtable.getValueAt(row, 1).toString()));
+             dv.setPrecioVenta(Double.parseDouble(jtable.getValueAt(row, 3).toString()));
+             dv.setVenta(v);
+             dv.setProducto(productosAgregados.get(row));
+             detalleVentaData.guardar(dv);
+         }
        
-            
-        
-        dv.setProducto(p);
-        dv.setPrecioVenta(p.getPrecioActual()*cantidad);
-        if(detalleVentaData.guardar(dv))
+      
             JOptionPane.showMessageDialog(this, "Venta realizada.");
         
     }//GEN-LAST:event_jButton1ActionPerformed
