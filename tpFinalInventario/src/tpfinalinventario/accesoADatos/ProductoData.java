@@ -103,7 +103,7 @@ public class ProductoData {
     public List<Producto> buscarCampoValor(String campo, String valor) {
         ArrayList<Producto> lista = new ArrayList();
         try { 
-            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE " + campo + "=?;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE " + campo + "=? and estado=true;");
             p.setString(1, valor);
 
             ResultSet r = p.executeQuery();
