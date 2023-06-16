@@ -18,7 +18,7 @@ import tpfinalinventario.entidades.Proveedor;
 public class ProveedorView extends javax.swing.JInternalFrame {
 
     private ProveedorData proveedorData=new ProveedorData();
-    
+    private int idBuscado;
     public ProveedorView() {
         initComponents();
         btnAgregar.setEnabled(false);
@@ -60,10 +60,10 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         jLabel1.setText("Proveedor");
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel2.setText("ID");
+        jLabel2.setText("Razón social:");
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel3.setText("Razon social");
+        jLabel3.setText("Razón social");
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setText("Domicilio");
@@ -130,17 +130,12 @@ public class ProveedorView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jtf_id)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(187, 187, 187))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(269, 269, 269))))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
+                .addGap(135, 135, 135))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -174,6 +169,10 @@ public class ProveedorView extends javax.swing.JInternalFrame {
                         .addGap(0, 52, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(238, 238, 238)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +186,7 @@ public class ProveedorView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtf_razonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,19 +211,25 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         int id=0;
-             try{
-           id=Integer.parseInt(jtf_id.getText());    
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "El id debe ser un número");
-            return;
-        }
-             Proveedor proveedor=proveedorData.buscar(id);
+        String razonSocial=jtf_id.getText();
+        
+        if(razonSocial.trim().length()==0)
+            JOptionPane.showMessageDialog(this,"Campo razón social es obligatorio.");
+           
+          else{
+              if(!razonSocial.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*"))
+                   JOptionPane.showMessageDialog(this,"Campo razón social: caracteres no válidos.");
+            return;  
+        }      
+            
+      
+        
+        Proveedor proveedor=proveedorData.buscarPorRazonSocial(razonSocial);
              if(proveedor==null){
-                 JOptionPane.showMessageDialog(this, "El proveedor con ID: " + jtf_id.getText() + " no existe en nuestro registro");
+                 JOptionPane.showMessageDialog(this, "El proveedor con razón social=: " + razonSocial + " no existe en nuestro registro");
                  return;
              }
-             
+             idBuscado=proveedor.getIdProveedor();
             jtf_razonSocial.setText(proveedor.getRazonSocial());
             jtf_domicilio.setText(proveedor.getDomicilio());
             jtf_telefono.setText(proveedor.getTelefono());
@@ -246,33 +251,20 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         int id=0; 
-        try{
-           id=Integer.parseInt(jtf_id.getText());    
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "El id debe ser un número");
-            return;
-        } 
        
-        JOptionPane.showMessageDialog(this, proveedorData.eliminarLogico(id));
+       
+        JOptionPane.showMessageDialog(this, proveedorData.eliminarLogico(idBuscado));
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        int id=0;
-        try{
-            id=Integer.parseInt(jtf_id.getText());
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this,"Debe ingresar un número en el campo id.\n"+e.getMessage());
-            return;
-        }
+      
         
         Proveedor p=new Proveedor();  
         if (!validar(p))
             return;
         
-        p.setIdProveedor(id);
+        p.setIdProveedor(idBuscado);
         JOptionPane.showMessageDialog(this,proveedorData.update(p));
         
     }//GEN-LAST:event_btnActualizarActionPerformed

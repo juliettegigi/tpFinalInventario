@@ -118,6 +118,34 @@ public class ProveedorData {
         return proveedor;
     }
 
+    
+    
+        public Proveedor buscarPorRazonSocial(String razon){
+       
+        Proveedor proveedor = null;
+        
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor WHERE razonSocial=? and estado=true;");
+            p.setString(1, razon);
+            ResultSet r = p.executeQuery();
+           
+            if (r.next()) {
+                proveedor = new Proveedor();
+                proveedor.setRazonSocial(r.getString("razonSocial"));
+                proveedor.setDomicilio(r.getString("domicilio"));
+                proveedor.setTelefono(r.getString("telefono"));
+                proveedor.setIdProveedor(r.getInt("idProveedor"));
+            }
+            p.close();
+            r.close();
+            
+        } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error en buscar proveedor, "+ex.getMessage());
+        }
+        return proveedor;
+    }
+    
+    
     public  List<Proveedor> lista() {
        
           ArrayList<Proveedor> lista = new ArrayList();

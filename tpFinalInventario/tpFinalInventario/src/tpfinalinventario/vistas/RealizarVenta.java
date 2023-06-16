@@ -205,6 +205,7 @@ public class RealizarVenta extends javax.swing.JInternalFrame {
          lista=(ArrayList<Producto>) productoData.nombresEmpiezanCon(jtf_nombre.getText());
          System.out.println(lista);
          cargarCB();
+         
     }//GEN-LAST:event_jtf_nombreKeyReleased
 
     private void cbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProductosActionPerformed
@@ -217,9 +218,9 @@ public class RealizarVenta extends javax.swing.JInternalFrame {
        private void cargarCB(){
         cbProductos.removeAllItems();       
         for(Producto item:lista){
-                cbProductos.addItem(item);
-                
+                cbProductos.addItem(item);               
         }
+        cbProductos.setPopupVisible(true);
     }
     
        
