@@ -186,7 +186,6 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
 
     private void jTableProdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProdMousePressed
 
-
     }//GEN-LAST:event_jTableProdMousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
