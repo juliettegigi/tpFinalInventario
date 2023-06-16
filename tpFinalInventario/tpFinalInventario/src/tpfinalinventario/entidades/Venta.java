@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class Venta {
 
     private int idVenta;
+    private int numeroDeCompra;
     private LocalDate fecha;
     private Cliente cliente;
     private boolean estado;
@@ -21,14 +22,16 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(int idVenta, LocalDate fecha, Cliente cliente, boolean estado) {
+    public Venta(int idVenta, int numeroDeCompra, LocalDate fecha, Cliente cliente, boolean estado) {
         this.idVenta = idVenta;
+        this.numeroDeCompra = numeroDeCompra;
         this.fecha = fecha;
         this.cliente = cliente;
         this.estado = estado;
     }
 
-    public Venta(LocalDate fecha, Cliente cliente, boolean estado) {
+    public Venta(int numeroDeCompra, LocalDate fecha, Cliente cliente, boolean estado) {
+        this.numeroDeCompra = numeroDeCompra;
         this.fecha = fecha;
         this.cliente = cliente;
         this.estado = estado;
@@ -36,6 +39,10 @@ public class Venta {
 
     public int getIdVenta() {
         return idVenta;
+    }
+
+    public int getNumeroDeCompra() {
+        return numeroDeCompra;
     }
 
     public LocalDate getFecha() {
@@ -50,12 +57,12 @@ public class Venta {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
     public void setIdVenta(int idVenta) {
         this.idVenta = idVenta;
+    }
+
+    public void setNumeroDeCompra(int numeroDeCompra) {
+        this.numeroDeCompra = numeroDeCompra;
     }
 
     public void setFecha(LocalDate fecha) {
@@ -66,9 +73,16 @@ public class Venta {
         this.cliente = cliente;
     }
 
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", fecha=" + fecha + ", cliente=" + cliente + '}';
+        return "Venta{" + "idVenta=" + idVenta + ", numeroDeCompra=" + numeroDeCompra + ", fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + '}';
     }
+
+  
+    
 
 }

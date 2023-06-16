@@ -183,7 +183,7 @@ public class ProductoData {
     }
     
     
-    public void update(Producto producto) {
+    public boolean update(Producto producto) {
 
         try {
             PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,categoria=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE idProducto=?");
@@ -194,12 +194,14 @@ public class ProductoData {
             p.setInt(5, producto.getStock());
             p.setBoolean(6, producto.isEstado());
             p.setInt(7, producto.getIdProducto());
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             p.close();
-            
-            JOptionPane.showMessageDialog(null, "Producto actualizado" );
+            if(filasAfectadas>0)
+               return true;
+            else return false;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
+            return false;
         }
 
     }

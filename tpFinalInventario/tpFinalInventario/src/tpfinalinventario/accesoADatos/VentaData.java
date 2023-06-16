@@ -132,5 +132,24 @@ public class VentaData {
         }
         return lista;
     }
+    
+    
+    public int numeroCompra() {
+        int numeroCompra=1;
+       try {
+
+            PreparedStatement p = c.prepareStatement("SELECT max(numeroDeCompra as max from venta;");
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+               numeroCompra=r.getInt("max")+1;
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en lista venta, " + ex.getMessage());
+        }
+       return numeroCompra;
+    }
 
 }
