@@ -6,6 +6,7 @@ package tpfinalinventario.vistas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import tpfinalinventario.accesoADatos.ClienteData;
 import tpfinalinventario.accesoADatos.DetalleVentaData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -19,32 +20,29 @@ import tpfinalinventario.entidades.Venta;
  *
  * @author Paula Priotti
  */
-public class DetalleVentaView extends javax.swing.JInternalFrame {
+public class RealizarVenta extends javax.swing.JInternalFrame {
 
-    ClienteData clienteData=new ClienteData();
-    VentaData ventaData=new VentaData();
-    DetalleVentaData detalleVentaData=new DetalleVentaData();
-    ProductoData productoData=new ProductoData();
-    public DetalleVentaView() {
+    ClienteData clienteData = new ClienteData();
+    VentaData ventaData = new VentaData();
+    DetalleVentaData detalleVentaData = new DetalleVentaData();
+    ProductoData productoData = new ProductoData();
+    private ArrayList<Producto> lista;
+    private int idProducto=0;
+
+    public RealizarVenta() {
         initComponents();
         initComboBox();
-        
     }
 
-    
-    
-    
-         private void initComboBox(){
-        ArrayList<Cliente> lista=(ArrayList<Cliente>) clienteData.lista();
-        if(!lista.isEmpty()){
-              for(Cliente item: lista)
-                  jcb_clientes.addItem(item);     
+    private void initComboBox() {
+        ArrayList<Cliente> lista = (ArrayList<Cliente>) clienteData.lista();
+        if (!lista.isEmpty()) {
+            for (Cliente item : lista) {
+                jcb_clientes.addItem(item);
+            }
         }
-       
-        
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,10 +61,11 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jtf_cantidad = new javax.swing.JTextField();
         jtf_precio = new javax.swing.JTextField();
-        jtf_idProducto = new javax.swing.JTextField();
+        jtf_nombre = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        cbProductos = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("VENDER");
 
@@ -78,12 +77,24 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Precio:");
 
-        jLabel5.setText("Id Producto:");
+        jLabel5.setText("Producto:");
+
+        jtf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nombreKeyReleased(evt);
+            }
+        });
 
         jButton1.setText("Realizar venta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        cbProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProductosActionPerformed(evt);
             }
         });
 
@@ -121,13 +132,17 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                                         .addComponent(jtf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jtf_idProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addGap(0, 140, Short.MAX_VALUE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,33 +163,112 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jtf_idProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cbProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        Cliente c=(Cliente) jcb_clientes.getSelectedItem();
-        
-        Venta v=new Venta(LocalDate.now(),c,true);
+        Cliente c = (Cliente) jcb_clientes.getSelectedItem();
+
+        Venta v = new Venta(LocalDate.now(), c, true);
         ventaData.guardar(v);
         
-        int cantidad=Integer.parseInt(jtf_cantidad.getText());
-        double precio=Double.parseDouble(jtf_precio.getText());
-        Producto p=productoData.buscarPorId(Integer.parseInt(jtf_idProducto.getText()));
-        DetalleVenta dv=new DetalleVenta(cantidad,precio,v,p,true);
-        detalleVentaData.guardar(dv);
+        //validar
+        DetalleVenta dv = new DetalleVenta();
+        if(!validar(dv)){
+            ventaData.eliminar(v.getIdVenta());
+            return;
+        }
+            
+        dv.setVenta(v);
+        Producto p = productoData.buscarPorId(idProducto);   
+        dv.setProducto(p);
+        if(detalleVentaData.guardar(dv))
+            JOptionPane.showMessageDialog(this, "Venta realizada.");
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jtf_nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nombreKeyReleased
+         lista=(ArrayList<Producto>) productoData.nombresEmpiezanCon(jtf_nombre.getText());
+         System.out.println(lista);
+         cargarCB();
+    }//GEN-LAST:event_jtf_nombreKeyReleased
+
+    private void cbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProductosActionPerformed
+        Producto p=(Producto) cbProductos.getSelectedItem();
+        if(p==null)return;
+        idProducto=p.getIdProducto();
+    }//GEN-LAST:event_cbProductosActionPerformed
+
+    
+       private void cargarCB(){
+        cbProductos.removeAllItems();       
+        for(Producto item:lista){
+                cbProductos.addItem(item);
+                
+        }
+    }
+    
+       
+       
+       
+       
+       
+       private boolean validar( DetalleVenta v){
+         ArrayList<String> errores=new ArrayList();
+         
+         
+        if(!jtf_cantidad.getText().toLowerCase().matches("[0-9]{1,10}"))
+              errores.add("Campo cantidad: ingrese un número.");
+        else v.setCantidad(Integer.parseInt(jtf_cantidad.getText()));
+        
+        try{   
+           v.setPrecioVenta( Double.parseDouble(jtf_precio.getText()));   
+           v.setPrecioVenta(Double.parseDouble(jtf_precio.getText()));
+        }
+        catch(Exception e){
+            errores.add("Campo precio: ingrese un número.");
+        }
+         
+     
+         if(!errores.isEmpty()){
+                 String mensaje="";
+            for(int i=0; i<errores.size();i++){
+                if(i==errores.size()-1)
+                    mensaje+=errores.get(i)+", ";
+                else  mensaje+=errores.get(i)+".";
+            }
+          JOptionPane.showMessageDialog(this,mensaje);
+          return false;
+         }
+             
+      
+        
+        return true;
+    }
+    
+       
+       
+       
+       
+       
+       
+       
+       
+    
     /**
      * @param args the command line arguments
      */
@@ -192,34 +286,28 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DetalleVentaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DetalleVentaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DetalleVentaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DetalleVentaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetalleVentaView().setVisible(true);
+                new RealizarVenta().setVisible(true);
             }
         });
     }
 
-    
-    
-    
-    
-    
-    
 
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Producto> cbProductos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -229,7 +317,7 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<Cliente> jcb_clientes;
     private javax.swing.JTextField jtf_cantidad;
-    private javax.swing.JTextField jtf_idProducto;
+    private javax.swing.JTextField jtf_nombre;
     private javax.swing.JTextField jtf_precio;
     // End of variables declaration//GEN-END:variables
 }

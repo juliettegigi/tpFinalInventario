@@ -28,7 +28,7 @@ public class DetalleVentaData {
         c = Conexion.getConexion();
     }
 
-    public void guardar(DetalleVenta dv) {
+    public boolean guardar(DetalleVenta dv) {
 
         try {
             PreparedStatement p = c.prepareStatement("INSERT INTO detalleventa(cantidad,precioVenta,idVenta,idProducto,estado) values(?,?,?,?,true)", Statement.RETURN_GENERATED_KEYS);
@@ -43,8 +43,10 @@ public class DetalleVentaData {
             }
             p.close();
             r.close();
+            return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en guardar DetalleVentaData, " + ex.getMessage());
+            return false;
         }
     }
 

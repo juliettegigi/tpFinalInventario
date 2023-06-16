@@ -228,5 +228,30 @@ public class ProductoData {
         }
         return lista;
     }
+    
+    
+    
+    public List<Producto>  nombresEmpiezanCon(String s){
+         ArrayList<Producto> lista = new ArrayList();
+          try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto where nombre like '"+s+"%' and estado=true;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Producto producto = new Producto();
+                producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                producto.setEstado(r.getBoolean("estado"));
+                lista.add(producto);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la lista de producto, " + ex.getMessage());
+        }
+          return lista;
+    }
 
 }
