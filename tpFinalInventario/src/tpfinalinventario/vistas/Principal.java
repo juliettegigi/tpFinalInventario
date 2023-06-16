@@ -84,6 +84,16 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setText("Compra");
 
         jMenu10.setText("Detalle de compra");
+        jMenu10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu10MousePressed(evt);
+            }
+        });
+        jMenu10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu10ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenu10);
 
         jMenuBar1.add(jMenu4);
@@ -174,6 +184,14 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
        cargarInternal(new ProductoConsultasView());
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenu10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu10ActionPerformed
+        //cargarInternal(new DetalleCompraView());
+    }//GEN-LAST:event_jMenu10ActionPerformed
+
+    private void jMenu10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu10MousePressed
+        cargarInternal(new DetalleCompraView());
+    }//GEN-LAST:event_jMenu10MousePressed
 
     
     private void cargarInternal(JInternalFrame i){
