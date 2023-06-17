@@ -5,6 +5,7 @@
 package tpfinalinventario.vistas;
 
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
@@ -218,6 +219,7 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
                     dc.setProducto(p);
                     dc.setEstado(true);
                     dcD.guardar(dc);
+                    JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
                 }
             }
         }

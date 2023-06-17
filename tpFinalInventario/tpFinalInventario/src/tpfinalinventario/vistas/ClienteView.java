@@ -13,11 +13,11 @@ import tpfinalinventario.entidades.Cliente;
  *
  * @author Paula Priotti
  */
-public class ClienteView extends javax.swing.JInternalFrame{
+public class ClienteView extends javax.swing.JInternalFrame {
 
-    private ClienteData clienteData=new ClienteData();
-    private int idCliente=0;
-    
+    private ClienteData clienteData = new ClienteData();
+    private int idCliente = 0;
+
     public ClienteView() {
         initComponents();
         btnAgregar.setEnabled(false);
@@ -58,7 +58,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dubai Medium", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dubai Medium", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 0, 0));
         jLabel1.setText("Cliente");
 
@@ -147,27 +147,23 @@ public class ClienteView extends javax.swing.JInternalFrame{
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jtf_apellido))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel8)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtf_apellido))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(65, 65, 65))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jLabel9))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,18 +181,22 @@ public class ClienteView extends javax.swing.JInternalFrame{
                         .addGap(26, 26, 26)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jLabel1)))
+                        .addGap(155, 155, 155)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel9)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jButton1)
@@ -231,39 +231,38 @@ public class ClienteView extends javax.swing.JInternalFrame{
                     .addComponent(btnActualizar)
                     .addComponent(btnAgregar)
                     .addComponent(jButton2))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            int dni=0;
-             try{
-           dni=Integer.parseInt(jtf_id.getText());    
-        }catch(Exception e){
+        int dni = 0;
+        try {
+            dni = Integer.parseInt(jtf_id.getText());
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "El dni debe ser un número");
             return;
         }
-             
-            
-             Cliente c=clienteData.buscarPorDNI(dni);
-             idCliente=c.getIdCliente();
-             if(c==null){
-                  JOptionPane.showMessageDialog(this, "El cliente con DNI= " + jtf_id.getText() + " no existe en nuestro registro");
-                  return;
-                 
-             }
-             
-             jtf_dni.setText(c.getDni()+"");
-             jtf_apellido.setText(c.getApellido());
-             jtf_nombre.setText(c.getNombre());
-             jtf_domicilio.setText(c.getDomicilio());
-             jtf_telefono.setText(c.getTelefono());
-            
-            btnEliminar.setEnabled(true);
-            btnActualizar.setEnabled(true); 
-            btnAgregar.setEnabled(false);
+
+        Cliente c = clienteData.buscarPorDNI(dni);
+        idCliente = c.getIdCliente();
+        if (c == null) {
+            JOptionPane.showMessageDialog(this, "El cliente con DNI= " + jtf_id.getText() + " no existe en nuestro registro");
+            return;
+
+        }
+
+        jtf_dni.setText(c.getDni() + "");
+        jtf_apellido.setText(c.getApellido());
+        jtf_nombre.setText(c.getNombre());
+        jtf_domicilio.setText(c.getDomicilio());
+        jtf_telefono.setText(c.getTelefono());
+
+        btnEliminar.setEnabled(true);
+        btnActualizar.setEnabled(true);
+        btnAgregar.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jtf_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_idActionPerformed
@@ -271,32 +270,32 @@ public class ClienteView extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_jtf_idActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-          Cliente c=new Cliente();
-          if (!validar(c))
-            return;          
-          clienteData.guardar(c);
+        Cliente c = new Cliente();
+        if (!validar(c)) {
+            return;
+        }
+        clienteData.guardar(c);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
-       
+
         clienteData.eliminarLogico(idCliente);
-        
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        
-    
-        
-        Cliente c=new Cliente();  
-        if (!validar(c))
+
+        Cliente c = new Cliente();
+        if (!validar(c)) {
             return;
-        
-       
+        }
+
         c.setIdCliente(idCliente);
-        if(clienteData.update(c))
-            JOptionPane.showMessageDialog(this,"Cliente actualizado" );
-        else  JOptionPane.showMessageDialog(this,"Cliente no actualizado, id no existe o error " );
+        if (clienteData.update(c)) {
+            JOptionPane.showMessageDialog(this, "Cliente actualizado");
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente no actualizado, id no existe o error ");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -312,7 +311,7 @@ public class ClienteView extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jtf_nombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nombreFocusGained
-           btnAgregar.setEnabled(true);
+        btnAgregar.setEnabled(true);
     }//GEN-LAST:event_jtf_nombreFocusGained
 
     /**
@@ -350,80 +349,75 @@ public class ClienteView extends javax.swing.JInternalFrame{
             }
         });
     }
-    
-    
-    
-    
-     private boolean validar( Cliente c){
-         ArrayList<String> errores=new ArrayList();
-         
-         
-         //VALIDO DNI
-         try{
-                 int dni=Integer.parseInt(jtf_dni.getText());
-                 if(jtf_dni.getText().length()<7 || jtf_dni.getText().length()>8)
-                    errores.add("El campo DNI acepta 7-8 dígitos ");
-                 c.setDni(dni);
-             }catch(Exception e){
-                  errores.add("El campo DNI solo acepta números");
-              } 
-         
-         //VALIDO APELLIDO
-         String nombre=jtf_nombre.getText();
-         String apellido=jtf_apellido.getText();
-         String domicilio=jtf_domicilio.getText();
-         String telefono=jtf_telefono.getText();
-         c.setApellido(apellido);
-         c.setNombre(nombre);
-         c.setDomicilio(domicilio);
-         c.setTelefono(telefono);
-         if(nombre.trim().length()==0)
-            errores.add("Campo nombre es obligatorio");
-          else{
-           if(!nombre.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*"))
-              errores.add("Campo nombre: carácter no válido.\n");
-        }
-         
-         if(apellido.trim().length()==0)
-            errores.add("Campo apellido es obligatorio");
-        else{
-           if(!apellido.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*"))
-              errores.add("Campo apellido: carácter no válido.\n");
-        }
-         
-         // valido domicilio
-         
-            if(domicilio.trim().length()==0)
-            errores.add("Campo domicilio es obligatorio");
-        else{
-            
-             if(!domicilio.toLowerCase().matches("[a-zñá-úä-ü-0-9]+(\\s[a-zñá-úä-ü0-9]+)*")){
-            errores.add("Campo domicilio: carácter no válido.\n");
-             }
-           
-        }
-         
-            
-            // valido telefono
-            if(telefono.trim().length()!=0 && !telefono.matches("[0-9]{10}")){
-               
-                        errores.add("campo telefono: carácter o longitud no válido.\n");
+
+    private boolean validar(Cliente c) {
+        ArrayList<String> errores = new ArrayList();
+
+        //VALIDO DNI
+        try {
+            int dni = Integer.parseInt(jtf_dni.getText());
+            if (jtf_dni.getText().length() < 7 || jtf_dni.getText().length() > 8) {
+                errores.add("El campo DNI acepta 7-8 dígitos ");
             }
-                
-            //SI HAY ERRORES , HAGO EL MSJ DE ERROR
-         if(!errores.isEmpty()){
-            String mensaje="";
-            for(String error : errores)
-                mensaje+=error+"\n";
-          JOptionPane.showMessageDialog(this,mensaje);
-          return false;
+            c.setDni(dni);
+        } catch (Exception e) {
+            errores.add("El campo DNI solo acepta números");
         }
-         c.setEstado(true);
+
+        String nombre = jtf_nombre.getText();
+        String apellido = jtf_apellido.getText();
+        String domicilio = jtf_domicilio.getText();
+        String telefono = jtf_telefono.getText();
+        c.setApellido(apellido);
+        c.setNombre(nombre);
+        c.setDomicilio(domicilio);
+        c.setTelefono(telefono);
+
+        //valido nombre
+        if (nombre.trim().length() == 0) {
+            errores.add("Campo nombre es obligatorio");
+        } else {
+            if (!nombre.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*")) {
+                errores.add("Campo nombre: carácter no válido.\n");
+            }
+        }
+
+        //valido apellido
+        if (apellido.trim().length() == 0) {
+            errores.add("Campo apellido es obligatorio");
+        } else {
+            if (!apellido.toLowerCase().matches("[a-zñá-úä-ü]+(\\s[a-zñá-úä-ü]+)*")) {
+                errores.add("Campo apellido: carácter no válido.\n");
+            }
+        }
+
+        // valido domicilio
+        if (domicilio.trim().length() == 0) {
+            errores.add("Campo domicilio es obligatorio");
+        } else {
+
+            if (!domicilio.toLowerCase().matches("[a-zñá-úä-ü-0-9]+(\\s[a-zñá-úä-ü0-9]+)*")) {
+                errores.add("Campo domicilio: carácter no válido.\n");
+            }
+        }
+
+        // valido telefono
+        if (telefono.trim().length() != 0 && !telefono.matches("[0-9]{10}")) {
+            errores.add("campo telefono: carácter o longitud no válido.\n");
+        }
+
+        //SI HAY ERRORES , HAGO EL MSJ DE ERROR
+        if (!errores.isEmpty()) {
+            String mensaje = "";
+            for (String error : errores) {
+                mensaje += error + "\n";
+            }
+            JOptionPane.showMessageDialog(this, mensaje);
+            return false;
+        }
+        c.setEstado(true);
         return true;
     }
-     
-     
-     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

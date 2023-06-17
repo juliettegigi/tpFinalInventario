@@ -19,19 +19,19 @@ import tpfinalinventario.entidades.Producto;
 public class ProductoConsultasView extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modelo;
-    private ProductoData productoData=new ProductoData();
-    private DetalleVentaData detalleVentaData=new DetalleVentaData();
+    private ProductoData productoData = new ProductoData();
+    private DetalleVentaData detalleVentaData = new DetalleVentaData();
     private ArrayList<Producto> lista;
-        
+
     public ProductoConsultasView() {
-         
+
         initComponents();
-       jtf_buscar.setVisible(false);
+        jtf_buscar.setVisible(false);
         btnBuscar.setVisible(false);
         rbtnTodos.setSelected(true);
-        modelo=new DefaultTableModel();
+        modelo = new DefaultTableModel();
         armarCabeceraTabla();
-        lista=(ArrayList<Producto>) productoData.lista();
+        lista = (ArrayList<Producto>) productoData.lista();
         llenarTabla(lista);
     }
 
@@ -164,99 +164,105 @@ public class ProductoConsultasView extends javax.swing.JInternalFrame {
     private void rbtnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnTodosActionPerformed
         jtf_buscar.setVisible(false);
         btnBuscar.setVisible(false);
-        lista=(ArrayList<Producto>) productoData.lista();
-        if(lista.isEmpty())return;
+        lista = (ArrayList<Producto>) productoData.lista();
+        if (lista.isEmpty()) {
+            return;
+        }
         llenarTabla(lista);
-       
+
     }//GEN-LAST:event_rbtnTodosActionPerformed
 
     private void rbtnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCategoriaActionPerformed
-         borrarFilas(); 
+        borrarFilas();
         jtf_buscar.setText("");
         jtf_buscar.setVisible(true);
         btnBuscar.setVisible(true);
-        
-       
+
+
     }//GEN-LAST:event_rbtnCategoriaActionPerformed
 
     private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
-         borrarFilas();
+        borrarFilas();
         jtf_buscar.setText("");
         jtf_buscar.setVisible(true);
         btnBuscar.setVisible(true);
     }//GEN-LAST:event_rbtnNombreActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
 //        System.out.println(buttonGroup1.getSelection().getSelectedObjects().toString());
-        if(rbtnCategoria.isSelected()){
-            if(jtf_buscar.getText().trim().equals(""))
-               JOptionPane.showMessageDialog(this,"Ingrese una categoría.");
-            lista=(ArrayList<Producto>) productoData.buscarCampoValor("categoria", jtf_buscar.getText());
-            if(lista.isEmpty())
-               JOptionPane.showMessageDialog(this,"La categoria \""+jtf_buscar.getText()+"\" no contiene productos.");
-            else llenarTabla(lista);     
-            return;    
+        if (rbtnCategoria.isSelected()) {
+            if (jtf_buscar.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese una categoría.");
+            }
+            lista = (ArrayList<Producto>) productoData.buscarCampoValor("categoria", jtf_buscar.getText());
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La categoria \"" + jtf_buscar.getText() + "\" no contiene productos.");
+            } else {
+                llenarTabla(lista);
+            }
+            return;
         }
-        
-        if(jtf_buscar.getText().trim().equals(""))
-               JOptionPane.showMessageDialog(this,"Ingrese un nombre.");
-        lista=(ArrayList<Producto>) productoData.buscarCampoValor("nombre", jtf_buscar.getText());
-         if(lista.isEmpty())
-             JOptionPane.showMessageDialog(this,"El nombre \""+jtf_buscar.getText()+"\" no contiene productos.");
-     else llenarTabla(lista);
-       
+
+        if (jtf_buscar.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre.");
+        }
+        lista = (ArrayList<Producto>) productoData.buscarCampoValor("nombre", jtf_buscar.getText());
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre \"" + jtf_buscar.getText() + "\" no contiene productos.");
+        } else {
+            llenarTabla(lista);
+        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        
-         jtf_buscar.setVisible(false);
+
+        jtf_buscar.setVisible(false);
         btnBuscar.setVisible(false);
-          lista=(ArrayList<Producto>) detalleVentaData.productosEnDetalleVenta();
-        if(lista.isEmpty())return;
+        lista = (ArrayList<Producto>) detalleVentaData.productosEnDetalleVenta();
+        if (lista.isEmpty()) {
+            return;
+        }
         llenarTabla(lista);
-        
-      
-        
+
+
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    
-       public void borrarFilas(){
-      int a=modelo.getRowCount()-1;
-      for(int i=a;i>=0;i--)
-          modelo.removeRow(i);
-      
+    public void borrarFilas() {
+        int a = modelo.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
     }
-    
-    
-    private void armarCabeceraTabla(){
-         //creo las columnas de la tabla
-        ArrayList<Object> columns=new ArrayList();
+
+    private void armarCabeceraTabla() {
+        //creo las columnas de la tabla
+        ArrayList<Object> columns = new ArrayList();
         columns.add("NOMBRE");
         columns.add("CATEGORIA");
         columns.add("DESCRIPCIÓN");
         columns.add("PRECIO ACTUAL");
         columns.add("STOCK");
         //recorro el arrayList, a nuestro modelo le agrego columnas
-        for(Object it:columns)
+        for (Object it : columns) {
             modelo.addColumn(it);
+        }
         //a la tabla alumno le cambio el modelo, le pongo este que tiene estas columnas(id,nombre, nota)
         jTableT.setModel(modelo);
     }
-    
-    
-    
-    
-    private void llenarTabla(ArrayList<Producto> lista){
-        borrarFilas();            
-       if(lista.isEmpty())
-           return;            
-        for(Producto p:lista){
-                modelo.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getDescripcion(),p.getPrecioActual(),p.getStock()});
-               
-            }
-             
-       
+
+    private void llenarTabla(ArrayList<Producto> lista) {
+        borrarFilas();
+        if (lista.isEmpty()) {
+            return;
+        }
+        for (Producto p : lista) {
+            modelo.addRow(new Object[]{p.getNombre(), p.getCategoria(), p.getDescripcion(), p.getPrecioActual(), p.getStock()});
+
+        }
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
