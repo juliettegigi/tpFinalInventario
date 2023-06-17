@@ -38,7 +38,8 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         modelo = new DefaultTableModel();
         armarCabeceraTabla();
         lista = (ArrayList<Producto>) productoData.lista();
-        
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
     }
 
     /**
@@ -98,8 +99,10 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         btSalir.setForeground(new java.awt.Color(255, 255, 255));
         btSalir.setText("Salir");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Cliente: nombre");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Fecha: ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -125,7 +128,7 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                                         .addGap(33, 33, 33)
                                         .addComponent(btBuscar))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(126, 126, 126)
+                                        .addGap(127, 127, 127)
                                         .addComponent(jLabel4)))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -152,12 +155,12 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -181,7 +184,7 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         // ACCION BOTON BUSCAR
-        
+         
         if (jtf_numVenta.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese un numero de venta.");
             return;
@@ -196,19 +199,22 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         
         // lista de Venta, con un numero de venta, es uno solo
         Venta venta = ventaData.buscarPorNumeroDeVenta(numero);
+        if(venta==null){
+            JOptionPane.showMessageDialog(this, "No existe ese número de venta.");
+            return; 
+        }
+           
         String fecha=venta.getFecha().toString();
         Cliente cliente=venta.getCliente();
         jLabel3.setText("Cliente: "+cliente.getNombre());
         jLabel4.setText("Fecha: "+fecha);
-        System.out.println("VENT_: " +venta);
         // buscar en detalleVenta por idVenta
         ArrayList<DetalleVenta> listaDetalleVenta=(ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(venta.getIdVenta());
         
         llenarTabla(listaDetalleVenta);
         
-        /*
-        ¿¿¿COMO BUSCO DISTINTOS VALORES DE DISTINTAS TABLAS?
-         */
+         jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void armarCabeceraTabla() {
@@ -232,12 +238,14 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         if (listaDetalleVenta.isEmpty()) {
             return;
         }
+        double total=0;
         for (DetalleVenta dv : listaDetalleVenta) {
             Producto p=productoData.buscarPorId(dv.getProducto().getIdProducto());
             modelo.addRow(new Object[]{p.getNombre(), dv.getCantidad(),p.getPrecioActual()});
+           total+=dv.getPrecioVenta();
         }
         
-         modelo.addRow(new Object[]{ "","","","total"});
+         modelo.addRow(new Object[]{ "","",total});
     }
 
     public void borrarFilas() {
