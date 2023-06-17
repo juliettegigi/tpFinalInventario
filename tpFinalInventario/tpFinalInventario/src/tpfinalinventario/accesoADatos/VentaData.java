@@ -23,8 +23,9 @@ import tpfinalinventario.entidades.Venta;
  */
 public class VentaData {
 
-    Connection c = null;
-
+    private Connection c = null;
+    private  ClienteData clienteData = new ClienteData();
+    
     public VentaData() {
         c = Conexion.getConexion();
     }
@@ -89,17 +90,18 @@ public class VentaData {
 
     public Venta buscar(int id) {
         Venta v = null;
-        ClienteData clienteData = new ClienteData();
         try {
 
-            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE idVenta=?;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE idVenta=? and estado=true;");
             p.setInt(1, id);
             ResultSet r = p.executeQuery();
             if (r.next()) {
-                v = new Venta();
-                v.setIdVenta(id);
+                 v = new Venta();
+                v.setIdVenta(r.getInt("idVenta"));
+                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
                 v.setFecha(r.getDate("fecha").toLocalDate());
                 v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+                v.setEstado(r.getBoolean("estado"));
 
             }
             p.close();
@@ -111,19 +113,20 @@ public class VentaData {
         return v;
     }
 
-    public List<DetalleCompra> lista() {
+    public List<Venta> lista() {
 
-        ArrayList<DetalleCompra> lista = new ArrayList();
-        ClienteData clienteData = new ClienteData();
+        ArrayList<Venta> lista = new ArrayList();
         try {
 
-            PreparedStatement p = c.prepareStatement("SELECT * FROM venta;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta where estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Venta v = new Venta();
                 v.setIdVenta(r.getInt("idVenta"));
+                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
                 v.setFecha(r.getDate("fecha").toLocalDate());
                 v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+                v.setEstado(r.getBoolean("estado"));
             }
             p.close();
             r.close();
@@ -151,6 +154,32 @@ public class VentaData {
             JOptionPane.showMessageDialog(null, "Error en numeroVenta, " + ex.getMessage());
         }
        return numeroCompra;
+    }
+    
+    
+     public Venta buscarPorNumeroDeVenta(int numero) {
+        Venta v = null;
+        try {
+
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE numeroDeVenta=? and estado=true;");
+            p.setInt(1, numero);
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+                v = new Venta();
+                v.setIdVenta(r.getInt("idVenta"));
+                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
+                v.setFecha(r.getDate("fecha").toLocalDate());
+                v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+                v.setEstado(r.getBoolean("estado"));
+
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en buscar venta, " + ex.getMessage());
+        }
+        return v;
     }
 
 }
