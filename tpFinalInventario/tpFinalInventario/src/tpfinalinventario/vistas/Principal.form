@@ -17,12 +17,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMFormularioClienteActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="IMActivarCliente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Activar cliente"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMActivarClienteActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -32,15 +32,14 @@
             <Property name="text" type="java.lang.String" value="Compra"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="IMRealizarCompra">
+            <MenuItem class="javax.swing.JMenuItem" name="IMRealizarCompra">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Realizar Compra"/>
               </Properties>
               <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="IMRealizarCompraMousePressed"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMRealizarCompraActionPerformed"/>
               </Events>
-            </Menu>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="IMDetalleCompra">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver Detalle Compra"/>
@@ -95,6 +94,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMConsultaActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="IMActivarProducto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Activar Producto"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMActivarProductoActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuProveedor">
@@ -108,6 +115,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMFormularioProveedorActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="IMActivarProveedor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Activar Proveedor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMActivarProveedorActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

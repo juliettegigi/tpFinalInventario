@@ -35,9 +35,9 @@ public class Principal extends javax.swing.JFrame {
         BarraMenu = new javax.swing.JMenuBar();
         MenuCliente = new javax.swing.JMenu();
         IMFormularioCliente = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        IMActivarCliente = new javax.swing.JMenuItem();
         MenuCompra = new javax.swing.JMenu();
-        IMRealizarCompra = new javax.swing.JMenu();
+        IMRealizarCompra = new javax.swing.JMenuItem();
         IMDetalleCompra = new javax.swing.JMenuItem();
         MenuVenta = new javax.swing.JMenu();
         IMRealizarVenta = new javax.swing.JMenuItem();
@@ -45,8 +45,10 @@ public class Principal extends javax.swing.JFrame {
         MenuProducto = new javax.swing.JMenu();
         IMFormularioProducto = new javax.swing.JMenuItem();
         IMConsulta = new javax.swing.JMenuItem();
+        IMActivarProducto = new javax.swing.JMenuItem();
         MenuProveedor = new javax.swing.JMenu();
         IMFormularioProveedor = new javax.swing.JMenuItem();
+        IMActivarProveedor = new javax.swing.JMenuItem();
         MenuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,24 +100,19 @@ public class Principal extends javax.swing.JFrame {
         });
         MenuCliente.add(IMFormularioCliente);
 
-        jMenuItem1.setText("Activar cliente");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        IMActivarCliente.setText("Activar cliente");
+        IMActivarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                IMActivarClienteActionPerformed(evt);
             }
         });
-        MenuCliente.add(jMenuItem1);
+        MenuCliente.add(IMActivarCliente);
 
         BarraMenu.add(MenuCliente);
 
         MenuCompra.setText("Compra");
 
         IMRealizarCompra.setText("Realizar Compra");
-        IMRealizarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                IMRealizarCompraMousePressed(evt);
-            }
-        });
         IMRealizarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IMRealizarCompraActionPerformed(evt);
@@ -171,6 +168,14 @@ public class Principal extends javax.swing.JFrame {
         });
         MenuProducto.add(IMConsulta);
 
+        IMActivarProducto.setText("Activar Producto");
+        IMActivarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IMActivarProductoActionPerformed(evt);
+            }
+        });
+        MenuProducto.add(IMActivarProducto);
+
         BarraMenu.add(MenuProducto);
 
         MenuProveedor.setText("Proveedor");
@@ -182,6 +187,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         MenuProveedor.add(IMFormularioProveedor);
+
+        IMActivarProveedor.setText("Activar Proveedor");
+        IMActivarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IMActivarProveedorActionPerformed(evt);
+            }
+        });
+        MenuProveedor.add(IMActivarProveedor);
 
         BarraMenu.add(MenuProveedor);
 
@@ -234,14 +247,6 @@ public class Principal extends javax.swing.JFrame {
         cargarInternal(new ProductoConsultasView());
     }//GEN-LAST:event_IMConsultaActionPerformed
 
-    private void IMRealizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealizarCompraActionPerformed
-        cargarInternal(new RealizarCompra());
-    }//GEN-LAST:event_IMRealizarCompraActionPerformed
-
-    private void IMRealizarCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IMRealizarCompraMousePressed
-        cargarInternal(new RealizarCompra());
-    }//GEN-LAST:event_IMRealizarCompraMousePressed
-
     private void IMDetalleCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMDetalleCompraActionPerformed
         cargarInternal(new DetalleCompraView());
     }//GEN-LAST:event_IMDetalleCompraActionPerformed
@@ -258,9 +263,21 @@ public class Principal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_MenuSalirMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       cargarInternal(new ActivarClienteView());
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void IMActivarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMActivarClienteActionPerformed
+        cargarInternal(new ActivarClienteView());
+    }//GEN-LAST:event_IMActivarClienteActionPerformed
+
+    private void IMRealizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealizarCompraActionPerformed
+        cargarInternal(new RealizarCompra());
+    }//GEN-LAST:event_IMRealizarCompraActionPerformed
+
+    private void IMActivarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMActivarProductoActionPerformed
+        cargarInternal(new ActivarProductoView());
+    }//GEN-LAST:event_IMActivarProductoActionPerformed
+
+    private void IMActivarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMActivarProveedorActionPerformed
+        cargarInternal(new ActivarProveedorView());
+    }//GEN-LAST:event_IMActivarProveedorActionPerformed
 
     private void cargarInternal(JInternalFrame i) {
         escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
@@ -308,13 +325,16 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar BarraMenu;
+    private javax.swing.JMenuItem IMActivarCliente;
+    private javax.swing.JMenuItem IMActivarProducto;
+    private javax.swing.JMenuItem IMActivarProveedor;
     private javax.swing.JMenuItem IMConsulta;
     private javax.swing.JMenuItem IMDetalleCompra;
     private javax.swing.JMenuItem IMDetalleVenta;
     private javax.swing.JMenuItem IMFormularioCliente;
     private javax.swing.JMenuItem IMFormularioProducto;
     private javax.swing.JMenuItem IMFormularioProveedor;
-    private javax.swing.JMenu IMRealizarCompra;
+    private javax.swing.JMenuItem IMRealizarCompra;
     private javax.swing.JMenuItem IMRealizarVenta;
     private javax.swing.JMenu MenuCliente;
     private javax.swing.JMenu MenuCompra;
@@ -324,7 +344,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVenta;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

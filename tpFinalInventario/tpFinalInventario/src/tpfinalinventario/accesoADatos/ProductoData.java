@@ -36,19 +36,21 @@ public class ProductoData {
             p.setDouble(4, producto.getPrecioActual());
             p.setInt(5, producto.getStock());
             p.setBoolean(6, producto.isEstado());
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
-            if (r.next()) 
-                producto.setIdProducto(r.getInt("idProducto"));              
+            if (r.next()) {
+                producto.setIdProducto(r.getInt("idProducto"));
+            }
 
-            if(filasAfectadas>0)
+            if (filasAfectadas > 0) {
                 return true;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar producto, " + ex.getMessage());
         }
         return false;
     }
-    
+
     public void borrarLog(Producto producto) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE FROM producto SET estado=? WHERE idProducto=?");
@@ -69,40 +71,34 @@ public class ProductoData {
             p.execute();
             p.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "error en eliminar producto " + ex.getMessage());
         }
     }
 
-    
-        public void eliminadoLogico(int id) {
+    public void eliminadoLogico(int id) {
 
-           Producto producto=buscarPorId(id);
-           if(producto==null){
-               
-               JOptionPane.showMessageDialog(null, "El Producto con id="+id+" no existe");
-               return;
-           }
-            
+        Producto producto = buscarPorId(id);
+        if (producto == null) {
+
+            JOptionPane.showMessageDialog(null, "El Producto con id=" + id + " no existe");
+            return;
+        }
+
         try {
             PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=?;");
             p.setInt(1, id);
             p.executeUpdate();
             p.close();
-            
+
             JOptionPane.showMessageDialog(null, "Producto eliminado con éxito ");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error en eliminar producto "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "error en eliminar producto " + ex.getMessage());
         }
     }
-    
-        
 
-
-        
-    
     public List<Producto> buscarCampoValor(String campo, String valor) {
         ArrayList<Producto> lista = new ArrayList();
-        try { 
+        try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE " + campo + "=? and estado=true;");
             p.setString(1, valor);
 
@@ -154,19 +150,17 @@ public class ProductoData {
         return producto;
     }
 
-    
-    public boolean existe(Producto producto){
-            try {
+    public boolean existe(Producto producto) {
+        try {
             PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and categoria=? and descripcion=? and precioActual=? and stock=? and estado=true;");
-            p.setString(1,producto.getNombre() );
+            p.setString(1, producto.getNombre());
             p.setString(2, producto.getCategoria());
-            p.setString(3,producto.getDescripcion());
-            p.setDouble(4,producto.getPrecioActual() );
+            p.setString(3, producto.getDescripcion());
+            p.setDouble(4, producto.getPrecioActual());
             p.setInt(5, producto.getStock());
-            
 
             ResultSet r = p.executeQuery();
-            
+
             if (r.next()) {
                 p.close();
                 r.close();
@@ -178,11 +172,10 @@ public class ProductoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en existe producto, " + ex.getMessage());
         }
-            
-            return false;
+
+        return false;
     }
-    
-    
+
     public boolean update(Producto producto) {
 
         try {
@@ -193,11 +186,13 @@ public class ProductoData {
             p.setDouble(4, producto.getPrecioActual());
             p.setInt(5, producto.getStock());
             p.setInt(6, producto.getIdProducto());
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             p.close();
-            if(filasAfectadas>0)
-               return true;
-            else return false;
+            if (filasAfectadas > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
             return false;
@@ -229,13 +224,35 @@ public class ProductoData {
         }
         return lista;
     }
-    
-    
-    
-    public List<Producto>  nombresEmpiezanCon(String s){
-         ArrayList<Producto> lista = new ArrayList();
-          try {
-            PreparedStatement p = c.prepareStatement("SELECT * FROM producto where nombre like '"+s+"%' and estado=true;");
+
+    public List<Producto> listaNoActivos() {
+
+        ArrayList<Producto> lista = new ArrayList();
+
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto where estado=false;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Producto producto = new Producto();
+                producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                lista.add(producto);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la lista de productos inactivos, " + ex.getMessage());
+        }
+        return lista;
+    }
+
+    public List<Producto> nombresEmpiezanCon(String s) {
+        ArrayList<Producto> lista = new ArrayList();
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto where nombre like '" + s + "%' and estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Producto producto = new Producto();
@@ -252,7 +269,27 @@ public class ProductoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la lista de producto, " + ex.getMessage());
         }
-          return lista;
+        return lista;
+    }
+
+    public boolean activarProducto(String nombre) {
+
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=true WHERE nombre=?");
+            p.setString(1, nombre);
+            int filasAfectadas = p.executeUpdate();
+            p.close();
+            if (filasAfectadas > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al activar producto, " + ex.getMessage());
+            return false;
+        }
+
     }
 
 }

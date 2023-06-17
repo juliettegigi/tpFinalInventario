@@ -8,40 +8,40 @@ package tpfinalinventario.vistas;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import tpfinalinventario.accesoADatos.ClienteData;
-import tpfinalinventario.entidades.Cliente;
+import tpfinalinventario.accesoADatos.ProductoData;
+import tpfinalinventario.entidades.Producto;
 
 /**
  *
- * @author julie
+ * @author santi
  */
-public class ActivarClienteView extends javax.swing.JInternalFrame {
- private DefaultTableModel modelo;
-    private  ClienteData clienteData=new ClienteData();
-    public ActivarClienteView() {
+public class ActivarProductoView extends javax.swing.JInternalFrame {
+
+    private DefaultTableModel modelo;
+    private ProductoData productoData = new ProductoData();
+
+    /**
+     * Creates new form ActivarProducto
+     */
+    public ActivarProductoView() {
         initComponents();
-         modelo=new DefaultTableModel();
+        modelo = new DefaultTableModel();
         armarCabeceraTabla();
-         llenarTabla();
+        llenarTabla();
     }
     
+    private void armarCabeceraTabla(){
     
-    
-    
-    
-    
-    
-    
-     private void armarCabeceraTabla(){
-        //creo las columnas de la tabla
         ArrayList<Object> columns=new ArrayList();
-        columns.add("DNI");
-        columns.add("APELLIDO");
         columns.add("NOMBRE");
-        //recorro el arrayList, a nuestro modelo le agrego columnas
+        columns.add("CATEGORIA");
+        columns.add("DESCRIPCION");
+        columns.add("PRECIO");
+        columns.add("STOCK");
+
         for(Object it:columns)
             modelo.addColumn(it);
-        //a la tabla alumno le cambio el modelo, le pongo este que tiene estas columnas(id,nombre, nota)
+     
         jTableT.setModel(modelo);
                 
     }
@@ -56,18 +56,17 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
     
    private void llenarTabla(){
         borrarFilas();
-        ArrayList<Cliente> listaClientes=null;
+        ArrayList<Producto> listaProductos=null;
        
         
-        //obtengo la lista de las materias q cursa el alumno seleccionado
+
         
-            listaClientes=(ArrayList<Cliente>) clienteData.listaNoActivos();
-       if(listaClientes.isEmpty())
+            listaProductos=(ArrayList<Producto>) productoData.listaNoActivos();
+       if(listaProductos.isEmpty())
            return;
             
-        for(Cliente c:listaClientes){
-                modelo.addRow(new Object[]{c.getDni(),c.getApellido(),c.getNombre()});
-               
+        for(Producto c:listaProductos){
+                modelo.addRow(new Object[]{c.getNombre(),c.getCategoria(),c.getDescripcion(),c.getPrecioActual(),c.getStock()});
             }
              
        
@@ -82,12 +81,19 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableT = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
 
-        jLabel1.setText("LISTADO DE CLIENTES NO ACTIVOS");
+        jButton1.setText("Activar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("LISTADO DE PRODUCTOS NO ACTIVOS");
 
         jTableT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,29 +108,23 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableT);
 
-        jButton1.setText("Activar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(103, 103, 103))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addComponent(jButton1)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,15 +142,15 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           int fila=jTableT.getSelectedRow();
-        if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Tiene que seleccionar a un cliente");
+        int fila = jTableT.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Tiene que seleccionar un producto");
             return;
         }
-       
-        //recupero el id 
-        int dni=(int) jTableT.getValueAt(fila, 0);
-        clienteData.activarCliente(dni);
+
+        
+        String nombre = (String)jTableT.getValueAt(fila, 0);
+        productoData.activarProducto(nombre);
         llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
