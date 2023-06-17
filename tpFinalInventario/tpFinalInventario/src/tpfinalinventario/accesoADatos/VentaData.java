@@ -141,7 +141,6 @@ public class VentaData {
     public int numeroVenta() {
         int numeroCompra=1;
        try {
-
             PreparedStatement p = c.prepareStatement("SELECT max(numeroDeVenta) as max from venta;");
             ResultSet r = p.executeQuery();
             if (r.next()) {
@@ -157,29 +156,29 @@ public class VentaData {
     }
     
     
-     public Venta buscarPorNumeroDeVenta(int numero) {
-        Venta v = null;
-        try {
+    public Venta buscarPorNumeroDeVenta(int numero) {
+       Venta v = null;
+       try {
 
-            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE numeroDeVenta=? and estado=true;");
-            p.setInt(1, numero);
-            ResultSet r = p.executeQuery();
-            if (r.next()) {
-                v = new Venta();
-                v.setIdVenta(r.getInt("idVenta"));
-                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
-                v.setFecha(r.getDate("fecha").toLocalDate());
-                v.setCliente(clienteData.buscar(r.getInt("idCliente")));
-                v.setEstado(r.getBoolean("estado"));
+           PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE numeroDeVenta=? and estado=true;");
+           p.setInt(1, numero);
+           ResultSet r = p.executeQuery();
+           if (r.next()) {
+               v = new Venta();
+               v.setIdVenta(r.getInt("idVenta"));
+               v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
+               v.setFecha(r.getDate("fecha").toLocalDate());
+               v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+               v.setEstado(r.getBoolean("estado"));
 
-            }
-            p.close();
-            r.close();
+           }
+           p.close();
+           r.close();
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en buscar venta, " + ex.getMessage());
-        }
-        return v;
+       } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error en buscar venta, " + ex.getMessage());
+       }
+       return v;
     }
 
 }

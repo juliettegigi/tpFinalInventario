@@ -14,15 +14,18 @@ import java.time.LocalDate;
 public class Compra {
 
     private int idCompra;
+    private int numeroDeCompra;
     private LocalDate fecha;
     private Proveedor proveedor;
     private boolean estado;
+    
 
     public Compra() {
     }
 
-    public Compra(int idCompra, LocalDate fecha, Proveedor proveedor, boolean estado) {
+    public Compra(int idCompra, int numeroDeCompra, LocalDate fecha, Proveedor proveedor, boolean estado) {
         this.idCompra = idCompra;
+        this.numeroDeCompra = numeroDeCompra;
         this.fecha = fecha;
         this.proveedor = proveedor;
         this.estado = estado;
@@ -37,6 +40,10 @@ public class Compra {
 
     public int getIdCompra() {
         return idCompra;
+    }
+    
+    public int getNumeroDeCompra(){
+        return numeroDeCompra;
     }
 
     public Proveedor getProveedor() {
@@ -58,6 +65,10 @@ public class Compra {
     public void setIdCompra(int idCompra) {
         this.idCompra = idCompra;
     }
+    
+    public void setNumeroDeCompra(int numeroDeCompra){
+        this.numeroDeCompra = numeroDeCompra;
+    }
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
@@ -69,7 +80,7 @@ public class Compra {
 
     @Override
     public String toString() {
-        return "Compra{" + "idCompra=" + idCompra + ", fecha=" + fecha + ", proveedor=" + proveedor + '}';
+        return "Compra{" + "idCompra=" + idCompra + ", numeroDeCompra=" + numeroDeCompra + ", fecha=" + fecha + ", proveedor=" + proveedor + '}';
     }
 
 }

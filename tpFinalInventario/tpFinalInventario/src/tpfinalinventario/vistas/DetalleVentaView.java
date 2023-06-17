@@ -72,6 +72,12 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("N° Venta");
 
+        jtf_numVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_numVentaActionPerformed(evt);
+            }
+        });
+
         btBuscar.setBackground(new java.awt.Color(0, 153, 0));
         btBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btBuscar.setText("Buscar");
@@ -216,6 +222,10 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
          jLabel3.setVisible(true);
         jLabel4.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void jtf_numVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_numVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_numVentaActionPerformed
 
     private void armarCabeceraTabla() {
         //creo las columnas de la tabla

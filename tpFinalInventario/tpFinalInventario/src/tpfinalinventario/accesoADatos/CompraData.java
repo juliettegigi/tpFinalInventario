@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.Compra;
+import tpfinalinventario.entidades.Venta;
 
 /**
  *
@@ -145,6 +146,31 @@ public class CompraData {
             JOptionPane.showMessageDialog(null, "Error en numeroCompra, " + ex.getMessage());
         }
        return numeroCompra;
+    }
+      
+      public Compra buscarPorNumeroDeCompra(int numero) {
+        Compra com = null;
+        try {
+
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE numeroDeCompra=? and estado=true;");
+            p.setInt(1, numero);
+            ResultSet r = p.executeQuery();
+            ProveedorData prov=new ProveedorData();
+            if (r.next()) {
+                com = new Compra();
+                com.setIdCompra(r.getInt("idCompra"));
+                com.setNumeroDeCompra(r.getInt("numeroDeCompra"));
+                com.setFecha(r.getDate("fecha").toLocalDate());
+                com.setProveedor(prov.buscar(r.getInt("idProveedor")));
+                com.setEstado(r.getBoolean("estado"));
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en buscar venta, " + ex.getMessage());
+        }
+        return com;
     }
 
 }
