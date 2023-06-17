@@ -42,7 +42,7 @@ public class Conexion {
             }
         }
 
-        return connection;  //retorno la conexion o una excepción
+        return connection;  //retorno la conexion 
 
     }
 }
