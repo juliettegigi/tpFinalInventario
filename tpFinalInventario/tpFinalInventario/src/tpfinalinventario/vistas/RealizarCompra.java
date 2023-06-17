@@ -271,37 +271,7 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtfNumCompraActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        // boton buscar
-        if (jtfNumCompra.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero de compra.");
-            return;
-        }
-        int numero=0;
-        try{
-            numero=Integer.parseInt(jtfNumCompra.getText());
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Ingrese un número.");
-            return; 
-        }
-        
-        // lista de compra, con un numero de compra, es uno solo
-        Compra compra = CompraData.
-        if(venta==null){
-            JOptionPane.showMessageDialog(this, "No existe ese número de compra.");
-            return; 
-        }
-           
-        String fecha=venta.getFecha().toString();
-        Cliente cliente=venta.getCliente();
-        jLabel3.setText("Cliente: "+cliente.getNombre());
-        jLabel4.setText("Fecha: "+fecha);
-        // buscar en detalleVenta por idVenta
-        ArrayList<DetalleVenta> listaDetalleVenta=(ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(venta.getIdVenta());
-        
-        llenarTabla(listaDetalleVenta);
-        
-         jLabel3.setVisible(true);
-        jLabel4.setVisible(true);
+        // 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     /**
