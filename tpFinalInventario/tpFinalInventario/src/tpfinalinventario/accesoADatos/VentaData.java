@@ -32,9 +32,10 @@ public class VentaData {
     public void guardar(Venta v) {
 
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO venta(fecha,idCliente,estado) values(?,?,true)", Statement.RETURN_GENERATED_KEYS);
-            p.setDate(1, Date.valueOf(v.getFecha()));
-            p.setDouble(2, v.getCliente().getIdCliente());
+            PreparedStatement p = c.prepareStatement("INSERT INTO venta(numeroDeVenta,fecha,idCliente,estado) values(?,?,?,true)", Statement.RETURN_GENERATED_KEYS);
+            p.setInt(1, v.getNumeroDeVenta());
+            p.setDate(2, Date.valueOf(v.getFecha()));
+            p.setDouble(3, v.getCliente().getIdCliente());
             p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
             if (r.next()) {
@@ -134,11 +135,11 @@ public class VentaData {
     }
     
     
-    public int numeroCompra() {
+    public int numeroVenta() {
         int numeroCompra=1;
        try {
 
-            PreparedStatement p = c.prepareStatement("SELECT max(numeroDeCompra as max from venta;");
+            PreparedStatement p = c.prepareStatement("SELECT max(numeroDeVenta) as max from venta;");
             ResultSet r = p.executeQuery();
             if (r.next()) {
                numeroCompra=r.getInt("max")+1;
@@ -147,7 +148,7 @@ public class VentaData {
             r.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en lista venta, " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en numeroVenta, " + ex.getMessage());
         }
        return numeroCompra;
     }

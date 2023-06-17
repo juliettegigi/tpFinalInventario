@@ -268,7 +268,8 @@ public class RealizarVenta extends javax.swing.JInternalFrame {
         
         // cargar la venta
         Cliente c = (Cliente) jcb_clientes.getSelectedItem();
-        Venta v = new Venta(ventaData.numeroCompra(),LocalDate.now(), c, true);
+        System.out.println("nu,ero de venta "+ventaData.numeroVenta());
+        Venta v = new Venta(ventaData.numeroVenta(),LocalDate.now(), c, true);
         ventaData.guardar(v);
         
         //recorrer la tabla
