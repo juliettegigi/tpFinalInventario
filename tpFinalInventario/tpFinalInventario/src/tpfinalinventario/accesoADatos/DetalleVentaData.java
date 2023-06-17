@@ -23,7 +23,8 @@ import tpfinalinventario.entidades.Producto;
 public class DetalleVentaData {
 
     private Connection c = null;
-
+    private VentaData ventaData=new VentaData();
+    private ProductoData productoData=new ProductoData();
     public DetalleVentaData() {
         c = Conexion.getConexion();
     }
@@ -146,12 +147,15 @@ public class DetalleVentaData {
         ///*productos que están en detalle venta*/
 //select * from producto where idProducto in(select idProducto from detalleVenta);
 
-    public List<Producto> productosEnDetalleVenta() {
+    public List<Producto> productosEnDetalleVenta(int i) {
         ArrayList<Producto> lista = new ArrayList();
         try { 
-            PreparedStatement p = c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta);");
-          
-
+            PreparedStatement p ;
+            if(i==0)
+              p= c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta);");
+            else {p= c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta where idVenta=?);");
+                   p.setInt(1, i);
+            }
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Producto producto = new Producto();
@@ -173,9 +177,34 @@ public class DetalleVentaData {
         return lista;
     }
     
+      public List<DetalleVenta>  detalleVentaPorIdVenta(int id) {
+        ArrayList<DetalleVenta> lista = new ArrayList();
+        try { 
+            PreparedStatement p ;
+              p= c.prepareStatement("select * from detalleVenta where idVenta=? and estado=1;");
+              p.setInt(1, id);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                DetalleVenta dv = new DetalleVenta();
+                dv.setIdDetalleVenta(r.getInt("idDetalleVenta"));
+                dv.setCantidad(r.getInt("cantidad"));
+                dv.setPrecioVenta(r.getDouble("precioventa"));
+                dv.setVenta(ventaData.buscar(r.getInt("idVenta")));
+                dv.setProducto(productoData.buscarPorId(r.getInt("idProducto")));
+              
+                lista.add(dv);
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error detalleventaporidventa, " + ex.getMessage());
+        }
+        return lista;
+    }
     
     
-    
+
        
 
 }

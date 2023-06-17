@@ -220,7 +220,7 @@ public class ProductoConsultasView extends javax.swing.JInternalFrame {
 
         jtf_buscar.setVisible(false);
         btnBuscar.setVisible(false);
-        lista = (ArrayList<Producto>) detalleVentaData.productosEnDetalleVenta();
+        lista = (ArrayList<Producto>) detalleVentaData.productosEnDetalleVenta(0);
         if (lista.isEmpty()) {
             return;
         }

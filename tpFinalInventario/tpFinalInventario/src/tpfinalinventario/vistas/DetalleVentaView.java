@@ -11,7 +11,11 @@ import javax.swing.table.DefaultTableModel;
 import tpfinalinventario.accesoADatos.ClienteData;
 import tpfinalinventario.accesoADatos.DetalleVentaData;
 import tpfinalinventario.accesoADatos.ProductoData;
+import tpfinalinventario.accesoADatos.VentaData;
+import tpfinalinventario.entidades.Cliente;
+import tpfinalinventario.entidades.DetalleVenta;
 import tpfinalinventario.entidades.Producto;
+import tpfinalinventario.entidades.Venta;
 
 /**
  *
@@ -24,7 +28,8 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
     private DetalleVentaData detalleVentaData = new DetalleVentaData();
     private ClienteData clienteData = new ClienteData();
     private ArrayList<Producto> lista;
-
+    private VentaData ventaData=new VentaData();
+ 
     /**
      * Creates new form DetalleVentaView
      */
@@ -33,7 +38,7 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         modelo = new DefaultTableModel();
         armarCabeceraTabla();
         lista = (ArrayList<Producto>) productoData.lista();
-        llenarTabla(lista);
+        
     }
 
     /**
@@ -54,21 +59,20 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btSalir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Detalle de Venta");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("N° Venta");
 
         btBuscar.setBackground(new java.awt.Color(0, 153, 0));
         btBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +98,10 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         btSalir.setForeground(new java.awt.Color(255, 255, 255));
         btSalir.setText("Salir");
 
+        jLabel3.setText("Cliente: nombre");
+
+        jLabel4.setText("Fecha: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -103,27 +111,32 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtf_numVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(btBuscar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(124, 124, 124)
-                                .addComponent(jLabel1)))
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jtf_numVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btBuscar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(126, 126, 126)
+                                        .addComponent(jLabel4)))))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btSalir)))
+                        .addComponent(btSalir))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,13 +148,21 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jtf_numVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addGap(14, 14, 14)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btSalir)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,9 +181,31 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         // ACCION BOTON BUSCAR
+        
         if (jtf_numVenta.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese un numero de venta.");
+            return;
         }
+        int numero=0;
+        try{
+            numero=Integer.parseInt(jtf_numVenta.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ingrese un número.");
+            return; 
+        }
+        
+        // lista de Venta, con un numero de venta, es uno solo
+        Venta venta = ventaData.buscarPorNumeroDeVenta(numero);
+        String fecha=venta.getFecha().toString();
+        Cliente cliente=venta.getCliente();
+        jLabel3.setText("Cliente: "+cliente.getNombre());
+        jLabel4.setText("Fecha: "+fecha);
+        System.out.println("VENT_: " +venta);
+        // buscar en detalleVenta por idVenta
+        ArrayList<DetalleVenta> listaDetalleVenta=(ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(venta.getIdVenta());
+        
+        llenarTabla(listaDetalleVenta);
+        
         /*
         ¿¿¿COMO BUSCO DISTINTOS VALORES DE DISTINTAS TABLAS?
          */
@@ -174,8 +217,8 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         columns.add("PRODUCTO");
         columns.add("CANTIDAD");
         columns.add("PRECIO");
-        columns.add("FECHA");
-        columns.add("CLIENTE");
+        //columns.add("FECHA");
+        //columns.add("CLIENTE");
 
         //recorro el arrayList, a nuestro modelo le agrego columnas
         for (Object it : columns) {
@@ -184,14 +227,17 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
     }
 
-    private void llenarTabla(ArrayList<Producto> lista) {
+    private void llenarTabla(ArrayList<DetalleVenta> listaDetalleVenta) {
         borrarFilas();
-        if (lista.isEmpty()) {
+        if (listaDetalleVenta.isEmpty()) {
             return;
         }
-        for (Producto p : lista) {
-            modelo.addRow(new Object[]{p.getNombre(), p.getCategoria(), p.getDescripcion(), p.getPrecioActual(), p.getStock()});
+        for (DetalleVenta dv : listaDetalleVenta) {
+            Producto p=productoData.buscarPorId(dv.getProducto().getIdProducto());
+            modelo.addRow(new Object[]{p.getNombre(), dv.getCantidad(),p.getPrecioActual()});
         }
+        
+         modelo.addRow(new Object[]{ "","","","total"});
     }
 
     public void borrarFilas() {
@@ -206,6 +252,8 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
