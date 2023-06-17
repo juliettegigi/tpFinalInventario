@@ -127,5 +127,24 @@ public class CompraData {
         }
         return lista;
     }
+    
+    
+      public int numeroCompra() {
+        int numeroCompra=1;
+       try {
+
+            PreparedStatement p = c.prepareStatement("SELECT max(numeroDeCompra) as max from compra;");
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+               numeroCompra=r.getInt("max")+1;
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en numeroCompra, " + ex.getMessage());
+        }
+       return numeroCompra;
+    }
 
 }
