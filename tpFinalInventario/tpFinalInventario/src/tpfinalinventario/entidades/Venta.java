@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Venta {
 
     private int idVenta;
-    private int numeroDeCompra;
+    private int numeroDeVenta;
     private LocalDate fecha;
     private Cliente cliente;
     private boolean estado;
@@ -24,14 +24,14 @@ public class Venta {
 
     public Venta(int idVenta, int numeroDeCompra, LocalDate fecha, Cliente cliente, boolean estado) {
         this.idVenta = idVenta;
-        this.numeroDeCompra = numeroDeCompra;
+        this.numeroDeVenta = numeroDeCompra;
         this.fecha = fecha;
         this.cliente = cliente;
         this.estado = estado;
     }
 
     public Venta(int numeroDeCompra, LocalDate fecha, Cliente cliente, boolean estado) {
-        this.numeroDeCompra = numeroDeCompra;
+        this.numeroDeVenta = numeroDeCompra;
         this.fecha = fecha;
         this.cliente = cliente;
         this.estado = estado;
@@ -41,8 +41,8 @@ public class Venta {
         return idVenta;
     }
 
-    public int getNumeroDeCompra() {
-        return numeroDeCompra;
+    public int getNumeroDeVenta() {
+        return numeroDeVenta;
     }
 
     public LocalDate getFecha() {
@@ -61,8 +61,8 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public void setNumeroDeCompra(int numeroDeCompra) {
-        this.numeroDeCompra = numeroDeCompra;
+    public void setNumeroDeVenta(int numeroDeVenta) {
+        this.numeroDeVenta = numeroDeVenta;
     }
 
     public void setFecha(LocalDate fecha) {
@@ -79,7 +79,7 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", numeroDeCompra=" + numeroDeCompra + ", fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + '}';
+        return "Venta{" + "idVenta=" + idVenta + ", numeroDeVenta=" + numeroDeVenta + ", fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + '}';
     }
 
   
