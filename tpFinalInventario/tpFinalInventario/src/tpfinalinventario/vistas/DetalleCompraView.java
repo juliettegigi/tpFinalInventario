@@ -41,7 +41,6 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         modelo = new DefaultTableModel();
         armarCabeceraTabla();
         lista = (ArrayList<Producto>) productoData.lista();
-        llenarTabla(lista);
     }
 
     /**
@@ -222,11 +221,11 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         jLabel5.setText("Proveedor: "+prov.getRazonSocial());
         jLabel6.setText("Fecha: "+fecha);
         // buscar en detalleVenta por idVenta
-        ArrayList<DetalleCompra> listaDetalleCompra=(ArrayList<DetalleCompra>) detalleCompraData.buscar(compra.getIdCompra());
+        ArrayList<DetalleCompra> listaDetalleCompra= new ArrayList<DetalleCompra>();
         
         llenarTabla(listaDetalleCompra);
         
-         jLabel3.setVisible(true);
+        jLabel3.setVisible(true);
         jLabel4.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
     private void armarCabeceraTabla() {
@@ -245,13 +244,13 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
     }
 
-    private void llenarTabla(ArrayList<DetalleCompra> lista) {
+    private void llenarTabla(ArrayList<DetalleCompra> listaDetalleCompra) {
         borrarFilas();
-        if (lista.isEmpty()) {
+        if (listaDetalleCompra.isEmpty()) {
             return;
         }
         double total=0;
-        for (DetalleCompra dc : lista) {
+        for (DetalleCompra dc : listaDetalleCompra) {
             Producto p=productoData.buscarPorId(dc.getProducto().getIdProducto());
             modelo.addRow(new Object[]{p.getNombre(), dc.getCantidad(),p.getPrecioActual()});
            total+=dc.getPrecioCosto();

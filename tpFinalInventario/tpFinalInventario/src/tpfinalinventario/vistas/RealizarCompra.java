@@ -82,9 +82,6 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProd = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jtfNumCompra = new javax.swing.JTextField();
-        jButtonBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -149,21 +146,6 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Numero de compra:");
-
-        jtfNumCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfNumCompraActionPerformed(evt);
-            }
-        });
-
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,15 +167,9 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addComponent(jtfNumCompra)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonBuscar)
-                        .addGap(93, 93, 93))))
+                                .addGap(202, 202, 202)
+                                .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,22 +177,16 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jButtonBuscar))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
-                        .addComponent(jButton1))
-                    .addComponent(jtfNumCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
+                .addComponent(jButton1)
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         pack();
@@ -247,6 +217,7 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
         if (cantR != 0 && c != 0) {
             for (int i = 0; i < cantProd; i++) {
                 if (!jTableProd.getValueAt(i, 4).equals("0")) {
+                    jTableProd.isCellEditable(i, 4);
                     int f = jTableProv.getSelectedRow();
                     comp.setProveedor(prov.buscar((int) jTableProv.getValueAt(f, 0)));
                     comp.setFecha(LocalDate.now());
@@ -265,14 +236,6 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jtfNumCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNumCompraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfNumCompraActionPerformed
-
-    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        // 
-    }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,15 +275,12 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableProd;
     private javax.swing.JTable jTableProv;
-    private javax.swing.JTextField jtfNumCompra;
     // End of variables declaration//GEN-END:variables
 }
