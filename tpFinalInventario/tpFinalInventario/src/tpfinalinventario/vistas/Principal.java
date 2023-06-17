@@ -42,6 +42,7 @@ public class Principal extends javax.swing.JFrame {
         MenuVenta = new javax.swing.JMenu();
         IMRealizarVenta = new javax.swing.JMenuItem();
         IMDetalleVenta = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         MenuProducto = new javax.swing.JMenu();
         IMFormularioProducto = new javax.swing.JMenuItem();
         IMConsulta = new javax.swing.JMenuItem();
@@ -147,6 +148,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         MenuVenta.add(IMDetalleVenta);
+
+        jMenuItem1.setText("detalle2");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuVenta.add(jMenuItem1);
 
         BarraMenu.add(MenuVenta);
 
@@ -279,6 +288,10 @@ public class Principal extends javax.swing.JFrame {
         cargarInternal(new ActivarProveedorView());
     }//GEN-LAST:event_IMActivarProveedorActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+         cargarInternal(new DetalleVenta2View());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void cargarInternal(JInternalFrame i) {
         escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
         escritorio.repaint();//dibuja todo de nuevo
@@ -344,6 +357,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVenta;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
