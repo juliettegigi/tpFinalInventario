@@ -186,14 +186,13 @@ public class ProductoData {
     public boolean update(Producto producto) {
 
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,categoria=?,descripcion=?,precioActual=?, stock=?, estado=? WHERE idProducto=?");
+            PreparedStatement p = c.prepareStatement("UPDATE producto set nombre=?,categoria=?,descripcion=?,precioActual=?, stock=? WHERE idProducto=? and estado=true");
             p.setString(1, producto.getNombre());
             p.setString(2, producto.getCategoria());
             p.setString(3, producto.getDescripcion());
             p.setDouble(4, producto.getPrecioActual());
             p.setInt(5, producto.getStock());
-            p.setBoolean(6, producto.isEstado());
-            p.setInt(7, producto.getIdProducto());
+            p.setInt(6, producto.getIdProducto());
             int filasAfectadas=p.executeUpdate();
             p.close();
             if(filasAfectadas>0)
