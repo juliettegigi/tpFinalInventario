@@ -37,7 +37,7 @@ public class ClienteData {
             p.setString(3, cliente.getNombre());
             p.setString(4, cliente.getDomicilio());
             p.setString(5, cliente.getTelefono());
-            
+
             p.executeUpdate();
             ResultSet rs = p.getGeneratedKeys();
             if (rs.next()) {
@@ -51,8 +51,8 @@ public class ClienteData {
             JOptionPane.showMessageDialog(null, "El cliente no fue añadido" + ex.getMessage());
         }
     }
-    
-     public void borrarLog(Cliente cliente) {
+
+    public void borrarLog(Cliente cliente) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE FROM cliente SET estado=? WHERE idCliente=?");
             p.setBoolean(1, cliente.isEstado());
@@ -77,22 +77,24 @@ public class ClienteData {
         }
     }
 
-      public void eliminarLogico(int id) {
+    public void eliminarLogico(int id) {
 
         String sql = "UPDATE cliente set estado=false WHERE idCliente=? and estado=true ;";
         try {
             PreparedStatement p = c.prepareStatement(sql);
             p.setInt(1, id);
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             p.close();
-            if(filasAfectadas>0)
-                JOptionPane.showMessageDialog(null,"Cliente eliminado");
-            else JOptionPane.showMessageDialog(null,"No existe cliente con id="+id);
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Cliente eliminado");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe cliente con id=" + id);
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar cliente, " + ex.getMessage());
         }
     }
-    
+
     public Cliente buscar(int id) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE idCliente=? and estado=true;";
@@ -119,8 +121,7 @@ public class ClienteData {
         return cliente;
     }
 
-    
-     public Cliente buscarPorDNI(int dni) {
+    public Cliente buscarPorDNI(int dni) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE dni=? and estado=true;";
 
@@ -145,9 +146,7 @@ public class ClienteData {
 
         return cliente;
     }
-    
-    
-    
+
     public boolean update(Cliente cliente) {
 
         try {
@@ -158,17 +157,18 @@ public class ClienteData {
             p.setString(4, cliente.getDomicilio());
             p.setString(5, cliente.getTelefono());
             p.setInt(6, cliente.getIdCliente());
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             p.close();
-            if(filasAfectadas>0)
+            if (filasAfectadas > 0) {
                 return true;
-            else return false;
-            
+            } else {
+                return false;
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
             return false;
         }
-      
 
     }
 
@@ -194,9 +194,8 @@ public class ClienteData {
         }
         return lista;
     }
-    
-    
-        public List<Cliente> listaNoActivos() {
+
+    public List<Cliente> listaNoActivos() {
         ArrayList<Cliente> lista = new ArrayList();
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM cliente where estado=false;");
@@ -218,23 +217,24 @@ public class ClienteData {
         }
         return lista;
     }
-        
-         public boolean activarCliente(int dni) {
+
+    public boolean activarCliente(int dni) {
 
         try {
             PreparedStatement p = c.prepareStatement("UPDATE  cliente SET estado=true WHERE dni=?");
             p.setInt(1, dni);
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             p.close();
-            if(filasAfectadas>0)
+            if (filasAfectadas > 0) {
                 return true;
-            else return false;
-            
+            } else {
+                return false;
+            }
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al activar cliente, " + ex.getMessage());
             return false;
         }
-      
 
     }
 
