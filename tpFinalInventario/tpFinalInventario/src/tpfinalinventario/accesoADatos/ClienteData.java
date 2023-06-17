@@ -194,5 +194,48 @@ public class ClienteData {
         }
         return lista;
     }
+    
+    
+        public List<Cliente> listaNoActivos() {
+        ArrayList<Cliente> lista = new ArrayList();
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM cliente where estado=false;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setDni(r.getInt("dni"));
+                cliente.setIdCliente(r.getInt("idCliente"));
+                cliente.setApellido(r.getString("apellido"));
+                cliente.setNombre(r.getString("nombre"));
+                cliente.setDomicilio(r.getString("domicilio"));
+                cliente.setTelefono(r.getString("telefono"));
+                lista.add(cliente);
+            }
+            p.close();
+            r.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar clientes, " + ex.getMessage());
+        }
+        return lista;
+    }
+        
+         public boolean activarCliente(int dni) {
+
+        try {
+            PreparedStatement p = c.prepareStatement("UPDATE  cliente SET estado=true WHERE dni=?");
+            p.setInt(1, dni);
+            int filasAfectadas=p.executeUpdate();
+            p.close();
+            if(filasAfectadas>0)
+                return true;
+            else return false;
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al update clientes, " + ex.getMessage());
+            return false;
+        }
+      
+
+    }
 
 }

@@ -35,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
         BarraMenu = new javax.swing.JMenuBar();
         MenuCliente = new javax.swing.JMenu();
         IMFormularioCliente = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         MenuCompra = new javax.swing.JMenu();
         IMRealizarCompra = new javax.swing.JMenu();
         IMDetalleCompra = new javax.swing.JMenuItem();
@@ -53,7 +54,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 0));
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 80)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("FraveMAX SRL ");
         jLabel1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -97,6 +97,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         MenuCliente.add(IMFormularioCliente);
+
+        jMenuItem1.setText("Activar cliente");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuCliente.add(jMenuItem1);
 
         BarraMenu.add(MenuCliente);
 
@@ -250,6 +258,10 @@ public class Principal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_MenuSalirMouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       cargarInternal(new ActivarClienteView());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void cargarInternal(JInternalFrame i) {
         escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
         escritorio.repaint();//dibuja todo de nuevo
@@ -312,6 +324,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVenta;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
