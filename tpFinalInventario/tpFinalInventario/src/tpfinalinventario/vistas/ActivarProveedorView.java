@@ -18,7 +18,7 @@ import tpfinalinventario.entidades.Proveedor;
 public class ActivarProveedorView extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modelo;
-    private ProveedorData clienteData = new ProveedorData();
+    private ProveedorData proveedorData = new ProveedorData();
 
     /**
      * Creates new form ActivarProveedor
@@ -57,7 +57,7 @@ public class ActivarProveedorView extends javax.swing.JInternalFrame {
         borrarFilas();
         ArrayList<Proveedor> listaProveedores = null;
 
-        listaProveedores = (ArrayList<Proveedor>) proveedorData.listaNoActivos() {
+        listaProveedores = (ArrayList<Proveedor>) proveedorData.listaNoActivos(); 
             if (listaProveedores.isEmpty()) {
                 return;
             }
@@ -66,8 +66,8 @@ public class ActivarProveedorView extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{c.getRazonSocial(), c.getDomicilio(), c.getTelefono()});
             }
 
-        }
-
+        
+    }
         /**
          * This method is called from within the constructor to initialize the
          * form. WARNING: Do NOT modify this code. The content of this method is
@@ -145,7 +145,7 @@ public class ActivarProveedorView extends javax.swing.JInternalFrame {
         }
 
         String razonSocial = (String) jTableT.getValueAt(fila, 0);
-        clienteData.activarProveedor(razonSocial);
+        proveedorData.activarProveedor(razonSocial);
         llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
