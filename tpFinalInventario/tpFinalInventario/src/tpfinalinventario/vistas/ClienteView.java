@@ -274,6 +274,14 @@ public class ClienteView extends javax.swing.JInternalFrame {
         if (!validar(c)) {
             return;
         }
+        
+           // si se encuentra inactivo
+          
+         if(clienteData.buscarPorDNIInactivos(Integer.parseInt(jtf_dni.getText()))!=null){
+             
+                  JOptionPane.showMessageDialog(this, "Ya existe un cliente con DNI:"+jtf_dni.getText()+"\n"+" en la lista de clientes inactivos"+"\n"+"Activelo y actualícelo.");
+                  return;
+              }
         clienteData.guardar(c);
     }//GEN-LAST:event_btnAgregarActionPerformed
 

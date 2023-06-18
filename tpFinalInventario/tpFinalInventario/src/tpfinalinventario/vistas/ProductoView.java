@@ -86,6 +86,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         cbResultado = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
 
+        setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -238,7 +239,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
           
          if(pd.buscarPorNombreInactivo(jtf_nombre.getText())!=null){
              
-                  JOptionPane.showMessageDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+"En la lista de productos inactivos"+"\n"+"Activelo y actualícelo.");
+                  JOptionPane.showMessageDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+" en la lista de productos inactivos"+"\n"+"Activelo y actualícelo.");
                   return;
               }
          
