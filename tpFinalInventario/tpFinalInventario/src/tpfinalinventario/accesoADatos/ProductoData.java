@@ -150,6 +150,34 @@ public class ProductoData {
         return producto;
     }
 
+    
+        public Producto buscarPorIdSinEstado(int id) {
+        Producto producto = null;
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE idProducto=? ;");
+            p.setInt(1, id);
+
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+                producto = new Producto();
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                producto.setEstado(r.getBoolean("estado"));
+
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar en producto, " + ex.getMessage());
+        }
+        return producto;
+    }
+    
     public boolean existe(Producto producto) {
         try {
             PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and categoria=? and descripcion=? and precioActual=? and stock=? and estado=true;");

@@ -6,6 +6,9 @@
 package tpfinalinventario.vistas;
 
 import java.util.ArrayList;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 import tpfinalinventario.accesoADatos.ClienteData;
 import tpfinalinventario.accesoADatos.DetalleVentaData;
@@ -23,22 +26,51 @@ import tpfinalinventario.entidades.Venta;
 public class DetalleVenta2View extends javax.swing.JInternalFrame {
 
       private DefaultTableModel modelo;
+      private DefaultTableModel modelo2;
       private DetalleVentaData detalleVentaData = new DetalleVentaData();
       private ProductoData productoData = new ProductoData();
        private VentaData ventaData = new VentaData();
        private ClienteData clienteData=new ClienteData();
+        private JPopupMenu menu;
     public DetalleVenta2View() {
         initComponents();
          modelo = new DefaultTableModel();
-        armarCabeceraTabla();
+         armarCabeceraTabla();
         llenarTabla();
+         modelo2=new DefaultTableModel();
+         armarCabeceraTabla2();
+        
+        
+        //clivk derechi
+        menu= new JPopupMenu();
+        JMenuItem item = new JMenuItem("verDetalle");
+        item.addActionListener(e -> verDetalle());
+        menu.add(item);
+        jTable1.setComponentPopupMenu(menu);
     }
 
+    
+    private void verDetalle(){
+         int row = jTable1.getSelectedRow();
+      if (row == -1){
+          JOptionPane.showMessageDialog(this, "Seleccione la fila.");
+         return;
+      }
+      
+      int idCliente=Integer.parseInt(jTable1.getValueAt(row,2 ).toString());
+      Cliente c=clienteData.buscarPorDNISinEstado(idCliente);
+      jLabel2.setText("<html>"+c.getNombre()+", "+c.getApellido()+" <br> Domicilio: "+c.getDomicilio()+"<br>Telefono:"+c.getTelefono()+"</html>");
+      
+      int id=Integer.parseInt(jTable1.getValueAt(row,0 ).toString());
+      //lista de detalleventa con el id de la venta
+      ArrayList<DetalleVenta> listaDetalleVenta=(ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(id);
+       llenarTabla2(listaDetalleVenta);
+    }
     
      private void armarCabeceraTabla() {
         //creo las columnas de la tabla
         ArrayList<Object> columns = new ArrayList();
-        columns.add("NUMERO DE VENTA");
+        columns.add("Id DE VENTA");
         columns.add("FECHA");
         columns.add("CLIENTE(DNI)");
        
@@ -51,15 +83,32 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
     }
      
-    private void borrarFilas() {
-        int a = modelo.getRowCount() - 1;
+     private void armarCabeceraTabla2(){
+        //creo las columnas de la tabla
+        ArrayList<Object> columns = new ArrayList();
+        columns.add("PRODUCTO");
+        columns.add("CANTIDAD");
+        columns.add("PRECIO");
+       
+        
+
+        //recorro el arrayList, a nuestro modelo le agrego columnas
+        for (Object it : columns) {
+            modelo2.addColumn(it);
+        }
+        jTable2.setModel(modelo2);
+    }
+     
+     
+    private void borrarFilas(DefaultTableModel model) {
+        int a = model.getRowCount() - 1;
         for (int i = a; i >= 0; i--) {
-            modelo.removeRow(i);
+            model.removeRow(i);
         }
     }
      
       private void llenarTabla(){
-           borrarFilas();
+           borrarFilas(modelo);
            
            //tengo toda la lista de venta
           ArrayList<Venta> listaVenta=(ArrayList<Venta>) ventaData.lista();
@@ -69,13 +118,27 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
            }
         for (Venta v : listaVenta) {
             Cliente c=clienteData.buscar(v.getCliente().getIdCliente());
-            modelo.addRow(new Object[]{v.getNumeroDeVenta(),v.getFecha(),c.getDni()});
+            modelo.addRow(new Object[]{v.getIdVenta(),v.getFecha(),c.getDni()});
           
         }
         
         
     }
     
+ private void llenarTabla2(ArrayList<DetalleVenta> listaDetalleVenta) {
+        borrarFilas(modelo2);
+        if (listaDetalleVenta.isEmpty()) {
+            return;
+        }
+        double total=0;
+        for (DetalleVenta dv : listaDetalleVenta) {
+            Producto p=productoData.buscarPorIdSinEstado(dv.getProducto().getIdProducto());
+            modelo2.addRow(new Object[]{p.getNombre(), dv.getCantidad(),p.getPrecioActual()});
+           total+=dv.getPrecioVenta();
+        }
+        
+         modelo2.addRow(new Object[]{ "","",total});
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,6 +152,9 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setText("Lista de ventas realizadas");
 
@@ -105,27 +171,53 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jLabel2.setText("<html>Nombre, Apellido <br> Domicilio: domicilio<br>Telefono:</html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(211, 211, 211)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(66, 66, 66))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(211, 211, 211)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(151, 151, 151))
         );
 
         pack();
@@ -134,7 +226,10 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

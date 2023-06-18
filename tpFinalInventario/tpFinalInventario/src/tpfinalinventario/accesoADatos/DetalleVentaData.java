@@ -190,7 +190,7 @@ public class DetalleVentaData {
                 dv.setCantidad(r.getInt("cantidad"));
                 dv.setPrecioVenta(r.getDouble("precioventa"));
                 dv.setVenta(ventaData.buscar(r.getInt("idVenta")));
-                dv.setProducto(productoData.buscarPorId(r.getInt("idProducto")));
+                dv.setProducto(productoData.buscarPorIdSinEstado(r.getInt("idProducto")));
               
                 lista.add(dv);
             }
