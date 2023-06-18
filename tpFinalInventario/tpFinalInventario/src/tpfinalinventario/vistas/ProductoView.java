@@ -5,8 +5,12 @@
  */
 package tpfinalinventario.vistas;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import javax.swing.ComboBoxEditor;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.entidades.Producto;
 /**
@@ -18,13 +22,38 @@ public class ProductoView extends javax.swing.JInternalFrame {
     private ArrayList<Producto> lista;
     private int idBuscado;
     private  ProductoData pd=new ProductoData();
+    private JTextField textField;
     public ProductoView() {
         initComponents();
+        setSize(624, 564);
         btnAgregar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        btnActualizar.setEnabled(false);
-        cbResultado.setVisible(false);
+        btnActualizar.setEnabled(false);       
        jLabel9.setText("AGREGAR PRODUCTO");
+       // Agregar un editor al ComboBox
+        cbResultado.setEditable(true);
+        ComboBoxEditor editor = cbResultado.getEditor();
+        textField = (JTextField) editor.getEditorComponent();
+         textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+        lista=(ArrayList<Producto>) pd.nombresEmpiezanCon(textField.getText());
+         cargarCB();
+            }
+
+       
+        });
+         
     }
 
     /**
@@ -47,7 +76,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jta_descripcion = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jtf_nombreBuscado = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -98,18 +126,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel6.setText("NOMBRE:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
-
-        jtf_nombreBuscado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nombreBuscadoFocusGained(evt);
-            }
-        });
-        jtf_nombreBuscado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nombreBuscadoKeyReleased(evt);
-            }
-        });
-        getContentPane().add(jtf_nombreBuscado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 300, 40));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 659, 29));
 
         btnAgregar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -119,7 +135,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, -1, -1));
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
 
         btnEliminar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -128,7 +144,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, -1, -1));
 
         btnActualizar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnActualizar.setText("Actualizar");
@@ -137,7 +153,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, -1, -1));
 
         jButton3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton3.setText("Limpiar");
@@ -146,7 +162,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 470, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel7.setText("CATEGORÍA:");
@@ -169,12 +185,13 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     
      private void cargarCB(){
+        String text = textField.getText();
         cbResultado.removeAllItems();       
         for(Producto item:lista){
                 cbResultado.addItem(item);               
         }
-        cbResultado.setVisible(true);
         cbResultado.setPopupVisible(true);
+        textField.setText(text);
     }
     
     private void cargarTF(Producto producto){
@@ -202,26 +219,58 @@ public class ProductoView extends javax.swing.JInternalFrame {
     
     
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
+         
+         
+                
          if (!validar())
             return;
-         ProductoData productoData=new ProductoData();
+         
+         
+         if(!pd.buscarCampoValor("nombre",jtf_nombre.getText()).isEmpty()){
+              int respuesta = JOptionPane.showConfirmDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+"Desea agregar?", "Si", JOptionPane.YES_NO_OPTION);
+              if (respuesta == JOptionPane.NO_OPTION){
+                  JOptionPane.showMessageDialog(this,  "Operación cancelada.\n ");
+                  return;
+              }
+         }
+         
+         // si se encuentra inactivo
+          
+         if(pd.buscarPorNombreInactivo(jtf_nombre.getText())!=null){
+             
+                  JOptionPane.showMessageDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+"En la lista de productos inactivos"+"\n"+"Activelo y actualícelo.");
+                  return;
+              }
+         
+             
          Producto p=cargarDatos();
          
-         if(productoData.guardar(p))
+         if(pd.guardar(p))
               JOptionPane.showMessageDialog(this,  "Producto guardado.\n ");
          else  JOptionPane.showMessageDialog(this,  "Producto no guardado, el producto ya existe o error.\n ");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
        
-     
+      if(cbResultado.getSelectedItem()==null){
+             JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
+             return;
+        }
         
-        pd.eliminadoLogico(idBuscado);
+        if(pd.eliminadoLogico(idBuscado))
+          JOptionPane.showMessageDialog(this, "Producto eliminado. " );
+        else 
+          JOptionPane.showMessageDialog(this,"El producto seleccionado no existe. ");
+         cbResultado.setSelectedItem(null);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
+        if(cbResultado.getSelectedItem()==null){
+             JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
+             return;
+        }
+            
      
         if (!validar())
             return;
@@ -231,7 +280,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         if(pd.update(producto))
             JOptionPane.showMessageDialog(this,"Producto actualizado");
         else  JOptionPane.showMessageDialog(this,"Producto no actualizado");
-        
+         cbResultado.setSelectedItem(null);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -254,17 +303,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
         btnActualizar.setEnabled(true);
          btnAgregar.setEnabled(false);
     }//GEN-LAST:event_cbResultadoActionPerformed
-
-    private void jtf_nombreBuscadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nombreBuscadoKeyReleased
-         lista=(ArrayList<Producto>) pd.nombresEmpiezanCon(jtf_nombreBuscado.getText());
-         cargarCB();
-         cbResultado.setVisible(true);
-    }//GEN-LAST:event_jtf_nombreBuscadoKeyReleased
-
-    private void jtf_nombreBuscadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nombreBuscadoFocusGained
-       
-        btnAgregar.setEnabled(false);
-    }//GEN-LAST:event_jtf_nombreBuscadoFocusGained
 
     
     
@@ -330,12 +368,11 @@ public class ProductoView extends javax.swing.JInternalFrame {
        btnEliminar.setEnabled(false);
        btnActualizar.setEnabled(false);
        jtf_nombre.setText("");
-       jtf_nombreBuscado.setText("");
+       textField.setText("");
        jtf_precioActual.setText("");
        jtf_stock.setText("");
        jta_descripcion.setText("");
        jtf_categoria.setText("");
-       cbResultado.setVisible(false);
        jLabel9.setVisible(false);
     }
 
@@ -358,7 +395,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea jta_descripcion;
     private javax.swing.JTextField jtf_categoria;
     private javax.swing.JTextField jtf_nombre;
-    private javax.swing.JTextField jtf_nombreBuscado;
     private javax.swing.JTextField jtf_precioActual;
     private javax.swing.JTextField jtf_stock;
     // End of variables declaration//GEN-END:variables

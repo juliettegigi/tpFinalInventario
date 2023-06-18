@@ -264,5 +264,28 @@ public class ClienteData {
         }
 
     }
+    
+    public List<Cliente> dnisEmpiezanCon(String s) {
+        ArrayList<Cliente> lista = new ArrayList();
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM cliente where dni like '" + s + "%' and estado=true;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(r.getInt("idCliente"));
+                cliente.setDni(r.getInt("dni"));
+                cliente.setApellido(r.getString("apellido"));
+                cliente.setNombre(r.getString("nombre"));
+                cliente.setDomicilio(r.getString("domicilio"));
+                cliente.setTelefono(r.getString("telefono"));
+                cliente.setEstado(r.getBoolean("estado"));
+                lista.add(cliente);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la lista de producto, " + ex.getMessage());
+        }
+        return lista;
+    }
 
 }

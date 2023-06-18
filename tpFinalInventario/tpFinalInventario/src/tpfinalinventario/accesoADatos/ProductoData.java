@@ -75,24 +75,19 @@ public class ProductoData {
         }
     }
 
-    public void eliminadoLogico(int id) {
-
-        Producto producto = buscarPorId(id);
-        if (producto == null) {
-
-            JOptionPane.showMessageDialog(null, "El Producto con id=" + id + " no existe");
-            return;
-        }
+    public boolean eliminadoLogico(int id) {
 
         try {
-            PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=?;");
+            PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=? and estado=true;");
             p.setInt(1, id);
-            p.executeUpdate();
+            int filasAfectadas=p.executeUpdate();
             p.close();
-
-            JOptionPane.showMessageDialog(null, "Producto eliminado con éxito ");
+            if(filasAfectadas>0)
+                return true;
+            else return false;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error en eliminar producto " + ex.getMessage());
+            return false;
         }
     }
 
@@ -156,6 +151,40 @@ public class ProductoData {
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE idProducto=? ;");
             p.setInt(1, id);
+
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+                producto = new Producto();
+                producto.setIdProducto(r.getInt("idProducto"));
+                producto.setNombre(r.getString("nombre"));
+                producto.setCategoria(r.getString("categoria"));
+                producto.setDescripcion(r.getString("descripcion"));
+                producto.setPrecioActual(r.getDouble("precioActual"));
+                producto.setStock(r.getInt("stock"));
+                producto.setEstado(r.getBoolean("estado"));
+
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar en producto, " + ex.getMessage());
+        }
+        return producto;
+    }
+        
+        
+        
+        
+      
+        
+        
+        
+       public Producto buscarPorNombreInactivo(String nombre) {
+        Producto producto = null;
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE nombre=? and estado=false ;");
+            p.setString(1, nombre);
 
             ResultSet r = p.executeQuery();
             if (r.next()) {
