@@ -142,7 +142,7 @@ public class DetalleVentaData {
     }
     
     
-    
+     
             
         ///*productos que están en detalle venta*/
 //select * from producto where idProducto in(select idProducto from detalleVenta);

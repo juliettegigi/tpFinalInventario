@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.DetalleCompra;
+import tpfinalinventario.entidades.DetalleVenta;
 import tpfinalinventario.entidades.Venta;
 
 /**
@@ -207,5 +208,36 @@ public class VentaData {
         }
         return v;
     }
+     
+     
+     
+   
+       public List<Venta>  buscarPorIdProducto(int id) {
+        ArrayList<Venta> lista = new ArrayList();
+        
+        try {
+            PreparedStatement p = c.prepareStatement("select * from venta " +
+                                                     "where idVenta in(Select idVenta from detalleventa " +
+                                                     "where idproducto=?);");
+            p.setInt(1, id);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Venta v = new Venta();
+                     v.setIdVenta(r.getInt("idVenta"));
+                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
+                v.setFecha(r.getDate("fecha").toLocalDate());
+                v.setCliente(clienteData.buscar(r.getInt("idCliente")));
+                v.setEstado(r.getBoolean("estado"));
+                lista.add(v);
+            }
+            r.close();
+            p.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en lista DetalleVentaData, " + ex.getMessage());
+        }
+        return lista;
+    }
+    
 
 }
