@@ -139,6 +139,31 @@ public class VentaData {
     }
     
     
+        public List<Venta> listaSinEstadoDelCliente() {
+
+        ArrayList<Venta> lista = new ArrayList();
+        try {
+
+            PreparedStatement p = c.prepareStatement("SELECT * FROM venta where estado=true;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                Venta v = new Venta();
+                v.setIdVenta(r.getInt("idVenta"));
+                v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
+                v.setFecha(r.getDate("fecha").toLocalDate());
+                v.setCliente(clienteData.buscarSinEstado(r.getInt("idCliente")));
+                v.setEstado(r.getBoolean("estado"));
+                lista.add(v);
+            }
+            p.close();
+            r.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en lista venta, " + ex.getMessage());
+        }
+        return lista;
+    }
+    
     public int numeroVenta() {
         int numeroCompra=1;
        try {
