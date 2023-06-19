@@ -247,13 +247,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
         }
 
         Cliente c = clienteData.buscarPorDNI(dni);
-        idCliente = c.getIdCliente();
+       
         if (c == null) {
             JOptionPane.showMessageDialog(this, "El cliente con DNI= " + jtf_id.getText() + " no existe en nuestro registro");
             return;
 
         }
-
+         idCliente = c.getIdCliente();
         jtf_dni.setText(c.getDni() + "");
         jtf_apellido.setText(c.getApellido());
         jtf_nombre.setText(c.getNombre());

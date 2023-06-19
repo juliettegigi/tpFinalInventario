@@ -186,6 +186,7 @@ public class ProveedorData {
                 proveedor.setRazonSocial(r.getString("razonSocial"));
                 proveedor.setDomicilio(r.getString("domicilio"));
                 proveedor.setTelefono(r.getString("telefono"));
+                proveedor.setEstado(false);
                 lista.add(proveedor);
             }
 
@@ -214,5 +215,29 @@ public class ProveedorData {
         }
 
     }
+    
+    
+    public List<Proveedor> nombresEmpiezanCon(String s) {
+        System.out.println("s: "+s);
+        ArrayList<Proveedor> lista = new ArrayList();
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor where razonsocial like '" + s + "%' and estado=true;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                  Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(r.getInt("idProveedor"));
+                proveedor.setRazonSocial(r.getString("razonSocial"));
+                proveedor.setDomicilio(r.getString("domicilio"));
+                proveedor.setTelefono(r.getString("telefono"));
+                proveedor.setEstado(true);
+                lista.add(proveedor);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en nombres empiezan con el proveedor, " + ex.getMessage());
+        }
+        return lista;
+    }
+    
 
 }
