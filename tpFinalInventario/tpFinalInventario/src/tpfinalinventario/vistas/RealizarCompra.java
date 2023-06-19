@@ -10,6 +10,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -48,7 +49,7 @@ private Proveedor proveedorSeleccionado;
             mod.addRow(d);
         }
         jTableProv.setModel(mod);
-        
+        jTableProv.removeColumn((jTableProv.getColumnModel().getColumn(0)));
         // Obtener el modelo de selección de la tabla
         ListSelectionModel selectionModel = jTableProv.getSelectionModel();
 
@@ -81,22 +82,18 @@ private Proveedor proveedorSeleccionado;
                 Object oldValue = getValueAt(row, column); // Obtener el valor original
                 super.setValueAt(value, row, column);
                 Object newValue = getValueAt(row, column); // Obtener el nuevo valor
-
+   
                 if (oldValue != null && !oldValue.equals(newValue)) {
                     // La celda ha sido editada, realizar acciones aquí
                     
                    // System.out.println("Celda editada en la fila " + row + ", columna " + column);
                 }
             }
-            
         };
-        
-        
-        cargarProductos();
-        
-        
-        
-                }
+    cargarProductos();
+    //sacamos el id de productos
+    jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
+}
 
  
 
@@ -176,6 +173,7 @@ private Proveedor proveedorSeleccionado;
                 return canEdit [columnIndex];
             }
         });
+        jTableProd.setShowVerticalLines(true);
         jTableProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTableProdMousePressed(evt);

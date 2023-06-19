@@ -215,15 +215,11 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         
         if(razonSocial.trim().length()==0)
             JOptionPane.showMessageDialog(this,"Campo razón social es obligatorio.");
-           
-          else{
-              if(!razonSocial.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*"))
-                   JOptionPane.showMessageDialog(this,"Campo razón social: caracteres no válidos.");
+        else if(!razonSocial.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*")){
+                JOptionPane.showMessageDialog(this,"Campo razón social: caracteres no válidos.");
             return;  
         }      
-            
-      
-        
+
         Proveedor proveedor=proveedorData.buscarPorRazonSocial(razonSocial);
              if(proveedor==null){
                  JOptionPane.showMessageDialog(this, "El proveedor con razón social=: " + razonSocial + " no existe en nuestro registro");
