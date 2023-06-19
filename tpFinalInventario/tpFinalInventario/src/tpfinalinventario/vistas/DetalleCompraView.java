@@ -102,6 +102,11 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         btSalir.setBackground(new java.awt.Color(255, 0, 0));
         btSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btSalir.setText("Salir");
+        btSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalirActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Proveedor:");
@@ -231,8 +236,8 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
            
         String fecha=compra.getFecha().toString();
         Proveedor prov=compra.getProveedor();
-        jLabel5.setText("Proveedor: "+prov.getRazonSocial());
-        jLabel6.setText("Fecha: "+fecha);
+        jLabel5.setText(prov.getRazonSocial());
+        jLabel6.setText(fecha);
         // buscar en detalleCompra por idCompra
         ArrayList<DetalleCompra> listaDetalleCompra= (ArrayList<DetalleCompra>) detalleCompraData.buscarPorIdCompra(compra.getIdCompra());
         llenarTabla(listaDetalleCompra);
@@ -242,6 +247,10 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         jLabel4.setVisible(true);
         jLabel6.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void btSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btSalirActionPerformed
     private void armarCabeceraTabla() {
         //creo las columnas de la tabla
         ArrayList<Object> columns = new ArrayList();

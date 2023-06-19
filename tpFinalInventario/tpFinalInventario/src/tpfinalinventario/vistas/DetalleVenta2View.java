@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import tpfinalinventario.accesoADatos.ClienteData;
 import tpfinalinventario.accesoADatos.DetalleVentaData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -157,12 +159,12 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione la fila.");
             return;
         }
-
-        int idCliente = Integer.parseInt(jTable1.getValueAt(row, 2).toString());
+        Object hiddenColumnValue = modelo.getValueAt(row, 0);
+        int idCliente = Integer.parseInt(jTable1.getValueAt(row, 1).toString());
         Cliente c = clienteData.buscarPorDNISinEstado(idCliente);
         jLabel2.setText("<html>" + c.getNombre() + ", " + c.getApellido() + " <br> Domicilio: " + c.getDomicilio() + "<br>Telefono:" + c.getTelefono() + "</html>");
 
-        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+        int id = Integer.parseInt(hiddenColumnValue.toString());
         //lista de detalleventa con el id de la venta
         ArrayList<DetalleVenta> listaDetalleVenta = (ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(id);
         llenarTabla2(listaDetalleVenta);
@@ -180,6 +182,14 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
             modelo.addColumn(it);
         }
         jTable1.setModel(modelo);
+        // Obtener el modelo de columnas de la tabla
+        TableColumnModel columnModel = jTable1.getColumnModel();
+
+        // Obtener la columna que deseas ocultar
+        TableColumn columnToHide = columnModel.getColumn(0); // Por ejemplo, ocultar la segunda columna (índice 1)
+
+        // Ocultar la columna
+        columnModel.removeColumn(columnToHide);
     }
 
     private void armarCabeceraTabla2() {

@@ -151,6 +151,7 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
         //recupero el id 
         int dni=(int) jTableT.getValueAt(fila, 0);
         clienteData.activarCliente(dni);
+        JOptionPane.showMessageDialog(this, "Cliente activado exitosamente");
         llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -100,7 +100,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "dni=" + dni + ", " + apellido + ", nombre=" + nombre ;
+        return apellido + ", " + nombre + " | DNI:" + dni;
     }
 
 }

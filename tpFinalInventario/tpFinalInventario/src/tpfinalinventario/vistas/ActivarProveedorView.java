@@ -146,6 +146,7 @@ public class ActivarProveedorView extends javax.swing.JInternalFrame {
 
         String razonSocial = (String) jTableT.getValueAt(fila, 0);
         proveedorData.activarProveedor(razonSocial);
+        JOptionPane.showMessageDialog(this, "Proveedor activado exitosamente");
         llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 

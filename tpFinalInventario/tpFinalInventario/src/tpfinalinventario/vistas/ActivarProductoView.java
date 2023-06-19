@@ -151,6 +151,7 @@ public class ActivarProductoView extends javax.swing.JInternalFrame {
         
         String nombre = (String)jTableT.getValueAt(fila, 0);
         productoData.activarProducto(nombre);
+        JOptionPane.showMessageDialog(this, "Producto activado exitosamente");
         llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
