@@ -5,24 +5,20 @@
 package tpfinalinventario.vistas;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.accesoADatos.ProveedorData;
-import tpfinalinventario.entidades.Cliente;
 import tpfinalinventario.entidades.Compra;
 import tpfinalinventario.entidades.DetalleCompra;
-import tpfinalinventario.entidades.DetalleVenta;
 import tpfinalinventario.entidades.Producto;
 import tpfinalinventario.entidades.Proveedor;
-import tpfinalinventario.entidades.Venta;
+
 
 /**
  *
@@ -43,7 +39,7 @@ private Proveedor proveedorSeleccionado;
     public RealizarCompra() {
         initComponents();
        
-        
+        setSize(517, 560);
         //hago la tabla
         String[] columns = {"id", "nombre", "telefono"};
         mod = new DefaultTableModel(columns, 0);
@@ -65,7 +61,7 @@ private Proveedor proveedorSeleccionado;
                      int id=  (int) mod.getValueAt(selectedRow, 0);
                      proveedorSeleccionado=prov.buscar(id);
                     // Realizar acciones con los datos seleccionados
-                    System.out.println("Fila seleccionada: " + id + ", " );
+                   // System.out.println("//Fila seleccionada: " + id + ", " );
                 }
             }
     });
@@ -89,7 +85,7 @@ private Proveedor proveedorSeleccionado;
                 if (oldValue != null && !oldValue.equals(newValue)) {
                     // La celda ha sido editada, realizar acciones aquí
                     
-                    System.out.println("Celda editada en la fila " + row + ", columna " + column);
+                   // System.out.println("Celda editada en la fila " + row + ", columna " + column);
                 }
             }
             
@@ -131,6 +127,7 @@ private Proveedor proveedorSeleccionado;
         jTableProd = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -206,13 +203,12 @@ private Proveedor proveedorSeleccionado;
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 107, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(149, 149, 149)
+                                .addComponent(jButton1))
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(202, 202, 202)
@@ -234,7 +230,7 @@ private Proveedor proveedorSeleccionado;
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(91, 91, 91)
                 .addComponent(jButton1)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,9 +247,13 @@ private Proveedor proveedorSeleccionado;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //boton de realizar compra
         //metodo que obtiene cantidad de filas seleccionadas
-        int cantR = jTableProv.getSelectedRowCount();
+        if(jTableProv.getSelectedRow()==-1){
+             JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
+             return;
+        }
+            
         int cantProd = jTableProd.getRowCount();
-        
+        int c=0;
         Compra comp = new Compra(compraD.numeroCompra(),LocalDate.now(),proveedorSeleccionado,true);
         compraD.guardar(comp);
         for (int i = 0; i < cantProd; i++) {
@@ -265,11 +265,15 @@ private Proveedor proveedorSeleccionado;
                     dc.setCompra(comp);
                     dc.setProducto(p);
                     dc.setEstado(true);
+                    p.setStock(p.getStock()+dc.getCantidad());
+                    prod.update(p);
                     dcD.guardar(dc);
-                    
+                    c++;    
             }
         }
-
+      if(c==0)
+           JOptionPane.showMessageDialog(this, "Debe colocar la cantidad de los productos.");
+      else
       JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
     }//GEN-LAST:event_jButton1ActionPerformed
 

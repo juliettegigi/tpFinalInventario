@@ -66,6 +66,8 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
+        setClosable(true);
+
         jPanel1.setBackground(new java.awt.Color(204, 204, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -128,28 +130,31 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addGap(112, 112, 112))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabel4)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel6))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btSalir)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,17 +169,18 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel5))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(51, 51, 51)
                 .addComponent(btSalir)
-                .addGap(186, 186, 186))
+                .addGap(51, 51, 51))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,8 +193,8 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -196,7 +202,13 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         // ACCION BOTON BUSCAR
+        jLabel3.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel6.setVisible(false);
+          borrarFilas();
         if (jtf_numCompra.getText().trim().equals("")) {
+            
             JOptionPane.showMessageDialog(this, "Ingrese un numero de compra.");
             return;
         }
@@ -212,21 +224,23 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         // lista de compra, con un numero de compra, es uno solo
         Compra compra = compraData.buscarPorNumeroDeCompra(numero);
         if(compra==null){
-            JOptionPane.showMessageDialog(this, "No existe ese número de compra.");
+            JOptionPane.showMessageDialog(this, "No existe ese número de compra.");            
             return; 
+            
         }
            
         String fecha=compra.getFecha().toString();
         Proveedor prov=compra.getProveedor();
         jLabel5.setText("Proveedor: "+prov.getRazonSocial());
         jLabel6.setText("Fecha: "+fecha);
-        // buscar en detalleVenta por idVenta
-        ArrayList<DetalleCompra> listaDetalleCompra= new ArrayList<DetalleCompra>();
-        
+        // buscar en detalleCompra por idCompra
+        ArrayList<DetalleCompra> listaDetalleCompra= (ArrayList<DetalleCompra>) detalleCompraData.buscarPorIdCompra(compra.getIdCompra());
         llenarTabla(listaDetalleCompra);
         
         jLabel3.setVisible(true);
+        jLabel5.setVisible(true);
         jLabel4.setVisible(true);
+        jLabel6.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
     private void armarCabeceraTabla() {
         //creo las columnas de la tabla
@@ -234,8 +248,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         columns.add("PRODUCTO");
         columns.add("CANTIDAD");
         columns.add("PRECIO");
-        columns.add("FECHA");
-        columns.add("PROVEEDOR");
+       
 
         //recorro el arrayList, a nuestro modelo le agrego columnas
         for (Object it : columns) {
@@ -245,13 +258,13 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
     }
 
     private void llenarTabla(ArrayList<DetalleCompra> listaDetalleCompra) {
-        borrarFilas();
+      
         if (listaDetalleCompra.isEmpty()) {
             return;
         }
         double total=0;
         for (DetalleCompra dc : listaDetalleCompra) {
-            Producto p=productoData.buscarPorId(dc.getProducto().getIdProducto());
+            Producto p=productoData.buscarPorIdSinEstado(dc.getProducto().getIdProducto());
             modelo.addRow(new Object[]{p.getNombre(), dc.getCantidad(),p.getPrecioActual()});
            total+=dc.getPrecioCosto();
         }

@@ -142,5 +142,32 @@ public class DetalleCompraData {
     }
     
     
+        public List<DetalleCompra> buscarPorIdCompra(int idCompra) {
+        CompraData compraData = new CompraData();
+        ProductoData productoData = new ProductoData();
+        ArrayList<DetalleCompra> lista = new ArrayList();
+        try {
+
+            PreparedStatement p = c.prepareStatement("SELECT * FROM DetalleCompra where idCompra=? and estado=true;");
+            p.setInt(1, idCompra);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                DetalleCompra dc = new DetalleCompra();
+                dc.setIdDetalle(r.getInt("idDetalle"));
+                dc.setCantidad(r.getInt("cantidad"));
+                dc.setPrecioCosto(r.getDouble("precioCosto"));
+                dc.setCompra(compraData.buscar(r.getInt("idCompra")));
+                dc.setProducto(productoData.buscarPorIdSinEstado(r.getInt("idProducto")));
+                lista.add(dc);
+            }
+            r.close();
+            p.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleCompraData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
 
 }

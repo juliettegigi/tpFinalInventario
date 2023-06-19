@@ -134,7 +134,6 @@ public class CompraData {
       public int numeroCompra() {
         int numeroCompra=1;
        try {
-
             PreparedStatement p = c.prepareStatement("SELECT max(numeroDeCompra) as max from compra;");
             ResultSet r = p.executeQuery();
             if (r.next()) {
@@ -153,7 +152,7 @@ public class CompraData {
         Compra com = null;
         try {
 
-            PreparedStatement p = c.prepareStatement("SELECT * FROM venta WHERE numeroDeCompra=? and estado=true;");
+            PreparedStatement p = c.prepareStatement("SELECT * FROM compra WHERE numeroDeCompra=? and estado=true;");
             p.setInt(1, numero);
             ResultSet r = p.executeQuery();
             ProveedorData prov=new ProveedorData();
@@ -169,7 +168,7 @@ public class CompraData {
             r.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en buscar venta, " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en buscar por numero de compra, " + ex.getMessage());
         }
         return com;
     }
