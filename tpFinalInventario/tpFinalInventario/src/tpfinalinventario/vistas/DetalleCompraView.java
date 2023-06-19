@@ -277,8 +277,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{p.getNombre(), dc.getCantidad(),p.getPrecioActual()});
            total+=dc.getPrecioCosto();
         }
-        
-         modelo.addRow(new Object[]{ "","",total});
+        modelo.addRow(new Object[]{ "","",total});
     }
 
     public void borrarFilas() {
