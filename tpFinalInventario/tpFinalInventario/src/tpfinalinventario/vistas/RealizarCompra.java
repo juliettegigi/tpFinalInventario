@@ -7,7 +7,11 @@ package tpfinalinventario.vistas;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -25,7 +29,9 @@ import tpfinalinventario.entidades.Venta;
  * @author Paula Priotti
  */
 public class RealizarCompra extends javax.swing.JInternalFrame {
-
+private DefaultTableModel mod ;
+private DefaultTableModel mod2 ;
+private Proveedor proveedorSeleccionado;
     ProveedorData prov = new ProveedorData();
     ProductoData prod = new ProductoData();
     CompraData compraD = new CompraData();
@@ -36,33 +42,75 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
      */
     public RealizarCompra() {
         initComponents();
-        cargarProv();
-        cargarProductos();
-    }
-
-    private void cargarProv() {
+       
+        
+        //hago la tabla
         String[] columns = {"id", "nombre", "telefono"};
-        DefaultTableModel mod = new DefaultTableModel(columns, 0);
+        mod = new DefaultTableModel(columns, 0);
         for (Proveedor p : prov.lista()) {
             Object[] d = {p.getIdProveedor(), p.getRazonSocial(), p.getTelefono()};
             mod.addRow(d);
         }
         jTableProv.setModel(mod);
-    }
+        
+        // Obtener el modelo de selección de la tabla
+        ListSelectionModel selectionModel = jTableProv.getSelectionModel();
 
-    private void cargarProductos() {
-        String[] columns = {"id", "nombre", "categoria", "precio actual", "cantidad"};
-        DefaultTableModel mod = new DefaultTableModel(columns, 0) {
+        // Agregar un ListSelectionListener al modelo de selección
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // Verificar si la selección es válida y no está ajustándose
+                if (!event.getValueIsAdjusting() && !selectionModel.isSelectionEmpty()) {
+                    int selectedRow = selectionModel.getMinSelectionIndex();
+                     int id=  (int) mod.getValueAt(selectedRow, 0);
+                     proveedorSeleccionado=prov.buscar(id);
+                    // Realizar acciones con los datos seleccionados
+                    System.out.println("Fila seleccionada: " + id + ", " );
+                }
+            }
+    });
+        
+        
+        
+        //HAGO LA TABLA 2
+        
+         String[] columns2 = {"id", "nombre", "categoria", "precio actual", "cantidad"};
+         mod2 = new DefaultTableModel(columns2, 0) {
             @Override
             public boolean isCellEditable(int i, int il) {
-                return il != 4;
+                return il == 4;
             }
+            @Override
+            public void setValueAt(Object value, int row, int column) {
+                Object oldValue = getValueAt(row, column); // Obtener el valor original
+                super.setValueAt(value, row, column);
+                Object newValue = getValueAt(row, column); // Obtener el nuevo valor
+
+                if (oldValue != null && !oldValue.equals(newValue)) {
+                    // La celda ha sido editada, realizar acciones aquí
+                    
+                    System.out.println("Celda editada en la fila " + row + ", columna " + column);
+                }
+            }
+            
         };
+        
+        
+        cargarProductos();
+        
+        
+        
+                }
+
+ 
+
+    private void cargarProductos() {
+       
         for (Producto p : prod.lista()) {
             Object[] d = {p.getIdProducto(), p.getNombre(), p.getCategoria(), p.getPrecioActual(), "0"};
-            mod.addRow(d);
+            mod2.addRow(d);
         }
-        jTableProd.setModel(mod);
+        jTableProd.setModel(mod2);
     }
 
     /**
@@ -205,38 +253,29 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
         //metodo que obtiene cantidad de filas seleccionadas
         int cantR = jTableProv.getSelectedRowCount();
         int cantProd = jTableProd.getRowCount();
-        int c = 0;
-        Compra comp = new Compra();
-
+        
+        Compra comp = new Compra(compraD.numeroCompra(),LocalDate.now(),proveedorSeleccionado,true);
+        compraD.guardar(comp);
         for (int i = 0; i < cantProd; i++) {
             if (!jTableProd.getValueAt(i, 4).equals("0")) {
-                c++;
-            }
-        }
-
-        if (cantR != 0 && c != 0) {
-            for (int i = 0; i < cantProd; i++) {
-                if (!jTableProd.getValueAt(i, 4).equals("0")) {
-                    jTableProd.isCellEditable(i, 4);
-                    int f = jTableProv.getSelectedRow();
-                    comp.setProveedor(prov.buscar((int) jTableProv.getValueAt(f, 0)));
-                    comp.setFecha(LocalDate.now());
-                    comp.setEstado(true);
-                    compraD.guardar(comp);
                     DetalleCompra dc = new DetalleCompra();
                     Producto p = prod.buscarPorId((int) jTableProd.getValueAt(i, 0));
-                    dc.setCantidad((int) jTableProd.getValueAt(i, 4));
+                    dc.setCantidad(Integer.parseInt((String) jTableProd.getValueAt(i, 4)));
                     dc.setPrecioCosto(p.getPrecioActual());
                     dc.setCompra(comp);
                     dc.setProducto(p);
                     dc.setEstado(true);
                     dcD.guardar(dc);
-                    JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
-                }
+                    
             }
         }
+
+      JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+
+    
     /**
      * @param args the command line arguments
      */

@@ -32,7 +32,7 @@ public class DetalleCompraData {
     public void guardar(DetalleCompra dc) {
 
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO detallecompra(cantidad,precioCosto,idCompra,idProducto) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement p = c.prepareStatement("INSERT INTO detallecompra(cantidad,precioCosto,idCompra,idProducto,estado) values(?,?,?,?,true)", Statement.RETURN_GENERATED_KEYS);
             p.setInt(1, dc.getCantidad());
             p.setDouble(2, dc.getPrecioCosto());
             p.setInt(3, dc.getCompra().getIdCompra());

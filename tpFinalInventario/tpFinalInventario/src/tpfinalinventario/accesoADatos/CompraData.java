@@ -31,9 +31,10 @@ public class CompraData {
 
     public void guardar(Compra compra) {
         try {
-            PreparedStatement p = c.prepareStatement("INSERT INTO compra (fecha,idproveedor) values(?,?)", Statement.RETURN_GENERATED_KEYS);
-            p.setDate(1, Date.valueOf(compra.getFecha()));
-            p.setInt(2, compra.getProveedor().getIdProveedor());
+            PreparedStatement p = c.prepareStatement("INSERT INTO compra (numeroDeCompra,fecha,idproveedor,estado) values(?,?,?,true);", Statement.RETURN_GENERATED_KEYS);
+            p.setInt(1, compra.getNumeroDeCompra());
+            p.setDate(2, Date.valueOf(compra.getFecha()));
+            p.setInt(3, compra.getProveedor().getIdProveedor());
             p.executeUpdate();
             ResultSet r = p.getGeneratedKeys();
             if (r.next()) {

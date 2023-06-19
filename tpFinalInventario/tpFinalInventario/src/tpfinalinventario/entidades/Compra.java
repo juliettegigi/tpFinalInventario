@@ -31,11 +31,11 @@ public class Compra {
         this.estado = estado;
     }
 
-    public Compra(LocalDate fecha, Proveedor proveedor, boolean estado) {
+    public Compra(int numeroDeCompra, LocalDate fecha, Proveedor proveedor, boolean estado) {
         this.fecha = fecha;
         this.proveedor = proveedor;
         this.estado = estado;
-
+        this.numeroDeCompra=numeroDeCompra;
     }
 
     public int getIdCompra() {
