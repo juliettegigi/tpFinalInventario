@@ -4,9 +4,14 @@
  */
 package tpfinalinventario.vistas;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import javax.swing.ComboBoxEditor;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import tpfinalinventario.accesoADatos.ProveedorData;
+import tpfinalinventario.entidades.Producto;
 import tpfinalinventario.entidades.Proveedor;
 
 /**
@@ -17,14 +22,50 @@ public class ProveedorView extends javax.swing.JInternalFrame {
 
     private ProveedorData proveedorData = new ProveedorData();
     private int idBuscado;
-
+ private JTextField textField;
+ private ArrayList<Proveedor> lista;
     public ProveedorView() {
         initComponents();
         btnAgregar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnActualizar.setEnabled(false);
+        // Agregar un editor al ComboBox
+        cbRazonSocial.setEditable(true);
+        ComboBoxEditor editor = cbRazonSocial.getEditor();
+        textField = (JTextField) editor.getEditorComponent();
+        textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+                lista = (ArrayList<Proveedor>) proveedorData.nombresEmpiezanCon(textField.getText());
+                cargarCB();
+            }
+
+        });        
     }
 
+    
+    
+        private void cargarCB() {
+        String text = textField.getText();
+        cbRazonSocial.removeAllItems();
+        for (Proveedor item : lista) {
+            cbRazonSocial.addItem(item);
+        }
+        cbRazonSocial.setPopupVisible(true);
+        textField.setText(text);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,16 +81,15 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtf_BuscoRS = new javax.swing.JTextField();
         jtf_razonSocial = new javax.swing.JTextField();
         jtf_domicilio = new javax.swing.JTextField();
         jtf_telefono = new javax.swing.JTextField();
-        jbtnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        cbRazonSocial = new javax.swing.JComboBox<>();
 
         jTextField5.setText("jTextField5");
 
@@ -70,8 +110,6 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel5.setText("Telefono");
 
-        jtf_BuscoRS.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-
         jtf_razonSocial.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jtf_razonSocial.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -82,14 +120,6 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         jtf_domicilio.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
         jtf_telefono.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-
-        jbtnBuscar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jbtnBuscar.setText("Buscar");
-        jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarActionPerformed(evt);
-            }
-        });
 
         btnAgregar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnAgregar.setText("Agregar");
@@ -120,6 +150,12 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        cbRazonSocial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRazonSocialActionPerformed(evt);
             }
         });
 
@@ -154,10 +190,8 @@ public class ProveedorView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtf_BuscoRS, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtnBuscar))
+                        .addComponent(cbRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(227, 227, 227)
                         .addComponent(jLabel1)))
@@ -170,11 +204,12 @@ public class ProveedorView extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jtf_BuscoRS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnBuscar))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(cbRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,37 +229,11 @@ public class ProveedorView extends javax.swing.JInternalFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnActualizar)
                     .addComponent(btnLimpiar))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
-        String razonSocial ="";
-        razonSocial = jtf_BuscoRS.getText();
-
-        if (razonSocial.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Campo razón social es obligatorio.");
-        } else if (!razonSocial.toLowerCase().matches("[a-zñá-úä-ü0-9]+(\\s[a-zñá-úä-ü0-9]+)*")) {
-            JOptionPane.showMessageDialog(this, "Campo razón social: caracteres no válidos.");
-            return;
-        }
-
-        Proveedor proveedor = proveedorData.buscarPorRazonSocial(razonSocial);
-        if (proveedor == null) {
-            JOptionPane.showMessageDialog(this, "El proveedor con razón social: " + razonSocial + ", no existe en nuestro registro o se encuentra INACTIVO");
-            return;
-        }
-        idBuscado = proveedor.getIdProveedor();
-        jtf_razonSocial.setText(proveedor.getRazonSocial());
-        jtf_domicilio.setText(proveedor.getDomicilio());
-        jtf_telefono.setText(proveedor.getTelefono());
-
-        btnEliminar.setEnabled(true);
-        btnActualizar.setEnabled(true);
-        btnAgregar.setEnabled(false);
-    }//GEN-LAST:event_jbtnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         Proveedor proveedor = new Proveedor();
@@ -233,13 +242,14 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         }
 
         JOptionPane.showMessageDialog(this, proveedorData.guardar(proveedor));
-
+ idBuscado=-1;
 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         JOptionPane.showMessageDialog(this, proveedorData.eliminarLogico(idBuscado));
+        idBuscado=-1;
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -251,12 +261,12 @@ public class ProveedorView extends javax.swing.JInternalFrame {
 
         p.setIdProveedor(idBuscado);
         JOptionPane.showMessageDialog(this, proveedorData.update(p));
+         idBuscado=-1;
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         jtf_domicilio.setText("");
-        jtf_BuscoRS.setText("");
         jtf_razonSocial.setText("");
         jtf_telefono.setText("");
         btnAgregar.setEnabled(false);
@@ -268,6 +278,26 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         btnAgregar.setEnabled(true);
     }//GEN-LAST:event_jtf_razonSocialFocusGained
 
+    private void cbRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRazonSocialActionPerformed
+  // CUANDO SELECCIONAN UN PROveedor DEL CB
+        Proveedor p = (Proveedor) cbRazonSocial.getSelectedItem();
+        if (p == null) {
+            return;
+        }
+        idBuscado = p.getIdProveedor();
+        cargarTF(p);
+        btnEliminar.setEnabled(true);
+        btnActualizar.setEnabled(true);
+        btnAgregar.setEnabled(false);
+    }//GEN-LAST:event_cbRazonSocialActionPerformed
+
+    
+       private void cargarTF(Proveedor proveedor) {
+           jtf_razonSocial.setText(proveedor.getRazonSocial());
+           jtf_domicilio.setText(proveedor.getDomicilio());
+           jtf_telefono.setText(proveedor.getTelefono());
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -351,6 +381,7 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JComboBox<Proveedor> cbRazonSocial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -358,8 +389,6 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JButton jbtnBuscar;
-    private javax.swing.JTextField jtf_BuscoRS;
     private javax.swing.JTextField jtf_domicilio;
     private javax.swing.JTextField jtf_razonSocial;
     private javax.swing.JTextField jtf_telefono;

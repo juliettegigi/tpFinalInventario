@@ -64,7 +64,7 @@ public class ProveedorData {
             if (filasAfectadas > 0) {
                 return "Proveedor actualizado";
             } else {
-                return "No se encuentra un proveedor con id=" + proveedor.getIdProveedor();
+                return "No se encuentra el proveedor ingresado" + proveedor.getIdProveedor();
             }
         } catch (SQLException ex) {
             return "Error al update proovedor, " + ex.getMessage();
@@ -81,7 +81,7 @@ public class ProveedorData {
             if (filasAfectadas > 0) {
                 return "Proveedor eliminado.\n";
             } else {
-                return "Proveedor no eliminado,no se encuentra proveedor con id=" + id;
+                return "Proveedor no eliminado,no se encuentra al proveedor ingresado" ;
             }
         } catch (SQLException ex) {
 
@@ -205,6 +205,7 @@ public class ProveedorData {
                 proveedor.setRazonSocial(r.getString("razonSocial"));
                 proveedor.setDomicilio(r.getString("domicilio"));
                 proveedor.setTelefono(r.getString("telefono"));
+                 proveedor.setEstado(r.getBoolean("estado"));
                 lista.add(proveedor);
             }
 
@@ -232,6 +233,28 @@ public class ProveedorData {
             return false;
         }
 
+    }
+    
+    
+    public List<Proveedor> nombresEmpiezanCon(String s) {
+        ArrayList<Proveedor> lista = new ArrayList();
+        try {
+            PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor where razonSocial like '" + s + "%' and estado=true;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                 Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(r.getInt("idProveedor"));
+                proveedor.setRazonSocial(r.getString("razonSocial"));
+                proveedor.setDomicilio(r.getString("domicilio"));
+                proveedor.setTelefono(r.getString("telefono"));
+                proveedor.setEstado(r.getBoolean("estado"));
+                lista.add(proveedor);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la lista de producto, " + ex.getMessage());
+        }
+        return lista;
     }
 
 }
