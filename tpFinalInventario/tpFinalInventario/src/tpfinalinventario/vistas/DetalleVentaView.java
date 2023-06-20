@@ -28,8 +28,8 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
     private DetalleVentaData detalleVentaData = new DetalleVentaData();
     private ClienteData clienteData = new ClienteData();
     private ArrayList<Producto> lista;
-    private VentaData ventaData=new VentaData();
- 
+    private VentaData ventaData = new VentaData();
+
     /**
      * Creates new form DetalleVentaView
      */
@@ -195,36 +195,36 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         // ACCION BOTON BUSCAR
-         
+
         if (jtf_numVenta.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese un numero de venta.");
             return;
         }
-        int numero=0;
-        try{
-            numero=Integer.parseInt(jtf_numVenta.getText());
-        }catch(Exception e){
+        int numero = 0;
+        try {
+            numero = Integer.parseInt(jtf_numVenta.getText());
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingrese un número.");
-            return; 
+            return;
         }
-        
+
         // lista de Venta, con un numero de venta, es uno solo
         Venta venta = ventaData.buscarPorNumeroDeVenta(numero);
-        if(venta==null){
+        if (venta == null) {
             JOptionPane.showMessageDialog(this, "No existe ese número de venta.");
-            return; 
+            return;
         }
-           
-        String fecha=venta.getFecha().toString();
-        Cliente cliente=venta.getCliente();
-        jLabel3.setText("Cliente: "+cliente.getNombre());
-        jLabel4.setText("Fecha: "+fecha);
+
+        String fecha = venta.getFecha().toString();
+        Cliente cliente = venta.getCliente();
+        jLabel3.setText("Cliente: " + cliente.getNombre());
+        jLabel4.setText("Fecha: " + fecha);
         // buscar en detalleVenta por idVenta
-        ArrayList<DetalleVenta> listaDetalleVenta=(ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(venta.getIdVenta());
-        
+        ArrayList<DetalleVenta> listaDetalleVenta = (ArrayList<DetalleVenta>) detalleVentaData.detalleVentaPorIdVenta(venta.getIdVenta());
+
         llenarTabla(listaDetalleVenta);
-        
-         jLabel3.setVisible(true);
+
+        jLabel3.setVisible(true);
         jLabel4.setVisible(true);
     }//GEN-LAST:event_btBuscarActionPerformed
 
@@ -233,7 +233,7 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtf_numVentaActionPerformed
 
     private void btSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalirActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_btSalirActionPerformed
 
     private void armarCabeceraTabla() {
@@ -257,14 +257,14 @@ public class DetalleVentaView extends javax.swing.JInternalFrame {
         if (listaDetalleVenta.isEmpty()) {
             return;
         }
-        double total=0;
+        double total = 0;
         for (DetalleVenta dv : listaDetalleVenta) {
-            Producto p=productoData.buscarPorId(dv.getProducto().getIdProducto());
-            modelo.addRow(new Object[]{p.getNombre(), dv.getCantidad(),p.getPrecioActual()});
-           total+=dv.getPrecioVenta();
+            Producto p = productoData.buscarPorId(dv.getProducto().getIdProducto());
+            modelo.addRow(new Object[]{p.getNombre(), dv.getCantidad(), p.getPrecioActual()});
+            total += dv.getPrecioVenta();
         }
-        
-         modelo.addRow(new Object[]{ "","",total});
+
+        modelo.addRow(new Object[]{"", "", total});
     }
 
     public void borrarFilas() {

@@ -129,15 +129,14 @@ public class CompraData {
         }
         return lista;
     }
-    
-    
-      public int numeroCompra() {
-        int numeroCompra=1;
-       try {
+
+    public int numeroCompra() {
+        int numeroCompra = 1;
+        try {
             PreparedStatement p = c.prepareStatement("SELECT max(numeroDeCompra) as max from compra;");
             ResultSet r = p.executeQuery();
             if (r.next()) {
-               numeroCompra=r.getInt("max")+1;
+                numeroCompra = r.getInt("max") + 1;
             }
             p.close();
             r.close();
@@ -145,17 +144,17 @@ public class CompraData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en numeroCompra, " + ex.getMessage());
         }
-       return numeroCompra;
+        return numeroCompra;
     }
-      
-      public Compra buscarPorNumeroDeCompra(int numero) {
+
+    public Compra buscarPorNumeroDeCompra(int numero) {
         Compra com = null;
         try {
 
             PreparedStatement p = c.prepareStatement("SELECT * FROM compra WHERE numeroDeCompra=? and estado=true;");
             p.setInt(1, numero);
             ResultSet r = p.executeQuery();
-            ProveedorData prov=new ProveedorData();
+            ProveedorData prov = new ProveedorData();
             if (r.next()) {
                 com = new Compra();
                 com.setIdCompra(r.getInt("idCompra"));

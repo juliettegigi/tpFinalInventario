@@ -298,7 +298,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_IMActivarProveedorActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-         cargarInternal(new DetalleVenta2View());
+        cargarInternal(new DetalleVenta2View());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void IMRealiza_Compra_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealiza_Compra_2ActionPerformed

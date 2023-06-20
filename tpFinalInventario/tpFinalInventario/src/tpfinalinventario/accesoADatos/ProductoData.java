@@ -80,11 +80,13 @@ public class ProductoData {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE producto SET estado=false WHERE idProducto=? and estado=true;");
             p.setInt(1, id);
-            int filasAfectadas=p.executeUpdate();
+            int filasAfectadas = p.executeUpdate();
             p.close();
-            if(filasAfectadas>0)
+            if (filasAfectadas > 0) {
                 return true;
-            else return false;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error en eliminar producto " + ex.getMessage());
             return false;
@@ -145,8 +147,7 @@ public class ProductoData {
         return producto;
     }
 
-    
-        public Producto buscarPorIdSinEstado(int id) {
+    public Producto buscarPorIdSinEstado(int id) {
         Producto producto = null;
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE idProducto=? ;");
@@ -172,15 +173,8 @@ public class ProductoData {
         }
         return producto;
     }
-        
-        
-        
-        
-      
-        
-        
-        
-       public Producto buscarPorNombreInactivo(String nombre) {
+
+    public Producto buscarPorNombreInactivo(String nombre) {
         Producto producto = null;
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto WHERE nombre=? and estado=false ;");
@@ -206,7 +200,7 @@ public class ProductoData {
         }
         return producto;
     }
-    
+
     public boolean existe(Producto producto) {
         try {
             PreparedStatement p = c.prepareStatement("SELECT nombre FROM producto WHERE nombre=? and categoria=? and descripcion=? and precioActual=? and stock=? and estado=true;");
@@ -329,9 +323,7 @@ public class ProductoData {
         return lista;
     }
 
-    
-    
-        public List<Producto> nombresEmpiezanConSinEstado(String s) {
+    public List<Producto> nombresEmpiezanConSinEstado(String s) {
         ArrayList<Producto> lista = new ArrayList();
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM producto where nombre like '" + s + "%' ;");
@@ -353,10 +345,7 @@ public class ProductoData {
         }
         return lista;
     }
-    
-    
-    
-    
+
     public boolean activarProducto(String nombre) {
 
         try {

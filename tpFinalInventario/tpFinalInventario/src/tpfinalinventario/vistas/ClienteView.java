@@ -45,7 +45,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         jtf_apellido = new javax.swing.JTextField();
         jtf_domicilio = new javax.swing.JTextField();
         jtf_telefono = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jBtnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnEliminar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -84,10 +84,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnBuscarActionPerformed(evt);
             }
         });
 
@@ -170,7 +170,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jButton1))
+                        .addComponent(jBtnBuscar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(btnAgregar)
@@ -199,7 +199,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton1)
+                    .addComponent(jBtnBuscar)
                     .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,7 +237,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
         int dni = 0;
         try {
             dni = Integer.parseInt(jtf_id.getText());
@@ -247,11 +247,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
         }
 
         Cliente c = clienteData.buscarPorDNI(dni);
-        idCliente = c.getIdCliente();
+        //idCliente = c.getIdCliente();
         if (c == null) {
-            JOptionPane.showMessageDialog(this, "El cliente con DNI= " + jtf_id.getText() + " no existe en nuestro registro");
+            JOptionPane.showMessageDialog(this, "El cliente con DNI: " + jtf_id.getText() + ", no existe en nuestro registro o se encuentra INACTIVO");
             return;
-
         }
 
         jtf_dni.setText(c.getDni() + "");
@@ -263,7 +262,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
         btnActualizar.setEnabled(true);
         btnAgregar.setEnabled(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jtf_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_idActionPerformed
         // TODO add your handling code here:
@@ -274,14 +273,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
         if (!validar(c)) {
             return;
         }
-        
-           // si se encuentra inactivo
-          
-         if(clienteData.buscarPorDNIInactivos(Integer.parseInt(jtf_dni.getText()))!=null){
-             
-                  JOptionPane.showMessageDialog(this, "Ya existe un cliente con DNI:"+jtf_dni.getText()+"\n"+" en la lista de clientes inactivos"+"\n"+"Activelo y actualícelo.");
-                  return;
-              }
+
+        // si se encuentra inactivo
+        if (clienteData.buscarPorDNIInactivos(Integer.parseInt(jtf_dni.getText())) != null) {
+
+            JOptionPane.showMessageDialog(this, "Ya existe un cliente con DNI:" + jtf_dni.getText() + "\n" + " en la lista de clientes inactivos" + "\n" + "Activelo y actualícelo.");
+            return;
+        }
         clienteData.guardar(c);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -432,7 +430,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

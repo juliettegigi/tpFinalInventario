@@ -120,8 +120,8 @@ public class ClienteData {
 
         return cliente;
     }
-    
-      public Cliente buscarSinEstado(int id) {
+
+    public Cliente buscarSinEstado(int id) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE idCliente=? ;";
 
@@ -146,7 +146,6 @@ public class ClienteData {
 
         return cliente;
     }
-    
 
     public Cliente buscarPorDNI(int dni) {
         Cliente cliente = null;
@@ -173,10 +172,8 @@ public class ClienteData {
 
         return cliente;
     }
-    
-    
-    
-           public Cliente buscarPorDNIInactivos(int dni) {
+
+    public Cliente buscarPorDNIInactivos(int dni) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE dni=? and estado=false ;";
 
@@ -201,10 +198,8 @@ public class ClienteData {
 
         return cliente;
     }
-    
 
-    
-        public Cliente buscarPorDNISinEstado(int dni) {
+    public Cliente buscarPorDNISinEstado(int dni) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE dni=? ;";
 
@@ -229,7 +224,7 @@ public class ClienteData {
 
         return cliente;
     }
-    
+
     public boolean update(Cliente cliente) {
 
         try {
@@ -320,7 +315,7 @@ public class ClienteData {
         }
 
     }
-    
+
     public List<Cliente> dnisEmpiezanCon(String s) {
         ArrayList<Cliente> lista = new ArrayList();
         try {

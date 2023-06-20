@@ -69,7 +69,7 @@ public class RealizarCompra2 extends javax.swing.JInternalFrame {
         //
         cbProveedor.setEditable(true); // Habilitar la edición del ComboBox
         cbProductos.setEditable(true);
-        
+
         // Agregar un editor al ComboBox
         editor2 = cbProductos.getEditor();
         textField2 = (JTextField) editor2.getEditorComponent();
@@ -89,7 +89,7 @@ public class RealizarCompra2 extends javax.swing.JInternalFrame {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                
+
                 ArrayList<Proveedor> l = (ArrayList<Proveedor>) proveedorData.razonSocialEmpiezanCon(textField.getText());
                 cargarCB2(l);
             }

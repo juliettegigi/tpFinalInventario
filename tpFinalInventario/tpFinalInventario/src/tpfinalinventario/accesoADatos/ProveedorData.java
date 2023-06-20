@@ -171,14 +171,14 @@ public class ProveedorData {
         }
         return lista;
     }
-    
+
     public List<Proveedor> razonSocialEmpiezanCon(String s) {
         ArrayList<Proveedor> lista = new ArrayList();
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor where razonSocial like '" + s + "%' and estado=true;");
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                 Proveedor proveedor = new Proveedor();
+                Proveedor proveedor = new Proveedor();
                 proveedor.setIdProveedor(r.getInt("idProveedor"));
                 proveedor.setRazonSocial(r.getString("razonSocial"));
                 proveedor.setDomicilio(r.getString("domicilio"));
@@ -191,7 +191,7 @@ public class ProveedorData {
         }
         return lista;
     }
-    
+
     public List<Proveedor> listaNoActivos() {
 
         ArrayList<Proveedor> lista = new ArrayList();
@@ -213,7 +213,6 @@ public class ProveedorData {
         }
         return lista;
     }
-    
 
     public boolean activarProveedor(String razonSocial) {
 

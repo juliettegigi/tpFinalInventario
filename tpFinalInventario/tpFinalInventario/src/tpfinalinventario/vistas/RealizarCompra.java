@@ -20,15 +20,15 @@ import tpfinalinventario.entidades.DetalleCompra;
 import tpfinalinventario.entidades.Producto;
 import tpfinalinventario.entidades.Proveedor;
 
-
 /**
  *
  * @author Paula Priotti
  */
 public class RealizarCompra extends javax.swing.JInternalFrame {
-private DefaultTableModel mod ;
-private DefaultTableModel mod2 ;
-private Proveedor proveedorSeleccionado;
+
+    private DefaultTableModel mod;
+    private DefaultTableModel mod2;
+    private Proveedor proveedorSeleccionado;
     ProveedorData prov = new ProveedorData();
     ProductoData prod = new ProductoData();
     CompraData compraD = new CompraData();
@@ -39,7 +39,7 @@ private Proveedor proveedorSeleccionado;
      */
     public RealizarCompra() {
         initComponents();
-       
+
         setSize(517, 560);
         //hago la tabla
         String[] columns = {"id", "nombre", "telefono"};
@@ -59,48 +59,42 @@ private Proveedor proveedorSeleccionado;
                 // Verificar si la selección es válida y no está ajustándose
                 if (!event.getValueIsAdjusting() && !selectionModel.isSelectionEmpty()) {
                     int selectedRow = selectionModel.getMinSelectionIndex();
-                     int id=  (int) mod.getValueAt(selectedRow, 0);
-                     proveedorSeleccionado=prov.buscar(id);
+                    int id = (int) mod.getValueAt(selectedRow, 0);
+                    proveedorSeleccionado = prov.buscar(id);
                     // Realizar acciones con los datos seleccionados
-                   // System.out.println("//Fila seleccionada: " + id + ", " );
+                    // System.out.println("//Fila seleccionada: " + id + ", " );
                 }
             }
-    });
-        
-        
-        
+        });
+
         //HAGO LA TABLA 2
-        
-         String[] columns2 = {"id", "nombre", "categoria", "precio actual", "cantidad"};
-         mod2 = new DefaultTableModel(columns2, 0) {
+        String[] columns2 = {"id", "nombre", "categoria", "precio actual", "cantidad"};
+        mod2 = new DefaultTableModel(columns2, 0) {
             @Override
             public boolean isCellEditable(int i, int il) {
                 return il == 4;
             }
+
             @Override
             public void setValueAt(Object value, int row, int column) {
                 Object oldValue = getValueAt(row, column); // Obtener el valor original
                 super.setValueAt(value, row, column);
                 Object newValue = getValueAt(row, column); // Obtener el nuevo valor
-   
+
                 if (oldValue != null && !oldValue.equals(newValue)) {
                     // La celda ha sido editada, realizar acciones aquí
-                    
-                   // System.out.println("Celda editada en la fila " + row + ", columna " + column);
+
+                    // System.out.println("Celda editada en la fila " + row + ", columna " + column);
                 }
             }
         };
-    cargarProductos();
-    //sacamos el id de productos
-   jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
-}
-    
-    
-    
- 
+        cargarProductos();
+        //sacamos el id de productos
+        jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
+    }
 
     private void cargarProductos() {
-       
+
         for (Producto p : prod.lista()) {
             Object[] d = {p.getIdProducto(), p.getNombre(), p.getCategoria(), p.getPrecioActual(), "0"};
             mod2.addRow(d);
@@ -247,7 +241,7 @@ private Proveedor proveedorSeleccionado;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //boton de realizar compra
         //metodo que obtiene cantidad de filas seleccionadas
-        if(jTableProv.getSelectedRow()==-1){
+        if (jTableProv.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
             return;
         }
@@ -259,10 +253,10 @@ private Proveedor proveedorSeleccionado;
         for (int i = 0; i < jTableProd.getRowCount(); i++) {
             hiddenProd[i] = jTableProd.getValueAt(i, 0);
         }*/
-            
+
         int cantProd = jTableProd.getRowCount();
-        int c=0;
-        Compra comp = new Compra(compraD.numeroCompra(),LocalDate.now(),proveedorSeleccionado,true);
+        int c = 0;
+        Compra comp = new Compra(compraD.numeroCompra(), LocalDate.now(), proveedorSeleccionado, true);
         compraD.guardar(comp);
         for (int i = 0; i < cantProd; i++) {
             if (!jTableProd.getValueAt(i, 4).equals("0")) {
@@ -273,22 +267,19 @@ private Proveedor proveedorSeleccionado;
                 dc.setCompra(comp);
                 dc.setProducto(p);
                 dc.setEstado(true);
-                p.setStock(p.getStock()+dc.getCantidad());
+                p.setStock(p.getStock() + dc.getCantidad());
                 prod.update(p);
                 dcD.guardar(dc);
-                c++;    
+                c++;
             }
         }
-        if(c==0){
+        if (c == 0) {
             JOptionPane.showMessageDialog(this, "Debe colocar la cantidad de los productos.");
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-
-    
     /**
      * @param args the command line arguments
      */
