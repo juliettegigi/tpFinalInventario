@@ -190,8 +190,13 @@ public class RealizarCompra2View extends javax.swing.JInternalFrame {
         jtable = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
 
+        setPreferredSize(new java.awt.Dimension(468, 400));
+        getContentPane().setLayout(null);
+
         jLabelProveedor.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabelProveedor.setText("PROVEEDOR");
+        getContentPane().add(jLabelProveedor);
+        jLabelProveedor.setBounds(12, 16, 92, 23);
 
         cbProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,18 +208,28 @@ public class RealizarCompra2View extends javax.swing.JInternalFrame {
                 cbProveedorKeyReleased(evt);
             }
         });
+        getContentPane().add(cbProveedor);
+        cbProveedor.setBounds(116, 12, 330, 30);
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel5.setText("Producto:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(12, 80, 72, 23);
 
         cbProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbProductosActionPerformed(evt);
             }
         });
+        getContentPane().add(cbProductos);
+        cbProductos.setBounds(96, 75, 240, 32);
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Cantidad: ");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(12, 132, 74, 23);
+        getContentPane().add(jtf_cantidad);
+        jtf_cantidad.setBounds(98, 129, 70, 30);
 
         jBtnAgregarLista.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jBtnAgregarLista.setText("Agregar a la lista");
@@ -223,8 +238,12 @@ public class RealizarCompra2View extends javax.swing.JInternalFrame {
                 jBtnAgregarListaActionPerformed(evt);
             }
         });
+        getContentPane().add(jBtnAgregarLista);
+        jBtnAgregarLista.setBounds(180, 127, 154, 33);
 
+        jBtnRealizarCompra.setBackground(new java.awt.Color(0, 255, 0));
         jBtnRealizarCompra.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jBtnRealizarCompra.setForeground(new java.awt.Color(0, 0, 0));
         jBtnRealizarCompra.setText("<html>Realizar<br>  compra</html>");
         jBtnRealizarCompra.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnRealizarCompra.addActionListener(new java.awt.event.ActionListener() {
@@ -232,6 +251,8 @@ public class RealizarCompra2View extends javax.swing.JInternalFrame {
                 jBtnRealizarCompraActionPerformed(evt);
             }
         });
+        getContentPane().add(jBtnRealizarCompra);
+        jBtnRealizarCompra.setBounds(354, 75, 92, 86);
 
         jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -246,67 +267,10 @@ public class RealizarCompra2View extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelProveedor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBtnAgregarLista)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnRealizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addComponent(jSeparator2)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelProveedor)
-                    .addComponent(cbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jBtnAgregarLista)))
-                    .addComponent(jBtnRealizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(300, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 180, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 180, 434, 147);
+        getContentPane().add(jSeparator2);
+        jSeparator2.setBounds(0, 53, 458, 10);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

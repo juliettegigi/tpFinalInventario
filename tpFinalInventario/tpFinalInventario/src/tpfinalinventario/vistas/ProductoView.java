@@ -92,19 +92,19 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel1.setText("NOMBRE: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, 30));
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("DESCRIPCIÓN: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, 30));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("PRECIO ACTUAL: ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, 30));
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setText("STOCK: ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, 30));
 
         jtf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -112,22 +112,22 @@ public class ProductoView extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jtf_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 200, 33));
-        getContentPane().add(jtf_precioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 186, 84, 30));
-        getContentPane().add(jtf_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 60, 33));
+        getContentPane().add(jtf_precioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 90, 30));
+        getContentPane().add(jtf_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 90, 30));
 
         jta_descripcion.setColumns(20);
         jta_descripcion.setRows(5);
         jScrollPane1.setViewportView(jta_descripcion);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 563, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 563, -1));
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
         jLabel5.setText("BUSCAR PRODUCTO");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 200, 43));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 200, 43));
 
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel6.setText("NOMBRE:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, 30));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 659, 29));
 
         btnAgregar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -137,7 +137,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, -1));
 
         btnEliminar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -146,7 +146,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, -1, -1));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, -1, -1));
 
         btnActualizar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnActualizar.setText("Actualizar");
@@ -155,7 +155,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, -1, -1));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
 
         jButton3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton3.setText("Limpiar");
@@ -164,23 +164,23 @@ public class ProductoView extends javax.swing.JInternalFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel7.setText("CATEGORÍA:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
-        getContentPane().add(jtf_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 179, 33));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 243, -1, 30));
+        getContentPane().add(jtf_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 180, 33));
 
         cbResultado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbResultadoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 52, 287, 31));
+        getContentPane().add(cbResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 310, 31));
 
         jLabel9.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
-        jLabel9.setText("AGREGAR PRODUCTO");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        jLabel9.setText("AGREGAR/MODIFICAR PRODUCTO");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

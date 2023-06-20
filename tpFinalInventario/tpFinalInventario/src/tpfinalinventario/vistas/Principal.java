@@ -92,6 +92,8 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        BarraMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
         MenuCliente.setText("Cliente");
 
         IMFormularioCliente.setText("Formulario de cliente");

@@ -188,17 +188,17 @@ public class RealizarVentaView extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("CLIENTE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 23, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 23, 70, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 67, 750, 22));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Cantidad: ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 143, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel5.setText("Producto:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 99, -1, -1));
-        getContentPane().add(jtf_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 70, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, 30));
+        getContentPane().add(jtf_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 70, 30));
 
         cbProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +207,9 @@ public class RealizarVentaView extends javax.swing.JInternalFrame {
         });
         getContentPane().add(cbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 250, 32));
 
+        jBtnRealizarVenta.setBackground(new java.awt.Color(51, 255, 0));
         jBtnRealizarVenta.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jBtnRealizarVenta.setForeground(new java.awt.Color(0, 0, 0));
         jBtnRealizarVenta.setText("<html>Realizar<br>   venta</html>");
         jBtnRealizarVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnRealizarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +226,7 @@ public class RealizarVentaView extends javax.swing.JInternalFrame {
                 jBtnAgregarListaActionPerformed(evt);
             }
         });
-        getContentPane().add(jBtnAgregarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, -1, -1));
+        getContentPane().add(jBtnAgregarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 160, -1));
 
         jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,7 +241,7 @@ public class RealizarVentaView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 281));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 150));
 
         cbClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,7 +253,7 @@ public class RealizarVentaView extends javax.swing.JInternalFrame {
                 cbClientesKeyReleased(evt);
             }
         });
-        getContentPane().add(cbClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 250, 30));
+        getContentPane().add(cbClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 370, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
