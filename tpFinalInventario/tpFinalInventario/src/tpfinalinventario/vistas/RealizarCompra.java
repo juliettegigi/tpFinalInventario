@@ -92,9 +92,11 @@ private Proveedor proveedorSeleccionado;
         };
     cargarProductos();
     //sacamos el id de productos
-    jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
+   jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
 }
-
+    
+    
+    
  
 
     private void cargarProductos() {
@@ -246,9 +248,17 @@ private Proveedor proveedorSeleccionado;
         //boton de realizar compra
         //metodo que obtiene cantidad de filas seleccionadas
         if(jTableProv.getSelectedRow()==-1){
-             JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
-             return;
+            JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
+            return;
         }
+        /*Object[] hiddenData = new Object[jTableProv.getRowCount()];
+        for (int i = 0; i < jTableProv.getRowCount(); i++) {
+            hiddenData[i] = jTableProv.getValueAt(i, 0);
+        }
+        Object[] hiddenProd = new Object[jTableProd.getRowCount()];
+        for (int i = 0; i < jTableProd.getRowCount(); i++) {
+            hiddenProd[i] = jTableProd.getValueAt(i, 0);
+        }*/
             
         int cantProd = jTableProd.getRowCount();
         int c=0;
@@ -256,23 +266,24 @@ private Proveedor proveedorSeleccionado;
         compraD.guardar(comp);
         for (int i = 0; i < cantProd; i++) {
             if (!jTableProd.getValueAt(i, 4).equals("0")) {
-                    DetalleCompra dc = new DetalleCompra();
-                    Producto p = prod.buscarPorId((int) jTableProd.getValueAt(i, 0));
-                    dc.setCantidad(Integer.parseInt((String) jTableProd.getValueAt(i, 4)));
-                    dc.setPrecioCosto(p.getPrecioActual());
-                    dc.setCompra(comp);
-                    dc.setProducto(p);
-                    dc.setEstado(true);
-                    p.setStock(p.getStock()+dc.getCantidad());
-                    prod.update(p);
-                    dcD.guardar(dc);
-                    c++;    
+                DetalleCompra dc = new DetalleCompra();
+                Producto p = prod.buscarPorId((int) jTableProd.getValueAt(i, 0));
+                dc.setCantidad(Integer.parseInt((String) jTableProd.getValueAt(i, 4)));
+                dc.setPrecioCosto(p.getPrecioActual());
+                dc.setCompra(comp);
+                dc.setProducto(p);
+                dc.setEstado(true);
+                p.setStock(p.getStock()+dc.getCantidad());
+                prod.update(p);
+                dcD.guardar(dc);
+                c++;    
             }
         }
-      if(c==0)
-           JOptionPane.showMessageDialog(this, "Debe colocar la cantidad de los productos.");
-      else
-      JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
+        if(c==0){
+            JOptionPane.showMessageDialog(this, "Debe colocar la cantidad de los productos.");
+        } else{
+            JOptionPane.showMessageDialog(this, "Compra realizada correctamente");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
