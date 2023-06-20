@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -48,8 +49,17 @@ private Proveedor proveedorSeleccionado;
             Object[] d = {p.getIdProveedor(), p.getRazonSocial(), p.getTelefono()};
             mod.addRow(d);
         }
+       
         jTableProv.setModel(mod);
-        jTableProv.removeColumn((jTableProv.getColumnModel().getColumn(0)));
+        // Obtener el modelo de columnas de la tabla
+        TableColumnModel columnModel = jTableProv.getColumnModel();
+
+        // Obtener la columna que deseas ocultar
+        TableColumn columnToHide = columnModel.getColumn(0); // Por ejemplo, ocultar la segunda columna (índice 1)
+
+        // Ocultar la columna
+        columnModel.removeColumn(columnToHide);
+        
         // Obtener el modelo de selección de la tabla
         ListSelectionModel selectionModel = jTableProv.getSelectionModel();
 
@@ -58,8 +68,11 @@ private Proveedor proveedorSeleccionado;
             public void valueChanged(ListSelectionEvent event) {
                 // Verificar si la selección es válida y no está ajustándose
                 if (!event.getValueIsAdjusting() && !selectionModel.isSelectionEmpty()) {
+                    
                     int selectedRow = selectionModel.getMinSelectionIndex();
-                     int id=  (int) mod.getValueAt(selectedRow, 0);
+                     Object hiddenColumnValue = mod.getValueAt(selectedRow, 0);
+                     int idProveedor = Integer.parseInt( hiddenColumnValue.toString());
+                    int id=  (int) mod.getValueAt(selectedRow, 0);
                      proveedorSeleccionado=prov.buscar(id);
                     // Realizar acciones con los datos seleccionados
                    // System.out.println("//Fila seleccionada: " + id + ", " );
@@ -82,28 +95,42 @@ private Proveedor proveedorSeleccionado;
                 Object oldValue = getValueAt(row, column); // Obtener el valor original
                 super.setValueAt(value, row, column);
                 Object newValue = getValueAt(row, column); // Obtener el nuevo valor
-   
+
                 if (oldValue != null && !oldValue.equals(newValue)) {
                     // La celda ha sido editada, realizar acciones aquí
                     
                    // System.out.println("Celda editada en la fila " + row + ", columna " + column);
                 }
             }
+            
         };
-    cargarProductos();
-    //sacamos el id de productos
-    jTableProd.removeColumn((jTableProd.getColumnModel().getColumn(0)));
-}
+        
+        
+        cargarProductos();
+        
+        
+        
+                }
 
  
 
     private void cargarProductos() {
-       
+        
+         
         for (Producto p : prod.lista()) {
+            
             Object[] d = {p.getIdProducto(), p.getNombre(), p.getCategoria(), p.getPrecioActual(), "0"};
             mod2.addRow(d);
         }
         jTableProd.setModel(mod2);
+              // Obtener el modelo de columnas de la tabla
+        TableColumnModel columnModel = jTableProd.getColumnModel();
+
+        // Obtener la columna que deseas ocultar
+        TableColumn columnToHide = columnModel.getColumn(0); // Por ejemplo, ocultar la segunda columna (índice 1)
+
+        // Ocultar la columna
+        columnModel.removeColumn(columnToHide);
     }
 
     /**
@@ -173,7 +200,6 @@ private Proveedor proveedorSeleccionado;
                 return canEdit [columnIndex];
             }
         });
-        jTableProd.setShowVerticalLines(true);
         jTableProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTableProdMousePressed(evt);
@@ -255,10 +281,12 @@ private Proveedor proveedorSeleccionado;
         Compra comp = new Compra(compraD.numeroCompra(),LocalDate.now(),proveedorSeleccionado,true);
         compraD.guardar(comp);
         for (int i = 0; i < cantProd; i++) {
-            if (!jTableProd.getValueAt(i, 4).equals("0")) {
+            if (!jTableProd.getValueAt(i, 3).equals("0")) {
                     DetalleCompra dc = new DetalleCompra();
-                    Producto p = prod.buscarPorId((int) jTableProd.getValueAt(i, 0));
-                    dc.setCantidad(Integer.parseInt((String) jTableProd.getValueAt(i, 4)));
+                    Object hiddenColumnValue = mod2.getValueAt(i, 0);
+                    int idCliente = Integer.parseInt(hiddenColumnValue.toString());
+                    Producto p = prod.buscarPorId(idCliente);
+                    dc.setCantidad(Integer.parseInt((String) jTableProd.getValueAt(i, 3)));
                     dc.setPrecioCosto(p.getPrecioActual());
                     dc.setCompra(comp);
                     dc.setProducto(p);

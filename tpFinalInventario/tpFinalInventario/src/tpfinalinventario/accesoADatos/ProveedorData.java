@@ -218,7 +218,6 @@ public class ProveedorData {
     
     
     public List<Proveedor> nombresEmpiezanCon(String s) {
-        System.out.println("s: "+s);
         ArrayList<Proveedor> lista = new ArrayList();
         try {
             PreparedStatement p = c.prepareStatement("SELECT * FROM proveedor where razonsocial like '" + s + "%' and estado=true;");
