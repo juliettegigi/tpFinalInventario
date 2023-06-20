@@ -294,6 +294,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private void cbResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbResultadoActionPerformed
         // CUANDO SELECCIONAN UN PRODUCTO DEL CB
+try{
         Producto p = (Producto) cbResultado.getSelectedItem();
         if (p == null) {
             return;
@@ -304,6 +305,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
         btnActualizar.setEnabled(true);
         btnAgregar.setEnabled(false);
+}catch(Exception e){
+    
+}
     }//GEN-LAST:event_cbResultadoActionPerformed
 
     private boolean validar() {

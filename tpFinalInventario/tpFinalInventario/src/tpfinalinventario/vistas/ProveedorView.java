@@ -247,24 +247,53 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+      if (cbRazonSocial.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
+            return;
+        }
 
-        JOptionPane.showMessageDialog(this, proveedorData.eliminarLogico(idBuscado));
-        idBuscado=-1;
+        if (proveedorData. eliminarLogico(idBuscado)) {
+            JOptionPane.showMessageDialog(this, "Producto eliminado. ");
+        } else {
+            JOptionPane.showMessageDialog(this, "El producto seleccionado no existe. ");
+        }
+        cbRazonSocial.setSelectedItem(null);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
-        Proveedor p = new Proveedor();
-        if (!validar(p)) {
+         if (cbRazonSocial.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
 
-        p.setIdProveedor(idBuscado);
-        JOptionPane.showMessageDialog(this, proveedorData.update(p));
-         idBuscado=-1;
+         Proveedor proveedor = cargarProveedor();
+        if (!validar(proveedor)) {
+            return;
+        }
+
+        
+        proveedor.setIdProveedor(idBuscado);
+        if (proveedorData.update(proveedor)) {
+            JOptionPane.showMessageDialog(this, "Producto actualizado");
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no actualizado");
+        }
+        cbRazonSocial.setSelectedItem(null);
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+       private Proveedor cargarProveedor() {
+        Proveedor p = new Proveedor();
+
+        p.setRazonSocial(jtf_razonSocial.getText());
+        p.setDomicilio(jtf_domicilio.getText());
+        p.setTelefono(jtf_telefono.getText());
+        p.setEstado(true);
+
+        return p;
+    }
+    
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         jtf_domicilio.setText("");
         jtf_razonSocial.setText("");
@@ -280,7 +309,8 @@ public class ProveedorView extends javax.swing.JInternalFrame {
 
     private void cbRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRazonSocialActionPerformed
   // CUANDO SELECCIONAN UN PROveedor DEL CB
-        Proveedor p = (Proveedor) cbRazonSocial.getSelectedItem();
+try{
+  Proveedor p = (Proveedor) cbRazonSocial.getSelectedItem();
         if (p == null) {
             return;
         }
@@ -288,7 +318,10 @@ public class ProveedorView extends javax.swing.JInternalFrame {
         cargarTF(p);
         btnEliminar.setEnabled(true);
         btnActualizar.setEnabled(true);
-        btnAgregar.setEnabled(false);
+        btnAgregar.setEnabled(false);}
+catch(Exception e){
+    
+}
     }//GEN-LAST:event_cbRazonSocialActionPerformed
 
     

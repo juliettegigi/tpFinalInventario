@@ -52,7 +52,7 @@ public class ProveedorData {
 
     }
 
-    public String update(Proveedor proveedor) {
+    public boolean update(Proveedor proveedor) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE proveedor SET razonsocial=?,domicilio=?,telefono=? WHERE idProveedor=? and estado=true;");
             p.setString(1, proveedor.getRazonSocial());
@@ -61,31 +61,31 @@ public class ProveedorData {
             p.setInt(4, proveedor.getIdProveedor());
             int filasAfectadas = p.executeUpdate();
             p.close();
-            if (filasAfectadas > 0) {
-                return "Proveedor actualizado";
+             if (filasAfectadas > 0) {
+                return true;
             } else {
-                return "No se encuentra el proveedor ingresado" + proveedor.getIdProveedor();
+                return false;
             }
         } catch (SQLException ex) {
-            return "Error al update proovedor, " + ex.getMessage();
-
+             JOptionPane.showMessageDialog(null, "Error al update proveedor, " + ex.getMessage());
+            return false;
         }
     }
 
-    public String eliminarLogico(int id) {
+    public boolean eliminarLogico(int id) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE proveedor SET estado=false WHERE idProveedor=? and estado=true;");
             p.setInt(1, id);
             int filasAfectadas = p.executeUpdate();
             p.close();
-            if (filasAfectadas > 0) {
-                return "Proveedor eliminado.\n";
+             if (filasAfectadas > 0) {
+                return true;
             } else {
-                return "Proveedor no eliminado,no se encuentra al proveedor ingresado" ;
+                return false;
             }
         } catch (SQLException ex) {
-
-            return "Error en Proveedor borradoLogico";
+             JOptionPane.showMessageDialog(null, "error en eliminar proveedor " + ex.getMessage());
+            return false;
         }
     }
 
