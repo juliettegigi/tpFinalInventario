@@ -258,7 +258,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_IMFormularioProveedorActionPerformed
 
     private void IMRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealizarVentaActionPerformed
-        cargarInternal(new RealizarVenta());
+        cargarInternal(new RealizarVentaView());
     }//GEN-LAST:event_IMRealizarVentaActionPerformed
 
     private void IMConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMConsultaActionPerformed
@@ -286,7 +286,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_IMActivarClienteActionPerformed
 
     private void IMRealizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealizarCompraActionPerformed
-        cargarInternal(new RealizarCompra());
+        cargarInternal(new RealizarCompraView());
     }//GEN-LAST:event_IMRealizarCompraActionPerformed
 
     private void IMActivarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMActivarProductoActionPerformed
@@ -302,7 +302,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void IMRealiza_Compra_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealiza_Compra_2ActionPerformed
-        cargarInternal(new RealizarCompra2());
+        cargarInternal(new RealizarCompra2View());
     }//GEN-LAST:event_IMRealiza_Compra_2ActionPerformed
 
     private void cargarInternal(JInternalFrame i) {

@@ -14,8 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import tpfinalinventario.entidades.DetalleCompra;
-import tpfinalinventario.entidades.DetalleVenta;
 import tpfinalinventario.entidades.Venta;
 
 /**
@@ -25,8 +23,8 @@ import tpfinalinventario.entidades.Venta;
 public class VentaData {
 
     private Connection c = null;
-    private  ClienteData clienteData = new ClienteData();
-    
+    private ClienteData clienteData = new ClienteData();
+
     public VentaData() {
         c = Conexion.getConexion();
     }
@@ -62,7 +60,7 @@ public class VentaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al update venta, " + ex.getMessage());
         }
-    } 
+    }
 
     public void borrarLog(Venta venta) {
         try {
@@ -97,7 +95,7 @@ public class VentaData {
             p.setInt(1, id);
             ResultSet r = p.executeQuery();
             if (r.next()) {
-                 v = new Venta();
+                v = new Venta();
                 v.setIdVenta(r.getInt("idVenta"));
                 v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
                 v.setFecha(r.getDate("fecha").toLocalDate());
@@ -138,9 +136,8 @@ public class VentaData {
         }
         return lista;
     }
-    
-    
-        public List<Venta> listaSinEstadoDelCliente() {
+
+    public List<Venta> listaSinEstadoDelCliente() {
 
         ArrayList<Venta> lista = new ArrayList();
         try {
@@ -164,15 +161,15 @@ public class VentaData {
         }
         return lista;
     }
-    
+
     public int numeroVenta() {
-        int numeroCompra=1;
-       try {
+        int numeroCompra = 1;
+        try {
 
             PreparedStatement p = c.prepareStatement("SELECT max(numeroDeVenta) as max from venta;");
             ResultSet r = p.executeQuery();
             if (r.next()) {
-               numeroCompra=r.getInt("max")+1;
+                numeroCompra = r.getInt("max") + 1;
             }
             p.close();
             r.close();
@@ -180,11 +177,10 @@ public class VentaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en numeroVenta, " + ex.getMessage());
         }
-       return numeroCompra;
+        return numeroCompra;
     }
-    
-    
-     public Venta buscarPorNumeroDeVenta(int numero) {
+
+    public Venta buscarPorNumeroDeVenta(int numero) {
         Venta v = null;
         try {
 
@@ -208,22 +204,19 @@ public class VentaData {
         }
         return v;
     }
-     
-     
-     
-   
-       public List<Venta>  buscarPorIdProducto(int id) {
+
+    public List<Venta> buscarPorIdProducto(int id) {
         ArrayList<Venta> lista = new ArrayList();
-        
+
         try {
-            PreparedStatement p = c.prepareStatement("select * from venta " +
-                                                     "where idVenta in(Select idVenta from detalleventa " +
-                                                     "where idproducto=?);");
+            PreparedStatement p = c.prepareStatement("select * from venta "
+                    + "where idVenta in(Select idVenta from detalleventa "
+                    + "where idproducto=?);");
             p.setInt(1, id);
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 Venta v = new Venta();
-                     v.setIdVenta(r.getInt("idVenta"));
+                v.setIdVenta(r.getInt("idVenta"));
                 v.setNumeroDeVenta(r.getInt("numeroDeVenta"));
                 v.setFecha(r.getDate("fecha").toLocalDate());
                 v.setCliente(clienteData.buscar(r.getInt("idCliente")));
@@ -238,6 +231,5 @@ public class VentaData {
         }
         return lista;
     }
-    
 
 }

@@ -29,47 +29,45 @@ public class ActivarProductoView extends javax.swing.JInternalFrame {
         armarCabeceraTabla();
         llenarTabla();
     }
-    
-    private void armarCabeceraTabla(){
-    
-        ArrayList<Object> columns=new ArrayList();
+
+    private void armarCabeceraTabla() {
+
+        ArrayList<Object> columns = new ArrayList();
         columns.add("NOMBRE");
         columns.add("CATEGORIA");
         columns.add("DESCRIPCION");
         columns.add("PRECIO");
         columns.add("STOCK");
 
-        for(Object it:columns)
+        for (Object it : columns) {
             modelo.addColumn(it);
-     
-        jTableT.setModel(modelo);
-                
-    }
-    
-    public void borrarFilas(){
-      int a=modelo.getRowCount()-1;
-      for(int i=a;i>=0;i--)
-          modelo.removeRow(i);
-      
-    }
-    
-    
-   private void llenarTabla(){
-        borrarFilas();
-        ArrayList<Producto> listaProductos=null;
-       
-        
+        }
 
-        
-            listaProductos=(ArrayList<Producto>) productoData.listaNoActivos();
-       if(listaProductos.isEmpty())
-           return;
-            
-        for(Producto c:listaProductos){
-                modelo.addRow(new Object[]{c.getNombre(),c.getCategoria(),c.getDescripcion(),c.getPrecioActual(),c.getStock()});
-            }
-             
-       
+        jTableT.setModel(modelo);
+
+    }
+
+    public void borrarFilas() {
+        int a = modelo.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
+    }
+
+    private void llenarTabla() {
+        borrarFilas();
+        ArrayList<Producto> listaProductos = null;
+
+        listaProductos = (ArrayList<Producto>) productoData.listaNoActivos();
+        if (listaProductos.isEmpty()) {
+            return;
+        }
+
+        for (Producto c : listaProductos) {
+            modelo.addRow(new Object[]{c.getNombre(), c.getCategoria(), c.getDescripcion(), c.getPrecioActual(), c.getStock()});
+        }
+
     }
 
     /**
@@ -148,8 +146,7 @@ public class ActivarProductoView extends javax.swing.JInternalFrame {
             return;
         }
 
-        
-        String nombre = (String)jTableT.getValueAt(fila, 0);
+        String nombre = (String) jTableT.getValueAt(fila, 0);
         productoData.activarProducto(nombre);
         JOptionPane.showMessageDialog(this, "Producto activado exitosamente");
         llenarTabla();

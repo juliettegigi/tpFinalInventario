@@ -18,7 +18,6 @@ public class Compra {
     private LocalDate fecha;
     private Proveedor proveedor;
     private boolean estado;
-    
 
     public Compra() {
     }
@@ -35,14 +34,14 @@ public class Compra {
         this.fecha = fecha;
         this.proveedor = proveedor;
         this.estado = estado;
-        this.numeroDeCompra=numeroDeCompra;
+        this.numeroDeCompra = numeroDeCompra;
     }
 
     public int getIdCompra() {
         return idCompra;
     }
-    
-    public int getNumeroDeCompra(){
+
+    public int getNumeroDeCompra() {
         return numeroDeCompra;
     }
 
@@ -65,8 +64,8 @@ public class Compra {
     public void setIdCompra(int idCompra) {
         this.idCompra = idCompra;
     }
-    
-    public void setNumeroDeCompra(int numeroDeCompra){
+
+    public void setNumeroDeCompra(int numeroDeCompra) {
         this.numeroDeCompra = numeroDeCompra;
     }
 

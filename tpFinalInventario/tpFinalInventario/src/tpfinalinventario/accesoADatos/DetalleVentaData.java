@@ -23,8 +23,9 @@ import tpfinalinventario.entidades.Producto;
 public class DetalleVentaData {
 
     private Connection c = null;
-    private VentaData ventaData=new VentaData();
-    private ProductoData productoData=new ProductoData();
+    private VentaData ventaData = new VentaData();
+    private ProductoData productoData = new ProductoData();
+
     public DetalleVentaData() {
         c = Conexion.getConexion();
     }
@@ -65,7 +66,7 @@ public class DetalleVentaData {
             JOptionPane.showMessageDialog(null, "Error al update detalleVenta, " + ex.getMessage());
         }
     }
-    
+
     public void borrarLog(DetalleVenta dV) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE FROM detalleVenta SET estado=? WHERE idDetalleVenta=?");
@@ -140,21 +141,18 @@ public class DetalleVentaData {
         }
         return lista;
     }
-    
-    
-     
-            
-        ///*productos que están en detalle venta*/
-//select * from producto where idProducto in(select idProducto from detalleVenta);
 
+    ///*productos que están en detalle venta*/
+//select * from producto where idProducto in(select idProducto from detalleVenta);
     public List<Producto> productosEnDetalleVenta(int i) {
         ArrayList<Producto> lista = new ArrayList();
-        try { 
-            PreparedStatement p ;
-            if(i==0)
-              p= c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta);");
-            else {p= c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta where idVenta=?);");
-                   p.setInt(1, i);
+        try {
+            PreparedStatement p;
+            if (i == 0) {
+                p = c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta);");
+            } else {
+                p = c.prepareStatement("select * from producto where idProducto in(select idProducto from detalleVenta where idVenta=?);");
+                p.setInt(1, i);
             }
             ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -176,13 +174,13 @@ public class DetalleVentaData {
         }
         return lista;
     }
-    
-      public List<DetalleVenta>  detalleVentaPorIdVenta(int id) {
+
+    public List<DetalleVenta> detalleVentaPorIdVenta(int id) {
         ArrayList<DetalleVenta> lista = new ArrayList();
-        try { 
-            PreparedStatement p ;
-              p= c.prepareStatement("select * from detalleVenta where idVenta=? and estado=1;");
-              p.setInt(1, id);
+        try {
+            PreparedStatement p;
+            p = c.prepareStatement("select * from detalleVenta where idVenta=? and estado=1;");
+            p.setInt(1, id);
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 DetalleVenta dv = new DetalleVenta();
@@ -191,7 +189,7 @@ public class DetalleVentaData {
                 dv.setPrecioVenta(r.getDouble("precioventa"));
                 dv.setVenta(ventaData.buscar(r.getInt("idVenta")));
                 dv.setProducto(productoData.buscarPorIdSinEstado(r.getInt("idProducto")));
-              
+
                 lista.add(dv);
             }
             p.close();
@@ -202,9 +200,5 @@ public class DetalleVentaData {
         }
         return lista;
     }
-    
-    
-
-       
 
 }

@@ -10,7 +10,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
@@ -24,7 +23,7 @@ import tpfinalinventario.entidades.Proveedor;
  *
  * @author Paula Priotti
  */
-public class RealizarCompra extends javax.swing.JInternalFrame {
+public class RealizarCompraView extends javax.swing.JInternalFrame {
 
     private DefaultTableModel mod;
     private DefaultTableModel mod2;
@@ -37,7 +36,7 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
     /**
      * Creates new form DetalleCompraView
      */
-    public RealizarCompra() {
+    public RealizarCompraView() {
         initComponents();
 
         setSize(517, 560);
@@ -169,7 +168,6 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableProd.setShowVerticalLines(true);
         jTableProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTableProdMousePressed(evt);
@@ -297,21 +295,23 @@ public class RealizarCompra extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompraView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompraView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompraView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompraView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RealizarCompra().setVisible(true);
+                new RealizarCompraView().setVisible(true);
             }
         });
     }

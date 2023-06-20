@@ -16,61 +16,55 @@ import tpfinalinventario.entidades.Cliente;
  * @author julie
  */
 public class ActivarClienteView extends javax.swing.JInternalFrame {
- private DefaultTableModel modelo;
-    private  ClienteData clienteData=new ClienteData();
+
+    private DefaultTableModel modelo;
+    private ClienteData clienteData = new ClienteData();
+
     public ActivarClienteView() {
         initComponents();
-         modelo=new DefaultTableModel();
+        modelo = new DefaultTableModel();
         armarCabeceraTabla();
-         llenarTabla();
+        llenarTabla();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-     private void armarCabeceraTabla(){
+
+    private void armarCabeceraTabla() {
         //creo las columnas de la tabla
-        ArrayList<Object> columns=new ArrayList();
+        ArrayList<Object> columns = new ArrayList();
         columns.add("DNI");
         columns.add("APELLIDO");
         columns.add("NOMBRE");
         //recorro el arrayList, a nuestro modelo le agrego columnas
-        for(Object it:columns)
+        for (Object it : columns) {
             modelo.addColumn(it);
+        }
         //a la tabla alumno le cambio el modelo, le pongo este que tiene estas columnas(id,nombre, nota)
         jTableT.setModel(modelo);
-                
+
     }
-    
-    public void borrarFilas(){
-      int a=modelo.getRowCount()-1;
-      for(int i=a;i>=0;i--)
-          modelo.removeRow(i);
-      
+
+    public void borrarFilas() {
+        int a = modelo.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
     }
-    
-    
-   private void llenarTabla(){
+
+    private void llenarTabla() {
         borrarFilas();
-        ArrayList<Cliente> listaClientes=null;
-       
-        
+        ArrayList<Cliente> listaClientes = null;
+
         //obtengo la lista de las materias q cursa el alumno seleccionado
-        
-            listaClientes=(ArrayList<Cliente>) clienteData.listaNoActivos();
-       if(listaClientes.isEmpty())
-           return;
-            
-        for(Cliente c:listaClientes){
-                modelo.addRow(new Object[]{c.getDni(),c.getApellido(),c.getNombre()});
-               
-            }
-             
-       
+        listaClientes = (ArrayList<Cliente>) clienteData.listaNoActivos();
+        if (listaClientes.isEmpty()) {
+            return;
+        }
+
+        for (Cliente c : listaClientes) {
+            modelo.addRow(new Object[]{c.getDni(), c.getApellido(), c.getNombre()});
+
+        }
+
     }
 
     /**
@@ -142,14 +136,14 @@ public class ActivarClienteView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           int fila=jTableT.getSelectedRow();
-        if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Tiene que seleccionar a un cliente");
+        int fila = jTableT.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Tiene que seleccionar a un cliente");
             return;
         }
-       
+
         //recupero el id 
-        int dni=(int) jTableT.getValueAt(fila, 0);
+        int dni = (int) jTableT.getValueAt(fila, 0);
         clienteData.activarCliente(dni);
         JOptionPane.showMessageDialog(this, "Cliente activado exitosamente");
         llenarTabla();

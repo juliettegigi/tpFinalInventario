@@ -5,8 +5,6 @@
  */
 package tpfinalinventario;
 
-
-
 /**
  *
  * @author julie
@@ -17,9 +15,7 @@ public class TpFinalInventario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-               
-        
-}
-    
+
+    }
+
 }

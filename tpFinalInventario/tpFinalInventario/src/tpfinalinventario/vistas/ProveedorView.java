@@ -5,7 +5,6 @@
 package tpfinalinventario.vistas;
 
 import java.util.ArrayList;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import tpfinalinventario.accesoADatos.ProveedorData;
 import tpfinalinventario.entidades.Proveedor;

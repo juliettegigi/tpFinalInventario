@@ -8,8 +8,6 @@ package tpfinalinventario.accesoADatos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,11 +32,11 @@ public class Conexion {
 
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
-                connection = DriverManager.getConnection(URL + DB+"?useLegacyDataTimeCode=false&serverTimeZone=UTC"+"&user="+USER+"&password="+PASS);
+                connection = DriverManager.getConnection(URL + DB + "?useLegacyDataTimeCode=false&serverTimeZone=UTC" + "&user=" + USER + "&password=" + PASS);
             } catch (ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null,"Error al cargar los drivers, "+ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al cargar los drivers, " + ex.getMessage());
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al conectarse a la DB, "+ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al conectarse a la DB, " + ex.getMessage());
             }
         }
 

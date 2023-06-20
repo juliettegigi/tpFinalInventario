@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import tpfinalinventario.entidades.Compra;
-import tpfinalinventario.entidades.Venta;
 
 /**
  *

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.entidades.Producto;
+
 /**
  *
  * @author julie
@@ -21,23 +22,24 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private ArrayList<Producto> lista;
     private int idBuscado;
-    private  ProductoData pd=new ProductoData();
+    private ProductoData pd = new ProductoData();
     private JTextField textField;
+
     public ProductoView() {
         initComponents();
         setSize(624, 564);
         btnAgregar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        btnActualizar.setEnabled(false);       
-       jLabel9.setText("AGREGAR PRODUCTO");
-       // Agregar un editor al ComboBox
+        btnActualizar.setEnabled(false);
+        jLabel9.setText("AGREGAR PRODUCTO");
+        // Agregar un editor al ComboBox
         cbResultado.setEditable(true);
         ComboBoxEditor editor = cbResultado.getEditor();
         textField = (JTextField) editor.getEditorComponent();
-         textField.addKeyListener(new KeyListener() {
+        textField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                
+
             }
 
             @Override
@@ -46,14 +48,13 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                
-        lista=(ArrayList<Producto>) pd.nombresEmpiezanCon(textField.getText());
-         cargarCB();
+
+                lista = (ArrayList<Producto>) pd.nombresEmpiezanCon(textField.getText());
+                cargarCB();
             }
 
-       
         });
-         
+
     }
 
     /**
@@ -184,109 +185,107 @@ public class ProductoView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-     private void cargarCB(){
+    private void cargarCB() {
         String text = textField.getText();
-        cbResultado.removeAllItems();       
-        for(Producto item:lista){
-                cbResultado.addItem(item);               
+        cbResultado.removeAllItems();
+        for (Producto item : lista) {
+            cbResultado.addItem(item);
         }
         cbResultado.setPopupVisible(true);
         textField.setText(text);
     }
-    
-    private void cargarTF(Producto producto){
+
+    private void cargarTF(Producto producto) {
         jtf_nombre.setText(producto.getNombre());
         jtf_categoria.setText(producto.getCategoria());
         jta_descripcion.setText(producto.getDescripcion());
         jtf_precioActual.setText(String.valueOf(producto.getPrecioActual()));
         jtf_stock.setText(String.valueOf(producto.getStock()));
     }
-    
-    
-    private Producto cargarProducto(){       
-        Producto p=new Producto();
-        
-      
-            p.setNombre(jtf_nombre.getText());
-            p.setDescripcion(jta_descripcion.getText());
-            p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
-            p.setEstado(true);            
-            p.setStock(Integer.parseInt(jtf_stock.getText()));
-            p.setCategoria(jtf_categoria.getText());
-        
+
+    private Producto cargarProducto() {
+        Producto p = new Producto();
+
+        p.setNombre(jtf_nombre.getText());
+        p.setDescripcion(jta_descripcion.getText());
+        p.setPrecioActual(Double.parseDouble(jtf_precioActual.getText()));
+        p.setEstado(true);
+        p.setStock(Integer.parseInt(jtf_stock.getText()));
+        p.setCategoria(jtf_categoria.getText());
+
         return p;
     }
-    
-    
+
+
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-         
-         
-                
-         if (!validar())
+
+        if (!validar()) {
             return;
-         
-         
-         if(!pd.buscarCampoValor("nombre",jtf_nombre.getText()).isEmpty()){
-              int respuesta = JOptionPane.showConfirmDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+"Desea agregar?", "Si", JOptionPane.YES_NO_OPTION);
-              if (respuesta == JOptionPane.NO_OPTION){
-                  JOptionPane.showMessageDialog(this,  "Operación cancelada.\n ");
-                  return;
-              }
-         }
-         
-         // si se encuentra inactivo
-          
-         if(pd.buscarPorNombreInactivo(jtf_nombre.getText())!=null){
-             
-                  JOptionPane.showMessageDialog(this, "Ya existe un producto con nombre:"+jtf_nombre.getText()+"\n"+" en la lista de productos inactivos"+"\n"+"Activelo y actualícelo.");
-                  return;
-              }
-         
-             
-         Producto p=cargarDatos();
-         
-         if(pd.guardar(p))
-              JOptionPane.showMessageDialog(this,  "Producto guardado.\n ");
-         else  JOptionPane.showMessageDialog(this,  "Producto no guardado, el producto ya existe o error.\n ");
+        }
+
+        if (!pd.buscarCampoValor("nombre", jtf_nombre.getText()).isEmpty()) {
+            int respuesta = JOptionPane.showConfirmDialog(this, "Ya existe un producto con nombre:" + jtf_nombre.getText() + "\n" + "Desea agregar?", "Si", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Operación cancelada.\n ");
+                return;
+            }
+        }
+
+        // si se encuentra inactivo
+        if (pd.buscarPorNombreInactivo(jtf_nombre.getText()) != null) {
+
+            JOptionPane.showMessageDialog(this, "Ya existe un producto con nombre:" + jtf_nombre.getText() + "\n" + " en la lista de productos inactivos" + "\n" + "Activelo y actualícelo.");
+            return;
+        }
+
+        Producto p = cargarDatos();
+
+        if (pd.guardar(p)) {
+            JOptionPane.showMessageDialog(this, "Producto guardado.\n ");
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no guardado, el producto ya existe o error.\n ");
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       
-      if(cbResultado.getSelectedItem()==null){
-             JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
-             return;
+
+        if (cbResultado.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
+            return;
         }
-        
-        if(pd.eliminadoLogico(idBuscado))
-          JOptionPane.showMessageDialog(this, "Producto eliminado. " );
-        else 
-          JOptionPane.showMessageDialog(this,"El producto seleccionado no existe. ");
-         cbResultado.setSelectedItem(null);
+
+        if (pd.eliminadoLogico(idBuscado)) {
+            JOptionPane.showMessageDialog(this, "Producto eliminado. ");
+        } else {
+            JOptionPane.showMessageDialog(this, "El producto seleccionado no existe. ");
+        }
+        cbResultado.setSelectedItem(null);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        
-        if(cbResultado.getSelectedItem()==null){
-             JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
-             return;
-        }
-            
-     
-        if (!validar())
+
+        if (cbResultado.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
-     
-        Producto producto=cargarProducto();
+        }
+
+        if (!validar()) {
+            return;
+        }
+
+        Producto producto = cargarProducto();
         producto.setIdProducto(idBuscado);
-        if(pd.update(producto))
-            JOptionPane.showMessageDialog(this,"Producto actualizado");
-        else  JOptionPane.showMessageDialog(this,"Producto no actualizado");
-         cbResultado.setSelectedItem(null);
+        if (pd.update(producto)) {
+            JOptionPane.showMessageDialog(this, "Producto actualizado");
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no actualizado");
+        }
+        cbResultado.setSelectedItem(null);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-  limpiar();
-  
+        limpiar();
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jtf_nombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nombreFocusGained
@@ -295,64 +294,59 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private void cbResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbResultadoActionPerformed
         // CUANDO SELECCIONAN UN PRODUCTO DEL CB
-        Producto p=(Producto) cbResultado.getSelectedItem();
-        if(p==null)return;
-        idBuscado=p.getIdProducto();
+        Producto p = (Producto) cbResultado.getSelectedItem();
+        if (p == null) {
+            return;
+        }
+        idBuscado = p.getIdProducto();
         cargarTF(p);
         jLabel9.setText("Producto seleccionado.");
-         btnEliminar.setEnabled(true);
+        btnEliminar.setEnabled(true);
         btnActualizar.setEnabled(true);
-         btnAgregar.setEnabled(false);
+        btnAgregar.setEnabled(false);
     }//GEN-LAST:event_cbResultadoActionPerformed
 
-    
-    
-    private boolean validar( ){
-         ArrayList<String> errores=new ArrayList();
-         
-         if(jtf_nombre.getText().trim().length()==0)
+    private boolean validar() {
+        ArrayList<String> errores = new ArrayList();
+
+        if (jtf_nombre.getText().trim().length() == 0) {
             errores.add("Campo nombre es obligatorio.");
-       
-         
-           if(jtf_categoria.getText().trim().length()==0)
-            errores.add("Campo categoría es obligatorio.");
-         
-        try{
-          Integer.parseInt(jtf_stock.getText());    
         }
-        
-        
-        
-        catch(Exception e){
+
+        if (jtf_categoria.getText().trim().length() == 0) {
+            errores.add("Campo categoría es obligatorio.");
+        }
+
+        try {
+            Integer.parseInt(jtf_stock.getText());
+        } catch (Exception e) {
             errores.add("Campo stock: numérico.");
         }
-         try{
-            Double.parseDouble(jtf_precioActual.getText());    
-        }
-        catch(Exception e){
+        try {
+            Double.parseDouble(jtf_precioActual.getText());
+        } catch (Exception e) {
             errores.add("Campo precio actual: numérico.");
         }
-         
-         if(!errores.isEmpty()){
-                 String mensaje="";
-            for(int i=0; i<errores.size();i++){
-                if(i==errores.size()-1)
-                    mensaje+=errores.get(i)+", ";
-                else  mensaje+=errores.get(i)+".";
+
+        if (!errores.isEmpty()) {
+            String mensaje = "";
+            for (int i = 0; i < errores.size(); i++) {
+                if (i == errores.size() - 1) {
+                    mensaje += errores.get(i) + ", ";
+                } else {
+                    mensaje += errores.get(i) + ".";
+                }
             }
-          JOptionPane.showMessageDialog(this,mensaje);
-          return false;
-         }
-             
-      
-        
+            JOptionPane.showMessageDialog(this, mensaje);
+            return false;
+        }
+
         return true;
     }
-    
-    
-    private Producto cargarDatos(){
-        Producto p=new Producto();
-        
+
+    private Producto cargarDatos() {
+        Producto p = new Producto();
+
         p.setNombre(jtf_nombre.getText());
         p.setCategoria(jtf_categoria.getText());
         p.setDescripcion(jta_descripcion.getText());
@@ -361,20 +355,18 @@ public class ProductoView extends javax.swing.JInternalFrame {
         p.setEstado(true);
         return p;
     }
-    
-    
-    
-    private void limpiar(){
-       btnAgregar.setEnabled(false);
-       btnEliminar.setEnabled(false);
-       btnActualizar.setEnabled(false);
-       jtf_nombre.setText("");
-       textField.setText("");
-       jtf_precioActual.setText("");
-       jtf_stock.setText("");
-       jta_descripcion.setText("");
-       jtf_categoria.setText("");
-       jLabel9.setVisible(false);
+
+    private void limpiar() {
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        jtf_nombre.setText("");
+        textField.setText("");
+        jtf_precioActual.setText("");
+        jtf_stock.setText("");
+        jta_descripcion.setText("");
+        jtf_categoria.setText("");
+        jLabel9.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

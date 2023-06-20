@@ -12,11 +12,8 @@ import tpfinalinventario.accesoADatos.CompraData;
 import tpfinalinventario.accesoADatos.DetalleCompraData;
 import tpfinalinventario.accesoADatos.ProductoData;
 import tpfinalinventario.accesoADatos.ProveedorData;
-import tpfinalinventario.accesoADatos.VentaData;
-import tpfinalinventario.entidades.Cliente;
 import tpfinalinventario.entidades.Compra;
 import tpfinalinventario.entidades.DetalleCompra;
-import tpfinalinventario.entidades.DetalleVenta;
 import tpfinalinventario.entidades.Producto;
 import tpfinalinventario.entidades.Proveedor;
 
@@ -31,7 +28,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
     private DetalleCompraData detalleCompraData = new DetalleCompraData();
     private ProveedorData proveedorData = new ProveedorData();
     private ArrayList<Producto> lista;
-    private CompraData compraData=new CompraData();
+    private CompraData compraData = new CompraData();
 
     /**
      * Creates new form DetalleCompraView
@@ -211,37 +208,37 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         jLabel5.setVisible(false);
         jLabel4.setVisible(false);
         jLabel6.setVisible(false);
-          borrarFilas();
+        borrarFilas();
         if (jtf_numCompra.getText().trim().equals("")) {
-            
+
             JOptionPane.showMessageDialog(this, "Ingrese un numero de compra.");
             return;
         }
-        
-        int numero=0;
-        try{
-            numero=Integer.parseInt(jtf_numCompra.getText());
-        }catch(Exception e){
+
+        int numero = 0;
+        try {
+            numero = Integer.parseInt(jtf_numCompra.getText());
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingrese un número.");
-            return; 
+            return;
         }
-        
+
         // lista de compra, con un numero de compra, es uno solo
         Compra compra = compraData.buscarPorNumeroDeCompra(numero);
-        if(compra==null){
-            JOptionPane.showMessageDialog(this, "No existe ese número de compra.");            
-            return; 
-            
+        if (compra == null) {
+            JOptionPane.showMessageDialog(this, "No existe ese número de compra.");
+            return;
+
         }
-           
-        String fecha=compra.getFecha().toString();
-        Proveedor prov=compra.getProveedor();
+
+        String fecha = compra.getFecha().toString();
+        Proveedor prov = compra.getProveedor();
         jLabel5.setText(prov.getRazonSocial());
         jLabel6.setText(fecha);
         // buscar en detalleCompra por idCompra
-        ArrayList<DetalleCompra> listaDetalleCompra= (ArrayList<DetalleCompra>) detalleCompraData.buscarPorIdCompra(compra.getIdCompra());
+        ArrayList<DetalleCompra> listaDetalleCompra = (ArrayList<DetalleCompra>) detalleCompraData.buscarPorIdCompra(compra.getIdCompra());
         llenarTabla(listaDetalleCompra);
-        
+
         jLabel3.setVisible(true);
         jLabel5.setVisible(true);
         jLabel4.setVisible(true);
@@ -257,7 +254,6 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
         columns.add("PRODUCTO");
         columns.add("CANTIDAD");
         columns.add("PRECIO");
-       
 
         //recorro el arrayList, a nuestro modelo le agrego columnas
         for (Object it : columns) {
@@ -267,17 +263,17 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
     }
 
     private void llenarTabla(ArrayList<DetalleCompra> listaDetalleCompra) {
-      
+
         if (listaDetalleCompra.isEmpty()) {
             return;
         }
-        double total=0;
+        double total = 0;
         for (DetalleCompra dc : listaDetalleCompra) {
-            Producto p=productoData.buscarPorIdSinEstado(dc.getProducto().getIdProducto());
-            modelo.addRow(new Object[]{p.getNombre(), dc.getCantidad(),p.getPrecioActual()});
-           total+=dc.getPrecioCosto();
+            Producto p = productoData.buscarPorIdSinEstado(dc.getProducto().getIdProducto());
+            modelo.addRow(new Object[]{p.getNombre(), dc.getCantidad(), p.getPrecioActual()});
+            total += dc.getPrecioCosto();
         }
-        modelo.addRow(new Object[]{ "","",total});
+        modelo.addRow(new Object[]{"", "", total});
     }
 
     public void borrarFilas() {
@@ -286,8 +282,7 @@ public class DetalleCompraView extends javax.swing.JInternalFrame {
             modelo.removeRow(i);
         }
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;

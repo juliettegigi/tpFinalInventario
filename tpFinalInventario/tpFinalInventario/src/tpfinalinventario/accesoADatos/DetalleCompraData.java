@@ -49,7 +49,6 @@ public class DetalleCompraData {
         }
     }
 
-
     public void update(DetalleCompra dC) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE FROM detallecompra SET cantidad=?,precioVenta=?,idCompra=?,idProducto=? WHERE idDetalleCompra=?");
@@ -64,7 +63,7 @@ public class DetalleCompraData {
             JOptionPane.showMessageDialog(null, "Error al update detalleCompra, " + ex.getMessage());
         }
     }
-    
+
     public void borrarLog(DetalleCompra dC) {
         try {
             PreparedStatement p = c.prepareStatement("UPDATE FROM detalleCompra SET estado=? WHERE idDetalle=?");
@@ -140,9 +139,8 @@ public class DetalleCompraData {
         }
         return lista;
     }
-    
-    
-        public List<DetalleCompra> buscarPorIdCompra(int idCompra) {
+
+    public List<DetalleCompra> buscarPorIdCompra(int idCompra) {
         CompraData compraData = new CompraData();
         ProductoData productoData = new ProductoData();
         ArrayList<DetalleCompra> lista = new ArrayList();
@@ -168,6 +166,5 @@ public class DetalleCompraData {
         }
         return lista;
     }
-    
 
 }

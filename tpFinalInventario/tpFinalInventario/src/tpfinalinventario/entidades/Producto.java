@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author julie
  */
 public class Producto {
+
     private int idProducto;
     private String nombre;
     private String categoria;
@@ -23,19 +24,19 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre,String categoria, String descripcion, double precioActual, int stock, boolean estado) {
+    public Producto(int idProducto, String nombre, String categoria, String descripcion, double precioActual, int stock, boolean estado) {
         this.idProducto = idProducto;
         this.nombre = nombre;
-        this.categoria=categoria;
+        this.categoria = categoria;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
         this.estado = estado;
     }
 
-     public Producto(String nombre,String categoria, String descripcion, double precioActual, int stock, boolean estado) {
+    public Producto(String nombre, String categoria, String descripcion, double precioActual, int stock, boolean estado) {
         this.nombre = nombre;
-        this.categoria=categoria;
+        this.categoria = categoria;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
@@ -49,8 +50,6 @@ public class Producto {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-     
-     
 
     public String getNombre() {
         return nombre;
@@ -102,28 +101,33 @@ public class Producto {
 
     @Override
     public String toString() {
-        return  nombre;
+        return nombre;
     }
 
- 
-      @Override
+    @Override
     public boolean equals(Object obj) {
-       if (this == obj)return true;
-       if (obj == null)return false;
-       if (getClass() != obj.getClass())return false;
-       Producto other = (Producto) obj;
-       boolean retorno= stock == other.stock  && 
-                        Objects.equals(nombre, other.nombre) &&
-                        Objects.equals(categoria, other.categoria)&&
-                        Objects.equals(descripcion, other.descripcion)&&
-                        precioActual==other.precioActual;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Producto other = (Producto) obj;
+        boolean retorno = stock == other.stock
+                && Objects.equals(nombre, other.nombre)
+                && Objects.equals(categoria, other.categoria)
+                && Objects.equals(descripcion, other.descripcion)
+                && precioActual == other.precioActual;
 
-      return retorno;
-}
- 
-@Override
-public int hashCode() {
-return Objects.hash(nombre,categoria,descripcion,precioActual,stock);
-}
-            
+        return retorno;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, categoria, descripcion, precioActual, stock);
+    }
+
 }

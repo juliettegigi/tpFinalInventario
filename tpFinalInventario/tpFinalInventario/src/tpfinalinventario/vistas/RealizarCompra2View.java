@@ -28,7 +28,7 @@ import tpfinalinventario.entidades.Proveedor;
  *
  * @author santi
  */
-public class RealizarCompra2 extends javax.swing.JInternalFrame {
+public class RealizarCompra2View extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modelo;
     ProveedorData proveedorData = new ProveedorData();
@@ -46,7 +46,7 @@ public class RealizarCompra2 extends javax.swing.JInternalFrame {
     /**
      * Creates new form RealizarCompra2
      */
-    public RealizarCompra2() {
+    public RealizarCompra2View() {
         initComponents();
         setSize(497, 529);
         //  initComboBox();
@@ -450,21 +450,23 @@ public class RealizarCompra2 extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompra2View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompra2View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompra2View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RealizarCompra2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RealizarCompra2View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RealizarCompra2().setVisible(true);
+                new RealizarCompra2View().setVisible(true);
             }
         });
     }

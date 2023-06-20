@@ -5,8 +5,6 @@
  */
 package tpfinalinventario.vistas;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -20,8 +18,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -54,23 +50,19 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
     public DetalleVenta2View() {
         initComponents();
 
-     
-        
         //le agrego un evento al jdatechooser
-       jDateChooser.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+        jDateChooser.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if ("date".equals(evt.getPropertyName())) {
                     Date selectedDate = (Date) evt.getNewValue();
-                    if (selectedDate != null ) {
-                       
+                    if (selectedDate != null) {
 
                         Date fechaDate = jDateChooser.getDate();
-                        
+
                         if (cbProductos.getSelectedIndex() == -1) {
                             listaVenta = (ArrayList<Venta>) ventaData.listaSinEstadoDelCliente();
-                        }
-                        else  {
+                        } else {
                             Producto productoSeleccionado = (Producto) cbProductos.getSelectedItem();
                             listaVenta = (ArrayList<Venta>) ventaData.buscarPorIdProducto(productoSeleccionado.getIdProducto());
                         }
@@ -84,10 +76,10 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
                         }
                         listaVenta = l;
                         llenarTabla();
-                    } 
+                    }
                 }
-                 borrarFilas(modelo2);
-                 jLabel2.setText("");
+                borrarFilas(modelo2);
+                jLabel2.setText("");
             }
 
         });
@@ -141,8 +133,6 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
 
     }
 
- 
-    
     private void cargarCB() {
         String text = textField.getText();
         cbProductos.removeAllItems();
@@ -207,14 +197,13 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas(DefaultTableModel model) {
-        
+
         int a = model.getRowCount() - 1;
         for (int i = a; i >= 0; i--) {
             model.removeRow(i);
         }
     }
 
-       
     private void llenarTabla() {
         borrarFilas(modelo);
         for (Venta v : listaVenta) {
@@ -374,7 +363,6 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
 
     private void cbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProductosActionPerformed
 
-
         try {
             Producto productoSeleccionado = (Producto) cbProductos.getSelectedItem();
             borrarFilas(modelo);
@@ -391,14 +379,14 @@ public class DetalleVenta2View extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbProductosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       cbProductos.setSelectedIndex(-1);
-       jDateChooser.setDate(null);
+        cbProductos.setSelectedIndex(-1);
+        jDateChooser.setDate(null);
         listaVenta = (ArrayList<Venta>) ventaData.listaSinEstadoDelCliente();
-           llenarTabla();
-           
+        llenarTabla();
+
         borrarFilas(modelo2);
         jLabel2.setText("");
-          
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

@@ -82,7 +82,4 @@ public class Venta {
         return "Venta{" + "idVenta=" + idVenta + ", numeroDeVenta=" + numeroDeVenta + ", fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + '}';
     }
 
-  
-    
-
 }
