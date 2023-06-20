@@ -37,12 +37,12 @@
             <Property name="text" type="java.lang.String" value="Compra"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="IMRealizarCompra">
+            <MenuItem class="javax.swing.JMenuItem" name="IMRealizaCompra">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Realizar Compra"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMRealizarCompraActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMRealizaCompraActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="IMDetalleCompra">
@@ -53,12 +53,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMDetalleCompraActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="IMRealiza_Compra_2">
+            <MenuItem class="javax.swing.JMenuItem" name="IMCompraRapida">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Realizar Compra 2"/>
+                <Property name="text" type="java.lang.String" value="Compra R&#xe1;pida"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMRealiza_Compra_2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMCompraRapidaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -84,12 +84,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IMDetalleVentaActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="MIVentasRealizadas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="detalle2"/>
+                <Property name="text" type="java.lang.String" value="Ventas Realizadas"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MIVentasRealizadasActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
