@@ -253,6 +253,13 @@ public class ProductoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
+           try{
+         Producto pr=(Producto) cbResultado.getSelectedItem();
+          
+      }catch(Exception e){
+           JOptionPane.showMessageDialog(this, "No ha seleccionado a un producto.");
+              return;
+      }
 
         if (pd.eliminadoLogico(idBuscado)) {
             JOptionPane.showMessageDialog(this, "Producto eliminado. ");
@@ -268,7 +275,14 @@ public class ProductoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
-
+   
+      try{
+         Producto pr=(Producto) cbResultado.getSelectedItem();
+          
+      }catch(Exception e){
+           JOptionPane.showMessageDialog(this, "No ha seleccionado a un producto.");
+              return;
+      }
         if (!validar()) {
             return;
         }

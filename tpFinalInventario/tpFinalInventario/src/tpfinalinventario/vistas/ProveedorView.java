@@ -48,6 +48,7 @@ public class ProveedorView extends javax.swing.JInternalFrame {
 
                 lista = (ArrayList<Proveedor>) proveedorData.nombresEmpiezanCon(textField.getText());
                 cargarCB();
+               
             }
 
         });        
@@ -251,7 +252,16 @@ public class ProveedorView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
-
+      
+      try{
+         Proveedor pr=(Proveedor) cbRazonSocial.getSelectedItem();
+          
+      }catch(Exception e){
+           JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
+              return;
+      }
+        
+                  
         if (proveedorData. eliminarLogico(idBuscado)) {
             JOptionPane.showMessageDialog(this, "Producto eliminado. ");
         } else {
@@ -266,7 +276,15 @@ public class ProveedorView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
-
+   
+      try{
+         Proveedor pr=(Proveedor) cbRazonSocial.getSelectedItem();
+          
+      }catch(Exception e){
+           JOptionPane.showMessageDialog(this, "No ha seleccionado a un proveedor.");
+              return;
+      }
+         
          Proveedor proveedor = cargarProveedor();
         if (!validar(proveedor)) {
             return;
@@ -310,6 +328,8 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     private void cbRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRazonSocialActionPerformed
   // CUANDO SELECCIONAN UN PROveedor DEL CB
 try{
+    
+  
   Proveedor p = (Proveedor) cbRazonSocial.getSelectedItem();
         if (p == null) {
             return;
@@ -367,6 +387,7 @@ catch(Exception e){
     }
 
     private boolean validar(Proveedor p) {
+        
         ArrayList<String> errores = new ArrayList();
 
         String razonSocial = jtf_razonSocial.getText();
