@@ -50,6 +50,11 @@ public class ProductoView extends javax.swing.JInternalFrame {
             public void keyReleased(KeyEvent e) {
 
                 lista = (ArrayList<Producto>) pd.nombresEmpiezanCon(textField.getText());
+                if(lista.isEmpty()){
+                    limpiar();
+                    return;
+                }
+                    
                 cargarCB();
             }
 
@@ -307,21 +312,28 @@ public class ProductoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtf_nombreFocusGained
 
     private void cbResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbResultadoActionPerformed
-        // CUANDO SELECCIONAN UN PRODUCTO DEL CB
-try{
+      
+       try{
+         Producto pr=(Producto) cbResultado.getSelectedItem();
+          
+      }catch(Exception e){
+              return;
+      }
+       
+       
         Producto p = (Producto) cbResultado.getSelectedItem();
         if (p == null) {
             return;
         }
+        
+      
         idBuscado = p.getIdProducto();
         cargarTF(p);
         jLabel9.setText("Producto seleccionado.");
         btnEliminar.setEnabled(true);
         btnActualizar.setEnabled(true);
         btnAgregar.setEnabled(false);
-}catch(Exception e){
-    
-}
+
     }//GEN-LAST:event_cbResultadoActionPerformed
 
     private boolean validar() {

@@ -48,6 +48,10 @@ public class ProveedorView extends javax.swing.JInternalFrame {
 
                 lista = (ArrayList<Proveedor>) proveedorData.nombresEmpiezanCon(textField.getText());
                 cargarCB();
+                 if(lista.isEmpty()){
+                    limpiar();
+                    return;
+                }
                
             }
 
@@ -313,14 +317,18 @@ public class ProveedorView extends javax.swing.JInternalFrame {
     }
     
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        jtf_domicilio.setText("");
+     limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+       private void limpiar(){
+              jtf_domicilio.setText("");
         jtf_razonSocial.setText("");
         jtf_telefono.setText("");
         btnAgregar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnActualizar.setEnabled(false);
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
+       }
+    
     private void jtf_razonSocialFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_razonSocialFocusGained
         btnAgregar.setEnabled(true);
     }//GEN-LAST:event_jtf_razonSocialFocusGained
