@@ -39,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
         MenuCompra = new javax.swing.JMenu();
         IMRealizarCompra = new javax.swing.JMenuItem();
         IMDetalleCompra = new javax.swing.JMenuItem();
+        IMRealiza_Compra_2 = new javax.swing.JMenuItem();
         MenuVenta = new javax.swing.JMenu();
         IMRealizarVenta = new javax.swing.JMenuItem();
         IMDetalleVenta = new javax.swing.JMenuItem();
@@ -128,6 +129,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         MenuCompra.add(IMDetalleCompra);
+
+        IMRealiza_Compra_2.setText("Realizar Compra 2");
+        IMRealiza_Compra_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IMRealiza_Compra_2ActionPerformed(evt);
+            }
+        });
+        MenuCompra.add(IMRealiza_Compra_2);
 
         BarraMenu.add(MenuCompra);
 
@@ -292,6 +301,10 @@ public class Principal extends javax.swing.JFrame {
          cargarInternal(new DetalleVenta2View());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void IMRealiza_Compra_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMRealiza_Compra_2ActionPerformed
+        cargarInternal(new RealizarCompra2());
+    }//GEN-LAST:event_IMRealiza_Compra_2ActionPerformed
+
     private void cargarInternal(JInternalFrame i) {
         escritorio.removeAll(); //si hay una ventana abierta, la limpia,la remueve 
         escritorio.repaint();//dibuja todo de nuevo
@@ -347,6 +360,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem IMFormularioCliente;
     private javax.swing.JMenuItem IMFormularioProducto;
     private javax.swing.JMenuItem IMFormularioProveedor;
+    private javax.swing.JMenuItem IMRealiza_Compra_2;
     private javax.swing.JMenuItem IMRealizarCompra;
     private javax.swing.JMenuItem IMRealizarVenta;
     private javax.swing.JMenu MenuCliente;
