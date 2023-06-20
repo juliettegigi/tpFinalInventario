@@ -265,7 +265,6 @@ public class ProductoView extends javax.swing.JInternalFrame {
            JOptionPane.showMessageDialog(this, "No ha seleccionado a un producto.");
               return;
       }
-
         if (pd.eliminadoLogico(idBuscado)) {
             JOptionPane.showMessageDialog(this, "Producto eliminado. ");
         } else {
